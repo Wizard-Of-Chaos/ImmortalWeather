@@ -106,7 +106,7 @@ def _phrase(number):
 def _ratio(requeststr):
     data = requests.get(requeststr)
     json = data.json()
-    ratio = float(float(json['win']) / float(json['lose']))
+    ratio = float(float(json['win']) / (float(json['lose']) + float(json['win'])))
     return ratio
 
 def _subman_APIstr(submanid):
