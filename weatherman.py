@@ -157,4 +157,7 @@ async def weather(ctx):
 
     await ctx.send(embed=embed)
 
-bot.run('MTIxNjc5Njc3Mzc3MTkwMzAyNw.GfzqTv.6T8L79Ll-Qk_C35tDHngExa8XbYEjyOZ4a2XKg')
+with open('token.txt', 'r') as tok:
+    token = tok.readline()
+    print(token)
+    bot.run(token)
