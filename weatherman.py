@@ -95,11 +95,11 @@ async def subman_clear(ctx):
     await ctx.send('Submen cleared.')
 
 def _phrase(number):
-    if number > 1.0:
+    if number > .53:
         return 'Calm'
-    if number >= .8:
+    if number >= .45:
         return 'Gusty'
-    if number >= .6:
+    if number >= .35:
         return 'Turbulent'
     return 'Stormy'
 
