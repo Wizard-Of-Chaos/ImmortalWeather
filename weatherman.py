@@ -33,9 +33,9 @@ async def global_help(ctx):
     embed.add_field(name='subman personal tracked:', value='Lists all of your tracked submen IDs. Must be registered.', inline=False)
     embed.add_field(name='myweather:', value='Generates your individualized weather report. Must be registered.', inline=False)
 
-    embed.add_field(name='subman global_add [dota_id]', value='Adds subman globally. Only available to cardinal winds.', inline=False)
-    embed.add_field(name='subman global_remove [dota_id]', value='Removes subman globally. Only available to cardinal winds.', inline=False)
-    embed.add_field(name='subman global_tracked [dota_id]', value='Lists all global submen.', inline=False)
+    embed.add_field(name='subman global_add [dota_id]:', value='Adds subman globally. Only available to cardinal winds.', inline=False)
+    embed.add_field(name='subman global_remove [dota_id]:', value='Removes subman globally. Only available to cardinal winds.', inline=False)
+    embed.add_field(name='subman global_tracked [dota_id]:', value='Lists all global submen.', inline=False)
 
     await ctx.send(embed=embed)
 
