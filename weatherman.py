@@ -19,6 +19,27 @@ async def on_message(message):
         await message.channel.send('It is an ill wind.')
     await bot.process_commands(message)
 
+@bot.command(name='helpme')
+async def global_help(ctx):
+    embed = dc.Embed(
+        color=dc.Color.blue(),
+        description='**Broken Winds Help**'
+    )
+    embed.add_field(name='weather:', value='Determines the general weather system of Dota 2 pubs. Includes personal submen where possible.', inline=False)
+
+    embed.add_field(name='subman personal register [dota_id]:', value='Registers your Discord ID to your Dota 2 ID.', inline=False)
+    embed.add_field(name='subman personal add [dota_id]:', value='Adds a subman to your personal list of submen. Must be registered.', inline=False)
+    embed.add_field(name='subman personal remove [dota_id]:', value='Removes a subman from your personal list of submen. Must be registered.', inline=False)
+    embed.add_field(name='subman personal tracked:', value='Lists all of your tracked submen IDs. Must be registered.', inline=False)
+    embed.add_field(name='myweather:', value='Generates your individualized weather report. Must be registered.', inline=False)
+
+    embed.add_field(name='subman global_add [dota_id]', value='Adds subman globally. Only available to cardinal winds.', inline=False)
+    embed.add_field(name='subman global_remove [dota_id]', value='Removes subman globally. Only available to cardinal winds.', inline=False)
+    embed.add_field(name='subman global_tracked [dota_id]', value='Lists all global submen.', inline=False)
+
+    await ctx.send(embed=embed)
+
+
 async def main():
     async with bot:
         #change txt for dev
