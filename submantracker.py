@@ -9,6 +9,30 @@ CARDINAL_MAP = {
     130569142863396865 : 62681700,
     252257562710245376 : 173836647
 }
+
+class PlayerData(object):
+    def __init__(self):
+        self.id = int(0)
+        self.tracked_submen = list[int]
+        self.last_forecast_timestamp = int(0)
+        self.last_forecast_confidence = float(1.0)
+        self.good_forecast_games = int(0)
+        self.good_forecast_wins = int(0)
+        self.bad_forecast_games = int(0)
+        self.bad_forecast_wins = int(0)
+        
+    def add_subman(self, id:int):
+        self.tracked_submen.append(id)
+
+    def remove_subman(self, id:int):
+        self.tracked_submen.remove(id)
+    
+    def good_game_winrate(self) -> float:
+        return float(self.good_forecast_wins / self.good_forecast_wins)
+    
+    def bad_game_winrate(self) -> float:
+        return float(self.bad_forecast_wins / self.bad_forecast_games)
+
 class SubmanTracker(object):
     def __init__(self, globalfile, personalfile, regfile):
         self.globalfile = globalfile
