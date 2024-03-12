@@ -16,6 +16,23 @@ MIKE_REQUEST_STR = API_STR + 'players/173836647/' + WL_LIMIT_STR
 
 SUBMAN_TRACKER = SubmanTracker('submen.pkl', 'submen_personal.pkl', 'id_reg.pkl')
 
+WAIT_EMOJI = '<a:clockwerk:635269145151143956>'
+
+def _placeholder_embed(author) -> dc.Embed:
+    embed = dc.Embed(
+        color=dc.Color.blue(),
+        description = f'Weather report for {author}'
+        )
+    
+    embed.add_field(name='**Wizard of Chaos:**', value=WAIT_EMOJI, inline=True)
+    embed.add_field(name='**Snow:**', value=WAIT_EMOJI, inline=True)
+    embed.add_field(name='**Tint:**', value=WAIT_EMOJI, inline=True)
+    embed.add_field(name='**MxGuire:**', value=WAIT_EMOJI, inline=True)
+    embed.add_field(name='**Jubei Report:**', value=WAIT_EMOJI, inline=False)
+    embed.add_field(name='**Global Subman Report:**', value=WAIT_EMOJI, inline=False)
+    return embed 
+
+
 def _personal_request_str(id: int) -> str:
     return API_STR + f'players/{id}/' + WL_LIMIT_STR
 
