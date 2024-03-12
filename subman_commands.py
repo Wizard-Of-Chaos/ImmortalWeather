@@ -24,14 +24,33 @@ def _placeholder_embed(author) -> dc.Embed:
         description = f'Weather report for {author}'
         )
     
-    embed.add_field(name='**Wizard of Chaos:**', value=WAIT_EMOJI, inline=True)
-    embed.add_field(name='**Snow:**', value=WAIT_EMOJI, inline=True)
-    embed.add_field(name='**Tint:**', value=WAIT_EMOJI, inline=True)
-    embed.add_field(name='**MxGuire:**', value=WAIT_EMOJI, inline=True)
-    embed.add_field(name='**Jubei Report:**', value=WAIT_EMOJI, inline=False)
-    embed.add_field(name='**Global Subman Report:**', value=WAIT_EMOJI, inline=False)
+    embed.insert_field_at(0, name='**Wizard of Chaos:**', value=WAIT_EMOJI, inline=True)
+    embed.insert_field_at(1, name='**Snow:**', value=WAIT_EMOJI, inline=True)
+    embed.insert_field_at(2, name='**Tint:**', value=WAIT_EMOJI, inline=True)
+    embed.insert_field_at(3, name='**MxGuire:**', value=WAIT_EMOJI, inline=True)
+    embed.insert_field_at(4, name='**Jubei Report:**', value=WAIT_EMOJI, inline=False)
+    embed.insert_field_at(5, name='**Global Subman Report:**', value=WAIT_EMOJI, inline=False)
+    embed.insert_field_at(6, name='**Recommendation:**', value=WAIT_EMOJI, inline=False)
     return embed 
 
+def queue_confidence_factor(jubei_active:bool, active_submen_percentage:float, minute_count:int, hour_count:int) -> float:
+    confidence = 1.0 #start at 100%
+    if jubei_active:
+        confidence -= .13 #jubei is 25% off
+    confidence = confidence * (1 - active_submen_percentage) #active submen are a flat multiplier
+    confidence = confidence - float(minute_count * .04) #each active subman whose game ended in the past 10 minutes is 4% off
+    return confidence
+
+def queue_rec(confidence:float) -> str:
+    if confidence >= .75:
+        return 'safe'
+    if confidence >= .6:
+        return 'probably harmless'
+    if confidence >= .5:
+        return 'gambling'
+    if confidence >= .35:
+        return 'unsafe'
+    return 'extremely hazardous'
 
 def _personal_request_str(id: int) -> str:
     return API_STR + f'players/{id}/' + WL_LIMIT_STR
@@ -225,6 +244,10 @@ class SubmanCog(commands.Cog):
                 if timesince < 10:
                     submen_last_ten_min += 1
             round(most_recent, 2)
+            jubei_factor = bool(_last_minutes(106159118) < 60)
+            submen_percentage = float(submen_last_hour / len(SUBMAN_TRACKER.personal_tracked_list(int(ctx.author.id))))
+            confidence = queue_confidence_factor(jubei_factor, submen_percentage, submen_last_ten_min, submen_last_hour)
+            embed.add_field(name='**Queue Confidence Factor:**', value=f'{round(confidence*100, 2)}%. Queueing right now would be **{queue_rec(confidence)}.**', inline=False)
             embed.add_field(name='**Personal Subman Report:**', 
                             value=f"""From your personal list, there have been {submen_last_ten_min} in the last ten minutes and {submen_last_hour} in the last hour. 
                             You have {len(SUBMAN_TRACKER.personal_tracked_list(ctx.author.id))} submen tracked in total. 
