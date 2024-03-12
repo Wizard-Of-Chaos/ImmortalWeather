@@ -184,11 +184,12 @@ class SubmanCog(commands.Cog):
                 msg = await msg.edit(embed=embed)
             
             round(most_recent, 2)
-            submen_percentage = float(submen_last_hour / len(SUBMAN_TRACKER.personal_tracked_list(int(ctx.author.id))))
+            valid_submen = submen_tracked - submen_invalid
+            submen_percentage = float(submen_last_hour / valid_submen)
             confidence = queue_confidence_factor(False, submen_percentage, submen_last_ten_min, submen_last_hour)
             embed.set_field_at(1, name='**Subman Report**', 
                            value=f"""
-                            {submen_last_hour} submen have queued in the past hour, with the most recent at {round(most_recent, 2)} minutes ago (activity %: {round(submen_percentage*100,2)}%).
+                            {submen_last_hour} submen have queued in the past hour, with the most recent at {round(most_recent, 2)} minutes ago (activity %: {round(submen_percentage*100,2)}%, {submen_invalid}/{submen_tracked} invalid).
                             {submen_last_ten_min} submen have queued in the past ten minutes.
                             The queue confidence is {round(confidence*100,2)}%.
                            """, inline=False)
@@ -245,12 +246,12 @@ class SubmanCog(commands.Cog):
             embed.set_field_at(5, name='**Global Subman Report**', value=f'Evaluated {subman_counter} submen of {SUBMAN_TRACKER.global_submen_count()} ({submen_invalid} invalid)', inline=False)
             msg = await msg.edit(embed=embed)
         
-        percent_submen = submen_last_hour / SUBMAN_TRACKER.global_submen_count()
+        percent_submen = submen_last_hour / (SUBMAN_TRACKER.global_submen_count() - submen_invalid)
         confidence = queue_confidence_factor(jubei_bool, percent_submen, submen_last_ten_min, submen_last_hour)
 
         embed.set_field_at(5, name='**Global Subman Report**', value = 
                            f"""
-                            {submen_last_hour} submen have queued in the past hour, with the most recent at {round(most_recent, 2)} minutes ago (activity %: {round(percent_submen*100,2)}%).
+                            {submen_last_hour} submen have queued in the past hour, with the most recent at {round(most_recent, 2)} minutes ago (activity %: {round(percent_submen*100,2)}%, {submen_invalid}/{SUBMAN_TRACKER.global_submen_count()} invalid).
                             {submen_last_ten_min} submen have queued in the past ten minutes.
                             The queue confidence is {round(confidence*100,2)}%.
                            """, inline=False)

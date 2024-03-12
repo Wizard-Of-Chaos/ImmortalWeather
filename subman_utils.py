@@ -89,6 +89,9 @@ def last_minutes_req(submanid):
     print(request)
     if request.status_code != 200:
         return None
+    if len(request.json()) == 0:
+        print('invalid request!')
+        return None
     recent_json = request.json()[0]
     start_time = recent_json['start_time']
     start_time += recent_json['duration']
