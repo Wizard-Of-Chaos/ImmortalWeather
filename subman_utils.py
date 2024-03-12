@@ -19,20 +19,31 @@ MIKE_REQUEST_STR = wl_request_str(173836647)
 
 WAIT_EMOJI = '<a:clockwerk:635269145151143956>'
 
-def placeholder_embed(author) -> dc.Embed:
+def placeholder_global_embed(author) -> dc.Embed:
     embed = dc.Embed(
         color=dc.Color.blue(),
-        description = f'Weather report for {author}'
+        description = f'*Immortal Draft weather report*'
         )
     
-    embed.insert_field_at(0, name='**Wizard of Chaos:**', value=WAIT_EMOJI, inline=True)
-    embed.insert_field_at(1, name='**Snow:**', value=WAIT_EMOJI, inline=True)
-    embed.insert_field_at(2, name='**Tint:**', value=WAIT_EMOJI, inline=True)
-    embed.insert_field_at(3, name='**MxGuire:**', value=WAIT_EMOJI, inline=True)
-    embed.insert_field_at(4, name='**Jubei Report:**', value=WAIT_EMOJI, inline=False)
-    embed.insert_field_at(5, name='**Global Subman Report:**', value=WAIT_EMOJI, inline=False)
-    embed.insert_field_at(6, name='**Recommendation:**', value=WAIT_EMOJI, inline=False)
+    embed.insert_field_at(0, name='**Wizard of Chaos**', value=WAIT_EMOJI, inline=True)
+    embed.insert_field_at(1, name='**Snow**', value=WAIT_EMOJI, inline=True)
+    embed.insert_field_at(2, name='**Tint**', value=WAIT_EMOJI, inline=True)
+    embed.insert_field_at(3, name='**MxGuire**', value=WAIT_EMOJI, inline=True)
+    embed.insert_field_at(4, name='**Jubei Status**', value=WAIT_EMOJI, inline=True)
+    embed.insert_field_at(5, name='**Global Subman Report**', value=WAIT_EMOJI, inline=False)
+    embed.insert_field_at(6, name='**Recommendation**', value=WAIT_EMOJI, inline=False)
     return embed 
+
+def placeholder_personal_embed(author) -> dc.Embed:
+    embed = dc.Embed(
+        color=dc.Color.red(),
+        description = f'*Weather report for {author}*'
+        )
+    embed.insert_field_at(0, name='**Your Wind**', value=WAIT_EMOJI, inline=False)
+    embed.insert_field_at(1, name='**Subman Report**', value=WAIT_EMOJI, inline=False)
+    embed.insert_field_at(2, name='**Recommendation**', value=WAIT_EMOJI, inline=False)
+    return embed
+
 
 def queue_confidence_factor(jubei_active:bool, active_submen_percentage:float, minute_count:int, hour_count:int) -> float:
     confidence = 1.0 #start at 100%
@@ -48,7 +59,7 @@ def queue_rec(confidence:float) -> str:
     if confidence >= .6:
         return 'probably harmless'
     if confidence >= .5:
-        return 'gambling'
+        return 'a gamble'
     if confidence >= .35:
         return 'unsafe'
     return 'extremely hazardous'
@@ -64,6 +75,8 @@ def wl_phrase(number):
 
 def wl_ratio_req(requeststr):
     data = requests.get(requeststr)
+    if data.status_code != 200:
+        return None
     json = data.json()
     ratio = float(float(json['win']) / (float(json['lose']) + float(json['win'])))
     return ratio
@@ -73,6 +86,9 @@ def subman_APIstr(submanid):
 
 def last_minutes_req(submanid):
     request = requests.get(subman_APIstr(submanid))
+    print(request)
+    if request.status_code != 200:
+        return None
     recent_json = request.json()[0]
     start_time = recent_json['start_time']
     start_time += recent_json['duration']
