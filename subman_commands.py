@@ -189,7 +189,7 @@ class SubmanCog(commands.Cog):
             confidence = queue_confidence_factor(False, submen_percentage, submen_last_ten_min, submen_last_hour)
             embed.set_field_at(1, name='**Subman Report**', 
                            value=f"""
-                            {submen_last_hour} submen have queued in the past hour, with the most recent at {round(most_recent, 2)} minutes ago (activity %: {round(submen_percentage*100,2)}%, {submen_invalid}/{submen_tracked} invalid).
+                            {submen_last_hour} submen have queued in the past hour, with the most recent at {round(most_recent, 2)} minutes ago (activity: {round(submen_percentage*100,2)}%, {submen_invalid}/{submen_tracked} invalid).
                             {submen_last_ten_min} submen have queued in the past ten minutes.
                             The queue confidence is {round(confidence*100,2)}%.
                            """, inline=False)
@@ -251,7 +251,7 @@ class SubmanCog(commands.Cog):
 
         embed.set_field_at(5, name='**Global Subman Report**', value = 
                            f"""
-                            {submen_last_hour} submen have queued in the past hour, with the most recent at {round(most_recent, 2)} minutes ago (activity %: {round(percent_submen*100,2)}%, {submen_invalid}/{SUBMAN_TRACKER.global_submen_count()} invalid).
+                            {submen_last_hour} submen have queued in the past hour, with the most recent at {round(most_recent, 2)} minutes ago (activity: {round(percent_submen*100,2)}%, {submen_invalid}/{SUBMAN_TRACKER.global_submen_count()} invalid).
                             {submen_last_ten_min} submen have queued in the past ten minutes.
                             The queue confidence is {round(confidence*100,2)}%.
                            """, inline=False)
