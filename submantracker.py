@@ -109,6 +109,7 @@ class SubmanTracker(object):
     
     def register(self, userid: int, dotaid: int):
         self.registered_ids[userid] = dotaid
+        self.users[userid] = []
         self.save()
     
     def registered(self, userid: int) -> bool:

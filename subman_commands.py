@@ -78,16 +78,8 @@ class SubmanCog(commands.Cog):
         SUBMAN_TRACKER.add_subman_global(161444478)
         SUBMAN_TRACKER.add_subman_global(106159118)
         await ctx.send('Submen cleared.')
-
-    @subman.group(pass_context=True)
-    async def personal(self, ctx):
-        if SUBMAN_TRACKER.registered(ctx.author.id) == False:
-            await ctx.send('You are not properly registered. Do that with `personal register (your dota id)`.')
-            return
-        if ctx.invoked_subcommand is None:
-            await ctx.send('Invalid personal subcommandman.')
     
-    @personal.command(name="register")
+    @subman.command(name="register")
     async def register(self, ctx, arg):
         if arg.isnumeric() == False:
             await ctx.send('You did not use a number. Try again.')
@@ -102,15 +94,18 @@ class SubmanCog(commands.Cog):
         if registered != None and registered != ctx.author.id:
             await ctx.send('That ID is already registered to another user.')
             return
-        if SUBMAN_TRACKER.registered(int(arg)) == True:
+        if SUBMAN_TRACKER.registered(int(ctx.author.id)) == True:
             await ctx.send('WARNING: You are already registered.')
         
         await ctx.send(f'Registering {arg} to discord id {ctx.author.id}')
         SUBMAN_TRACKER.register(ctx.author.id, int(arg))
 
-
-    @personal.command(name="add")
-    async def personal_add(self, ctx, arg):
+    @subman.command(name="add")
+    async def personal_add(self, ctx:Context, arg):
+        print(f'adding subman for author {ctx.author}')
+        if SUBMAN_TRACKER.registered(int(ctx.author.id)) == False:
+            await ctx.send('You are not registered. Please register first (see `--helpme` for commands).')
+            return
         if int(arg) in CARDINAL_DIRECTIONS:
             await ctx.send('The cardinal directions cannot be submen.')
             return
@@ -120,8 +115,11 @@ class SubmanCog(commands.Cog):
         SUBMAN_TRACKER.add_subman_personal(int(ctx.author.id), int(arg))
         await ctx.send('Added subman to your personal list of submen.')
 
-    @personal.command(name="remove")
+    @subman.command(name="remove")
     async def personal_remove(self, ctx, arg):
+        if SUBMAN_TRACKER.registered(int(ctx.author.id)) == False:
+            await ctx.send('You are not registered. Please register first (see `--helpme` for commands).')
+            return
         if int(arg) in CARDINAL_DIRECTIONS:
             await ctx.send('The cardinal directions cannot be submen.')
             return
@@ -131,12 +129,28 @@ class SubmanCog(commands.Cog):
         SUBMAN_TRACKER.remove_subman_personal(int(ctx.author.id), int(arg))
         await ctx.send('Removed subman from your personal list of submen.')
     
-    @personal.command(name="clear")
+    @subman.command(name="clear")
     async def personal_clear(self, ctx):
+        if SUBMAN_TRACKER.registered(int(ctx.author.id)) == False:
+            await ctx.send('You are not registered. Please register first (see `--helpme` for commands).')
+            return
         SUBMAN_TRACKER.clear_submen_personal(int(ctx.author.id))
         await ctx.send('Your personal list of submen has been cleared.')
+
+    @subman.command(name='admin_register')
+    async def admin_reg(self, ctx:Context, arg1, arg2):
+        if int(ctx.author.id) != 125433170047795200:
+            return
+        print(f'registering {arg1} to {arg2}')
+        SUBMAN_TRACKER.register(int(arg1), int(arg2))
+        await ctx.send(f'Registered Discord ID {arg1} to Dota 2 ID {arg2}')
     
-    @personal.command(name='tracked')
+    @subman.command(name='whos_registered')
+    async def check_regs(self, ctx):
+        print(SUBMAN_TRACKER.registered_ids)
+        await ctx.send('Printed to console')
+
+    @subman.command(name='tracked')
     async def subman_personal_track(self, ctx):
         submenlist = ''
         for subman in SUBMAN_TRACKER.personal_tracked_list(int(ctx.author.id)):
@@ -147,7 +161,7 @@ class SubmanCog(commands.Cog):
         )
 
         await ctx.send(embed=embed)
-    
+
     @commands.command(name='myweather')
     async def myweather(self, ctx: Context):
         if SUBMAN_TRACKER.registered(int(ctx.author.id)) == False:
@@ -161,40 +175,15 @@ class SubmanCog(commands.Cog):
 
         submen_tracked = len(SUBMAN_TRACKER.personal_tracked_list(int(ctx.author.id)))
         if submen_tracked > 0:
-            most_recent = sys.maxsize
-            submen_last_hour = 0
-            submen_last_ten_min = 0
-            submen_invalid = 0
-            subman_counter = 0
-            print(submen_tracked)
-            for subman in SUBMAN_TRACKER.personal_tracked_list(int(ctx.author.id)):
-                timesince = last_minutes_req(subman)
-                if timesince is None:
-                    submen_invalid += 1
-                else:
-                    if timesince < most_recent:
-                        most_recent = timesince
-                    if timesince < 60:
-                        submen_last_hour += 1
-                    if timesince < 10:
-                        submen_last_ten_min += 1
-                subman_counter += 1
-                print(subman_counter)
-                embed.set_field_at(1, name='**Subman Report**', value=f'Evaluated {subman_counter} submen of {submen_tracked} ({submen_invalid} invalid)', inline=False)
-                msg = await msg.edit(embed=embed)
-            
-            round(most_recent, 2)
-            valid_submen = submen_tracked - submen_invalid
-            submen_percentage = float(submen_last_hour / valid_submen)
-            confidence = queue_confidence_factor(False, submen_percentage, submen_last_ten_min, submen_last_hour)
-            embed.set_field_at(1, name='**Subman Report**', 
-                           value=f"""
-                            {submen_last_hour} submen have queued in the past hour, with the most recent at {round(most_recent, 2)} minutes ago (activity: {round(submen_percentage*100,2)}%, {submen_invalid}/{submen_tracked} invalid).
-                            {submen_last_ten_min} submen have queued in the past ten minutes.
-                            The queue confidence is {round(confidence*100,2)}%.
+            data = await eval_submen(SUBMAN_TRACKER.personal_tracked_list(int(ctx.author.id)), msg, embed, 1, False)
+            data.embed.set_field_at(1, name='**Subman Report**', value = 
+                           f"""
+                            {data.past_90} submen have queued in the past 90 minutes, with the most recent at {round(data.most_recent, 2)} minutes ago (activity: {round(data.percentage*100,2)}%, {data.invalid_submen}/{data.submen_count} invalid).
+                            {data.past_20} submen have queued in the past 20 minutes.
                            """, inline=False)
-            embed.set_field_at(2, name='**Recommendation**', value=f'It is currently **{queue_rec(confidence)}** to queue.', inline=False)
-            msg = await msg.edit(embed=embed)
+            data.embed.set_field_at(2, name='**Linear Factor**', value=f'{round(data.lin_factor*100,2)}% | **{queue_rec(data.lin_factor)}**', inline=True)
+            data.embed.set_field_at(3, name='**Decay Factor**', value=f'{round(data.decay_factor*100,2)}% | **{queue_rec(data.decay_factor)}**', inline=True)
+            msg = await data.msg.edit(embed=embed)
 
         else:
             embed.set_field_at(1, name='**No Submen Listed**', value='You do not have any tracked submen.', inline=False)
@@ -217,7 +206,7 @@ class SubmanCog(commands.Cog):
         jubei_time = last_minutes_req(106159118)
         jubei_bool = False
         jubei_report = ''
-        if jubei_time < 60:
+        if jubei_time < 90:
             jubei_report = f'Jubei is on the prowl. Exact time: {round(jubei_time, 2)} minutes ago.'
             jubei_bool = True
         else:
@@ -226,34 +215,13 @@ class SubmanCog(commands.Cog):
         embed.set_field_at(4, name='**Jubei Status**', value=jubei_report, inline=True)
         msg = await msg.edit(embed=embed)
 
-        most_recent = sys.maxsize
-        submen_last_hour = 0
-        submen_last_ten_min = 0
-        submen_invalid = 0
-        subman_counter = 0
-        for subman in SUBMAN_TRACKER.tracked_list():
-            timesince = last_minutes_req(subman)
-            if timesince is None:
-                submen_invalid += 1
-            else:
-                if timesince < most_recent:
-                    most_recent = timesince
-                if timesince < 60:
-                    submen_last_hour += 1
-                if timesince < 10:
-                    submen_last_ten_min += 1
-            subman_counter += 1
-            embed.set_field_at(5, name='**Global Subman Report**', value=f'Evaluated {subman_counter} submen of {SUBMAN_TRACKER.global_submen_count()} ({submen_invalid} invalid)', inline=False)
-            msg = await msg.edit(embed=embed)
-        
-        percent_submen = submen_last_hour / (SUBMAN_TRACKER.global_submen_count() - submen_invalid)
-        confidence = queue_confidence_factor(jubei_bool, percent_submen, submen_last_ten_min, submen_last_hour)
-
-        embed.set_field_at(5, name='**Global Subman Report**', value = 
+        data = await eval_submen(SUBMAN_TRACKER.tracked_list(), msg, embed, 5, jubei_bool)
+        data.embed.set_field_at(5, name='**Subman Report**', value = 
                            f"""
-                            {submen_last_hour} submen have queued in the past hour, with the most recent at {round(most_recent, 2)} minutes ago (activity: {round(percent_submen*100,2)}%, {submen_invalid}/{SUBMAN_TRACKER.global_submen_count()} invalid).
-                            {submen_last_ten_min} submen have queued in the past ten minutes.
-                            The queue confidence is {round(confidence*100,2)}%.
+                            {data.past_90} submen have queued in the past 90 minutes, with the most recent at {round(data.most_recent, 2)} minutes ago (activity: {round(data.percentage*100,2)}%, {data.invalid_submen}/{data.submen_count} invalid).
+                            {data.past_20} submen have queued in the past 20 minutes.
                            """, inline=False)
-        embed.set_field_at(6, name='**Recommendation**', value=f'It is currently **{queue_rec(confidence)}** to queue.', inline=False)
-        msg =  await msg.edit(embed=embed)
+        data.embed.set_field_at(6, name='**Linear Factor**', value=f'{round(data.lin_factor*100,2)}% | **{queue_rec(data.lin_factor)}**', inline=True)
+        data.embed.set_field_at(7, name='**Decay Factor**', value=f'{round(data.decay_factor*100,2)}% | **{queue_rec(data.decay_factor)}**', inline=True)
+
+        msg = await data.msg.edit(embed=embed)
