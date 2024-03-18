@@ -110,7 +110,9 @@ def last_minutes_req(submanid):
     start_time = recent_json['start_time']
     start_time += recent_json['duration']
     elapsed = time.time() - start_time
-    return float(elapsed/60)
+    elapsed = elapsed/60
+    elapsed = elapsed - 5 if elapsed > 5 else elapsed #fucking hate the conditional op in python
+    return float((elapsed/60) - 5)
 
 class SubmenData(object):
     def __init__(self, jubei:bool, past_90:int, past_20:int, submen_count:int, invalid_submen:int, active_submen:int, past_20_list:list[int], recent:int, msg:dc.Message, embed:dc.Embed):
