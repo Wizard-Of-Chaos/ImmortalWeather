@@ -3,20 +3,21 @@ import requests
 import time
 import sys 
 
-API_STR = 'https://api.opendota.com/api/'
-DBUFF_STR = 'https://www.dotabuff.com/matches/'
-WL_LIMIT_STR = 'wl?limit=10'
+DBUFF_STR = 'https://www.dotabuff.com/players/'
 
-def wl_request_str(id: int) -> str:
-    return API_STR + f'players/{id}/' + WL_LIMIT_STR
+STEAM_API_KEY = '869AE5CCFB534F12A611985021545B8B'
+STEAM_API_URL = 'http://api.steampowered.com/'
 
-def recent_request_str(id: int) -> str:
-    return API_STR + f'players/{id}' + '/recentMatches'
+def num_matches_str(player_id:int, num_matches:int) -> str:
+    return f'{STEAM_API_URL}/IDOTA2Match_570/GetMatchHistory/V001/?key={STEAM_API_KEY}&account_id={player_id}&matches_requested={num_matches}'
 
-WIZ_REQUEST_STR = wl_request_str(75688374)
-SNOW_REQUEST_STR = wl_request_str(107944284)
-TINT_REQUEST_STR = wl_request_str(62681700)
-MIKE_REQUEST_STR = wl_request_str(173836647)
+def specific_match_str(match_id: int) -> str:
+    return f'{STEAM_API_URL}/IDOTA2Match_570/GetMatchDetails/V001/?key={STEAM_API_KEY}&match_id={match_id}'
+
+WIZ_ID  = 75688374
+SNOW_ID = 107944284
+TINT_ID = 62681700
+MIKE_ID = 173836647
 
 WAIT_EMOJI = '<a:clockwerk:635269145151143956>'
 
@@ -87,32 +88,76 @@ def wl_phrase(number):
         return 'Turbulent'
     return 'Stormy'
 
-def wl_ratio_req(requeststr):
-    data = requests.get(requeststr)
-    if data.status_code != 200:
+def get_last_time_minutes(player_id:int) -> float|None:
+    begin_request = time.time()
+    request1 = requests.get(num_matches_str(player_id, 1))
+    if request1.status_code != 200:
+        print(f'get_last_time: Request for player {player_id} returned {request1.status_code}')
         return None
-    json = data.json()
-    ratio = float(float(json['win']) / (float(json['lose']) + float(json['win'])))
-    return ratio
+    
+    if int(request1.json()['result']['status']) != 1:
+        print(f'get_last_time: Request for player {player_id} is invalid!')
+        return None
+    
+    match_id = int(request1.json()['result']['matches'][0]['match_id'])
+    request2 = requests.get(specific_match_str(match_id))
 
-def subman_APIstr(submanid):
-    return API_STR + 'players/' + str(submanid) + '/recentMatches'
-
-def last_minutes_req(submanid):
-    request = requests.get(subman_APIstr(submanid))
-    print(request)
-    if request.status_code != 200:
+    if request2.status_code != 200:
+        print(f'get_last_time: Request for player {player_id} returned {request1.status_code} for match id {match_id}')
         return None
-    if len(request.json()) == 0:
-        print('invalid request!')
-        return None
-    recent_json = request.json()[0]
-    start_time = recent_json['start_time']
-    start_time += recent_json['duration']
+    
+    start_time = request2.json()['result']['start_time']
+    start_time += request2.json()['result']['duration']
     elapsed = time.time() - start_time
     elapsed = float(elapsed/60)
-    elapsed = elapsed - 5 if elapsed > 5 else elapsed #fucking hate the conditional op in python
-    return float(elapsed)
+    print(f'Time elapsed since last match for player {player_id}: {elapsed} ({time.time() - begin_request} sec response time)')
+    return elapsed
+
+def get_recent_wl_ratio(player_id:int) -> float|None:
+    begin_request = time.time()
+    request1 = requests.get(num_matches_str(player_id, 10))
+
+    if request1.status_code != 200:
+        print(f'get_recent_wl: Request for player {player_id} returned {request1.status_code}')
+        return None
+    
+    if int(request1.json()['result']['status']) != 1:
+        print(f'get_recent_wl: Request for player {player_id} is invalid!')
+        return None
+    
+    wins = 0
+    losses = 0
+
+    for i in range(10):
+        specific_req_id = int(request1.json()['result']['matches'][i]['match_id'])
+        specific_req = requests.get(specific_match_str(specific_req_id))
+
+        if specific_req.status_code != 200:
+            print(f'get_recent_wl: Failed to get match {specific_req_id}, exiting')
+            return None
+        
+        radiant_win = bool(specific_req.json()['result']['radiant_win'])
+
+        for j in range(10):
+            id = specific_req.json()['result']['players'][j]['account_id']
+            team_number = int(specific_req.json()['result']['players'][j]['team_number'])
+            if int(id) == player_id:
+                if radiant_win:
+                    if team_number == 0:
+                        wins += 1
+                    else:
+                        losses += 1
+                else:
+                    if team_number == 1:
+                        wins += 1
+                    else:
+                        losses += 1
+        
+    ratio = float(wins) / 10.0
+    print(f'Win ratio for last 10 matches on player {player_id}: {ratio} ({time.time() - begin_request} sec response time)')
+    return ratio
+
+
 class SubmenData(object):
     def __init__(self, jubei:bool, past_90:int, past_20:int, submen_count:int, invalid_submen:int, active_submen:int, past_20_list:list[int], recent:int, msg:dc.Message, embed:dc.Embed):
         self.jubei = jubei
@@ -139,7 +184,7 @@ async def eval_submen(submen_list:list[int], msg:dc.Message, embed:dc.Embed, rep
     updated_msg = msg
     most_recent = sys.maxsize
     for subman in submen_list:
-        timesince = last_minutes_req(subman)
+        timesince = get_last_time_minutes(subman)
         if timesince is None:
             submen_invalid += 1
         else:

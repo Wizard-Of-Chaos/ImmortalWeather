@@ -165,12 +165,12 @@ class SubmanCog(commands.Cog):
     @commands.command(name='myweather')
     async def myweather(self, ctx: Context):
         if SUBMAN_TRACKER.registered(int(ctx.author.id)) == False:
-            ctx.send('You are not registered and cannot have personalized weather conditions. Please register with `personal register (your dota id)`.')
+            ctx.send('You are not registered. Please register first (see `--helpme` for commands).')
             return
         embed = placeholder_personal_embed(ctx.author)
         msg = await ctx.send(embed=embed)
-        request_str = wl_request_str(SUBMAN_TRACKER.registered_ids[int(ctx.author.id)])
-        embed.set_field_at(0, name='**Your Wind**', value=wl_phrase(wl_ratio_req(request_str)), inline=False)
+        request_id = SUBMAN_TRACKER.registered_ids[int(ctx.author.id)]
+        embed.set_field_at(0, name='**Your Wind**', value=wl_phrase(get_recent_wl_ratio(request_id)), inline=False)
         msg = await msg.edit(embed=embed)
 
         submen_tracked = len(SUBMAN_TRACKER.personal_tracked_list(int(ctx.author.id)))
@@ -194,16 +194,16 @@ class SubmanCog(commands.Cog):
         embed = placeholder_global_embed(ctx.author)
         msg = await ctx.send(embed=embed)
 
-        embed.set_field_at(0, name='**Wizard of Chaos**', value=wl_phrase(wl_ratio_req(WIZ_REQUEST_STR)), inline=True)
+        embed.set_field_at(0, name='**Wizard of Chaos**', value=wl_phrase(get_recent_wl_ratio(WIZ_ID)), inline=True)
         msg = await msg.edit(embed=embed)
-        embed.set_field_at(1, name='**Snow**', value=wl_phrase(wl_ratio_req(SNOW_REQUEST_STR)), inline=True)
+        embed.set_field_at(1, name='**Snow**', value=wl_phrase(get_recent_wl_ratio(SNOW_ID)), inline=True)
         msg = await msg.edit(embed=embed)
-        embed.set_field_at(2, name='**Tint**', value=wl_phrase(wl_ratio_req(TINT_REQUEST_STR)), inline=True)
+        embed.set_field_at(2, name='**Tint**', value=wl_phrase(get_recent_wl_ratio(TINT_ID)), inline=True)
         msg = await msg.edit(embed=embed)
-        embed.set_field_at(3, name='**MxGuire**', value=wl_phrase(wl_ratio_req(MIKE_REQUEST_STR)), inline=True)
+        embed.set_field_at(3, name='**MxGuire**', value=wl_phrase(get_recent_wl_ratio(MIKE_ID)), inline=True)
         msg = await msg.edit(embed=embed)
 
-        jubei_time = last_minutes_req(106159118)
+        jubei_time = get_last_time_minutes(106159118)
         jubei_bool = False
         jubei_report = ''
         if jubei_time < 90:
@@ -225,3 +225,47 @@ class SubmanCog(commands.Cog):
         data.embed.set_field_at(7, name='**Decay Factor**', value=f'{round(data.decay_factor*100,2)}% | **{queue_rec(data.decay_factor)}**', inline=True)
 
         msg = await data.msg.edit(embed=embed)
+
+    @commands.command('invalids')
+    async def check_validity_global_submen(self, ctx: Context):
+        invalids = []
+        msg = await ctx.send('Checking validity of global submen...')
+        for subman in SUBMAN_TRACKER.tracked_list():
+            timesince = get_last_time_minutes(subman)
+            if timesince == None:
+                invalids.append(subman)
+
+        embed = dc.Embed(
+        color=dc.Color.blue(),
+        description = f'*The following submen did not have a last match to grab (request was invalid). Are any of them private?*'
+        )
+        invalids_str = ''
+        for id in invalids:
+            invalids_str += f'{id} | {DBUFF_STR + str(id)}\n'
+        embed.add_field(name='Invalids:', value=f'{invalids_str}', inline=True)
+
+        await msg.edit(content='Done checking validity of global submen.', embed=embed)
+
+    @commands.command('myinvalids')
+    async def check_validity_personal_submen(self, ctx: Context):
+        if SUBMAN_TRACKER.registered(int(ctx.author.id)) == False:
+            ctx.send('You are not registered. Please register first (see `--helpme` for commands).')
+            return
+        msg = await ctx.send('Checking validity of your submen...')
+
+        invalids = []
+        for subman in SUBMAN_TRACKER.personal_tracked_list(int(ctx.author.id)):
+            timesince = get_last_time_minutes(subman)
+            if timesince == None:
+                invalids.append(subman)
+
+        embed = dc.Embed(
+        color=dc.Color.red(),
+        description = f'*The following submen did not have a last match to grab (request was invalid). Are any of them private?*'
+        )
+        invalids_str = ''
+        for id in invalids:
+            invalids_str += f'{id} | {DBUFF_STR + str(id)}\n'
+        embed.add_field(name='Invalids:', value=f'{invalids_str}', inline=True)
+
+        await msg.edit(content='Done checking validity of your submen.', embed=embed)
