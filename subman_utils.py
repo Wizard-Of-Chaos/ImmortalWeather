@@ -5,7 +5,10 @@ import sys
 
 DBUFF_STR = 'https://www.dotabuff.com/players/'
 
-STEAM_API_KEY = '869AE5CCFB534F12A611985021545B8B'
+STEAM_API_KEY = ''
+with open('api.txt', 'r') as api:
+    STEAM_API_KEY = api.readline()
+print(STEAM_API_KEY)
 STEAM_API_URL = 'http://api.steampowered.com/'
 
 def num_matches_str(player_id:int, num_matches:int) -> str:

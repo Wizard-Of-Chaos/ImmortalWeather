@@ -2,7 +2,6 @@ import requests
 import json
 import time
 
-key = '869AE5CCFB534F12A611985021545B8B'
 api_url = 'http://api.steampowered.com/'
 
 def num_matches_str(player_id:int, num_matches:int) -> str:
