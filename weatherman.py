@@ -25,7 +25,7 @@ async def on_message(message):
 async def global_help(ctx):
     embed = dc.Embed(
         color=dc.Color.blue(),
-        description='**Broken Winds Help**'
+        description='**Gargoyle Help**'
     )
     embed.add_field(name='weather:', value='Determines the general weather system of Dota 2 pubs. Includes personal submen where possible.', inline=False)
 
