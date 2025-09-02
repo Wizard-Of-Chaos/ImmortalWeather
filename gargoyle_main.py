@@ -30,6 +30,8 @@ async def on_message(message):
         return
     if message.content.startswith('Do the winds blow?'):
         await message.channel.send('It is an ill wind.')
+    if message.content.startswith('i like rubbing my belly'):
+        await message.channel.send('https://cdn.discordapp.com/attachments/196338144201801728/1403414422835167292/goo_tumby.gif')
     await bot.process_commands(message)
 
 @bot.tree.command(name='helpme')

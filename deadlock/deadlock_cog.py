@@ -18,6 +18,7 @@ DEADLOCK_API_URL = "https://api.deadlock-api.com/v1"
 print("Loading up default Deadlock requests...")
 HEROES = requests.get("https://assets.deadlock-api.com/v2/heroes?language=english&only_active=true").json()
 ITEMS = requests.get("https://assets.deadlock-api.com/v2/items/by-type/upgrade").json()
+print("Loaded.")
 
 def hero_name(id: int) -> str:
     for hero in HEROES:
@@ -43,6 +44,25 @@ match_default_embed = dc.Embed(
     color=dc.Color.yellow(),
     description='**Last Match**'
 )
+
+def get_player_networth_9min(data, playerdata) -> int:
+    for stat in playerdata["stats"]:
+        if stat["time_stamp_s"] == 900:
+            return stat["net_worth"]
+
+
+def get_lane_diff(data, team, lane) -> float:
+    soulcount_0 = 0
+    soulcount_1 = 0
+    print("getting lane diff")
+    for player in data["match_info"]["players"]:
+        if player["assigned_lane"] == lane:
+            if player["team"] == team:
+                soulcount_0 += get_player_networth_9min(data, player)
+            else:
+                soulcount_1 += get_player_networth_9min(data, player)
+    
+    return round(float(soulcount_0 - soulcount_1) / 1000.0, 1)
 
 class DeadlockCog(commands.Cog):
     def __init__(self, bot):
@@ -132,7 +152,10 @@ class DeadlockCog(commands.Cog):
             if is_upgrade(item["item_id"]):
                 itemstr = itemstr + f'{get_item(item["item_id"])["name"]}\n'
         match_embed.add_field(name="Inventory", value=itemstr, inline=False)
-        match_embed.add_field(name="", value=f"-# match id {lm_id}")
         print("Inventory embed completed")
+        lanediff: float = get_lane_diff(lm_detailed, player_details["team"], player_details["assigned_lane"])
+        match_embed.add_field(name="Laning", value=f"Laning was **{'won - this is not your fault.' if lanediff > 0 else 'lost - this is your fault.'}**\nSoul diff at 8 min: {lanediff}k@", inline=False)
+        print("Laning embed completed")
+        match_embed.add_field(name="", value=f"-# match id {lm_id}")
         await msg.delete()
         await ctx.send(embed=match_embed)
