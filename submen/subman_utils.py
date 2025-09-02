@@ -8,8 +8,7 @@ DBUFF_STR = 'https://www.dotabuff.com/players/'
 STEAM_API_KEY = ''
 with open('api.txt', 'r') as api:
     STEAM_API_KEY = api.readline()
-print(STEAM_API_KEY)
-STEAM_API_URL = 'http://api.steampowered.com/'
+STEAM_API_URL = 'http://api.steampowered.com'
 
 def num_matches_str(player_id:int, num_matches:int) -> str:
     return f'{STEAM_API_URL}/IDOTA2Match_570/GetMatchHistory/V001/?key={STEAM_API_KEY}&account_id={player_id}&matches_requested={num_matches}'
@@ -134,10 +133,9 @@ def get_recent_wl_ratio(player_id:int) -> float|None:
     for i in range(10):
         specific_req_id = int(request1.json()['result']['matches'][i]['match_id'])
         specific_req = requests.get(specific_match_str(specific_req_id))
-
         if specific_req.status_code != 200:
-            print(f'get_recent_wl: Failed to get match {specific_req_id}, exiting')
-            return None
+            print(f'get_recent_wl: Failed to get match {specific_req_id} (status code {specific_req.status_code}), ignoring...')
+            continue
         
         radiant_win = bool(specific_req.json()['result']['radiant_win'])
 

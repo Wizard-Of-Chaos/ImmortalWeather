@@ -1,0 +1,2602 @@
+[
+    {
+        "match_id": 7645689211,
+        "match_seq_num": 6435344667,
+        "radiant_win": true,
+        "start_time": 1710894905,
+        "duration": 1763,
+        "lobby_type": 7,
+        "game_mode": 22,
+        "avg_rank_tier": 81,
+        "num_rank_tier": 7,
+        "cluster": 191,
+        "radiant_team": [
+            113,
+            99,
+            79,
+            41,
+            14
+        ],
+        "dire_team": [
+            52,
+            28,
+            88,
+            85,
+            18
+        ]
+    },
+    {
+        "match_id": 7645686700,
+        "match_seq_num": 6435331385,
+        "radiant_win": true,
+        "start_time": 1710894610,
+        "duration": 466,
+        "lobby_type": 7,
+        "game_mode": 22,
+        "avg_rank_tier": 81,
+        "num_rank_tier": 5,
+        "cluster": 274,
+        "radiant_team": [
+            21,
+            53,
+            123,
+            15,
+            19
+        ],
+        "dire_team": [
+            42,
+            59,
+            2,
+            14,
+            65
+        ]
+    },
+    {
+        "match_id": 7645686111,
+        "match_seq_num": 6435338158,
+        "radiant_win": true,
+        "start_time": 1710894550,
+        "duration": 1344,
+        "lobby_type": 7,
+        "game_mode": 22,
+        "avg_rank_tier": 81,
+        "num_rank_tier": 3,
+        "cluster": 185,
+        "radiant_team": [
+            82,
+            19,
+            2,
+            93,
+            84
+        ],
+        "dire_team": [
+            1,
+            21,
+            71,
+            55,
+            113
+        ]
+    },
+    {
+        "match_id": 7645685407,
+        "match_seq_num": 6435343487,
+        "radiant_win": false,
+        "start_time": 1710894465,
+        "duration": 2114,
+        "lobby_type": 7,
+        "game_mode": 22,
+        "avg_rank_tier": 81,
+        "num_rank_tier": 6,
+        "cluster": 251,
+        "radiant_team": [
+            5,
+            1,
+            51,
+            104,
+            13
+        ],
+        "dire_team": [
+            86,
+            68,
+            96,
+            97,
+            8
+        ]
+    },
+    {
+        "match_id": 7645684907,
+        "match_seq_num": 6435342998,
+        "radiant_win": false,
+        "start_time": 1710894416,
+        "duration": 2136,
+        "lobby_type": 7,
+        "game_mode": 22,
+        "avg_rank_tier": 81,
+        "num_rank_tier": 3,
+        "cluster": 381,
+        "radiant_team": [
+            14,
+            129,
+            106,
+            20,
+            94
+        ],
+        "dire_team": [
+            13,
+            96,
+            88,
+            41,
+            27
+        ]
+    },
+    {
+        "match_id": 7645684003,
+        "match_seq_num": 6435341012,
+        "radiant_win": false,
+        "start_time": 1710894295,
+        "duration": 1996,
+        "lobby_type": 7,
+        "game_mode": 22,
+        "avg_rank_tier": 81,
+        "num_rank_tier": 6,
+        "cluster": 272,
+        "radiant_team": [
+            95,
+            46,
+            96,
+            87,
+            40
+        ],
+        "dire_team": [
+            126,
+            44,
+            97,
+            22,
+            112
+        ]
+    },
+    {
+        "match_id": 7645682918,
+        "match_seq_num": 6435336637,
+        "radiant_win": true,
+        "start_time": 1710894200,
+        "duration": 1596,
+        "lobby_type": 7,
+        "game_mode": 22,
+        "avg_rank_tier": 81,
+        "num_rank_tier": 6,
+        "cluster": 381,
+        "radiant_team": [
+            21,
+            104,
+            18,
+            86,
+            27
+        ],
+        "dire_team": [
+            108,
+            88,
+            6,
+            26,
+            128
+        ]
+    },
+    {
+        "match_id": 7645682012,
+        "match_seq_num": 6435343765,
+        "radiant_win": true,
+        "start_time": 1710894095,
+        "duration": 2487,
+        "lobby_type": 7,
+        "game_mode": 22,
+        "avg_rank_tier": 81,
+        "num_rank_tier": 5,
+        "cluster": 122,
+        "radiant_team": [
+            60,
+            62,
+            71,
+            74,
+            70
+        ],
+        "dire_team": [
+            112,
+            97,
+            105,
+            54,
+            21
+        ]
+    },
+    {
+        "match_id": 7645682000,
+        "match_seq_num": 6435340204,
+        "radiant_win": false,
+        "start_time": 1710894095,
+        "duration": 2119,
+        "lobby_type": 7,
+        "game_mode": 22,
+        "avg_rank_tier": 81,
+        "num_rank_tier": 4,
+        "cluster": 184,
+        "radiant_team": [
+            104,
+            92,
+            20,
+            50,
+            15
+        ],
+        "dire_team": [
+            2,
+            52,
+            7,
+            41,
+            26
+        ]
+    },
+    {
+        "match_id": 7645681618,
+        "match_seq_num": 6435338240,
+        "radiant_win": false,
+        "start_time": 1710894055,
+        "duration": 1795,
+        "lobby_type": 7,
+        "game_mode": 22,
+        "avg_rank_tier": 81,
+        "num_rank_tier": 4,
+        "cluster": 381,
+        "radiant_team": [
+            99,
+            40,
+            70,
+            14,
+            88
+        ],
+        "dire_team": [
+            83,
+            15,
+            100,
+            98,
+            23
+        ]
+    },
+    {
+        "match_id": 7645681607,
+        "match_seq_num": 6435338234,
+        "radiant_win": true,
+        "start_time": 1710894050,
+        "duration": 1835,
+        "lobby_type": 7,
+        "game_mode": 22,
+        "avg_rank_tier": 81,
+        "num_rank_tier": 8,
+        "cluster": 183,
+        "radiant_team": [
+            110,
+            47,
+            95,
+            120,
+            70
+        ],
+        "dire_team": [
+            52,
+            12,
+            88,
+            2,
+            85
+        ]
+    },
+    {
+        "match_id": 7645681107,
+        "match_seq_num": 6435338787,
+        "radiant_win": true,
+        "start_time": 1710893990,
+        "duration": 2021,
+        "lobby_type": 7,
+        "game_mode": 22,
+        "avg_rank_tier": 81,
+        "num_rank_tier": 5,
+        "cluster": 273,
+        "radiant_team": [
+            21,
+            76,
+            30,
+            53,
+            94
+        ],
+        "dire_team": [
+            101,
+            35,
+            64,
+            28,
+            13
+        ]
+    },
+    {
+        "match_id": 7645680607,
+        "match_seq_num": 6435344074,
+        "radiant_win": false,
+        "start_time": 1710893945,
+        "duration": 2756,
+        "lobby_type": 7,
+        "game_mode": 22,
+        "avg_rank_tier": 81,
+        "num_rank_tier": 7,
+        "cluster": 122,
+        "radiant_team": [
+            93,
+            5,
+            99,
+            123,
+            45
+        ],
+        "dire_team": [
+            109,
+            39,
+            54,
+            37,
+            23
+        ]
+    },
+    {
+        "match_id": 7645680516,
+        "match_seq_num": 6435330944,
+        "radiant_win": false,
+        "start_time": 1710893936,
+        "duration": 1005,
+        "lobby_type": 7,
+        "game_mode": 22,
+        "avg_rank_tier": 81,
+        "num_rank_tier": 5,
+        "cluster": 274,
+        "radiant_team": [
+            10,
+            96,
+            79,
+            48,
+            45
+        ],
+        "dire_team": [
+            27,
+            44,
+            59,
+            7,
+            34
+        ]
+    },
+    {
+        "match_id": 7645680112,
+        "match_seq_num": 6435337081,
+        "radiant_win": true,
+        "start_time": 1710893885,
+        "duration": 1950,
+        "lobby_type": 7,
+        "game_mode": 22,
+        "avg_rank_tier": 81,
+        "num_rank_tier": 4,
+        "cluster": 121,
+        "radiant_team": [
+            30,
+            56,
+            40,
+            2,
+            95
+        ],
+        "dire_team": [
+            7,
+            49,
+            110,
+            6,
+            14
+        ]
+    },
+    {
+        "match_id": 7645677806,
+        "match_seq_num": 6435343614,
+        "radiant_win": true,
+        "start_time": 1710893610,
+        "duration": 2981,
+        "lobby_type": 7,
+        "game_mode": 22,
+        "avg_rank_tier": 81,
+        "num_rank_tier": 4,
+        "cluster": 274,
+        "radiant_team": [
+            67,
+            102,
+            60,
+            53,
+            14
+        ],
+        "dire_team": [
+            44,
+            120,
+            88,
+            123,
+            19
+        ]
+    },
+    {
+        "match_id": 7645677705,
+        "match_seq_num": 6435340224,
+        "radiant_win": true,
+        "start_time": 1710893635,
+        "duration": 2613,
+        "lobby_type": 7,
+        "game_mode": 22,
+        "avg_rank_tier": 81,
+        "num_rank_tier": 8,
+        "cluster": 227,
+        "radiant_team": [
+            71,
+            119,
+            129,
+            94,
+            14
+        ],
+        "dire_team": [
+            53,
+            29,
+            36,
+            21,
+            112
+        ]
+    },
+    {
+        "match_id": 7645677613,
+        "match_seq_num": 6435335167,
+        "radiant_win": false,
+        "start_time": 1710893620,
+        "duration": 1948,
+        "lobby_type": 7,
+        "game_mode": 22,
+        "avg_rank_tier": 81,
+        "num_rank_tier": 4,
+        "cluster": 121,
+        "radiant_team": [
+            94,
+            26,
+            30,
+            36,
+            112
+        ],
+        "dire_team": [
+            87,
+            53,
+            73,
+            44,
+            17
+        ]
+    },
+    {
+        "match_id": 7645677400,
+        "match_seq_num": 6435336615,
+        "radiant_win": false,
+        "start_time": 1710893600,
+        "duration": 2056,
+        "lobby_type": 7,
+        "game_mode": 22,
+        "avg_rank_tier": 81,
+        "num_rank_tier": 7,
+        "cluster": 121,
+        "radiant_team": [
+            74,
+            98,
+            33,
+            86,
+            41
+        ],
+        "dire_team": [
+            99,
+            14,
+            72,
+            17,
+            1
+        ]
+    },
+    {
+        "match_id": 7645677117,
+        "match_seq_num": 6435336482,
+        "radiant_win": true,
+        "start_time": 1710893565,
+        "duration": 2177,
+        "lobby_type": 7,
+        "game_mode": 22,
+        "avg_rank_tier": 81,
+        "num_rank_tier": 8,
+        "cluster": 272,
+        "radiant_team": [
+            109,
+            113,
+            23,
+            70,
+            30
+        ],
+        "dire_team": [
+            80,
+            123,
+            121,
+            2,
+            41
+        ]
+    },
+    {
+        "match_id": 7645677105,
+        "match_seq_num": 6435335335,
+        "radiant_win": false,
+        "start_time": 1710893550,
+        "duration": 2039,
+        "lobby_type": 7,
+        "game_mode": 22,
+        "avg_rank_tier": 81,
+        "num_rank_tier": 4,
+        "cluster": 273,
+        "radiant_team": [
+            104,
+            53,
+            19,
+            94,
+            101
+        ],
+        "dire_team": [
+            112,
+            3,
+            123,
+            16,
+            114
+        ]
+    },
+    {
+        "match_id": 7645675606,
+        "match_seq_num": 6435334934,
+        "radiant_win": false,
+        "start_time": 1710893405,
+        "duration": 2016,
+        "lobby_type": 7,
+        "game_mode": 22,
+        "avg_rank_tier": 81,
+        "num_rank_tier": 7,
+        "cluster": 153,
+        "radiant_team": [
+            120,
+            79,
+            1,
+            47,
+            7
+        ],
+        "dire_team": [
+            129,
+            78,
+            56,
+            30,
+            73
+        ]
+    },
+    {
+        "match_id": 7645675308,
+        "match_seq_num": 6435328008,
+        "radiant_win": true,
+        "start_time": 1710893359,
+        "duration": 1260,
+        "lobby_type": 7,
+        "game_mode": 22,
+        "avg_rank_tier": 81,
+        "num_rank_tier": 4,
+        "cluster": 181,
+        "radiant_team": [
+            40,
+            52,
+            23,
+            48,
+            110
+        ],
+        "dire_team": [
+            106,
+            20,
+            71,
+            121,
+            21
+        ]
+    },
+    {
+        "match_id": 7645674314,
+        "match_seq_num": 6435336783,
+        "radiant_win": true,
+        "start_time": 1710893265,
+        "duration": 2520,
+        "lobby_type": 7,
+        "game_mode": 22,
+        "avg_rank_tier": 81,
+        "num_rank_tier": 7,
+        "cluster": 122,
+        "radiant_team": [
+            30,
+            35,
+            85,
+            14,
+            46
+        ],
+        "dire_team": [
+            88,
+            31,
+            54,
+            19,
+            90
+        ]
+    },
+    {
+        "match_id": 7645673504,
+        "match_seq_num": 6435332991,
+        "radiant_win": false,
+        "start_time": 1710893175,
+        "duration": 2049,
+        "lobby_type": 7,
+        "game_mode": 22,
+        "avg_rank_tier": 81,
+        "num_rank_tier": 5,
+        "cluster": 274,
+        "radiant_team": [
+            87,
+            106,
+            65,
+            2,
+            54
+        ],
+        "dire_team": [
+            52,
+            14,
+            53,
+            43,
+            21
+        ]
+    },
+    {
+        "match_id": 7645672915,
+        "match_seq_num": 6435338144,
+        "radiant_win": false,
+        "start_time": 1710893119,
+        "duration": 2835,
+        "lobby_type": 7,
+        "game_mode": 22,
+        "avg_rank_tier": 81,
+        "num_rank_tier": 4,
+        "cluster": 273,
+        "radiant_team": [
+            74,
+            73,
+            123,
+            20,
+            129
+        ],
+        "dire_team": [
+            19,
+            25,
+            103,
+            2,
+            21
+        ]
+    },
+    {
+        "match_id": 7645672906,
+        "match_seq_num": 6435333263,
+        "radiant_win": true,
+        "start_time": 1710893115,
+        "duration": 2225,
+        "lobby_type": 7,
+        "game_mode": 22,
+        "avg_rank_tier": 81,
+        "num_rank_tier": 2,
+        "cluster": 122,
+        "radiant_team": [
+            22,
+            31,
+            4,
+            21,
+            8
+        ],
+        "dire_team": [
+            20,
+            28,
+            45,
+            44,
+            110
+        ]
+    },
+    {
+        "match_id": 7645672610,
+        "match_seq_num": 6435329237,
+        "radiant_win": false,
+        "start_time": 1710893089,
+        "duration": 1752,
+        "lobby_type": 7,
+        "game_mode": 22,
+        "avg_rank_tier": 81,
+        "num_rank_tier": 2,
+        "cluster": 251,
+        "radiant_team": [
+            14,
+            64,
+            106,
+            12,
+            59
+        ],
+        "dire_team": [
+            78,
+            25,
+            48,
+            138,
+            34
+        ]
+    },
+    {
+        "match_id": 7645671919,
+        "match_seq_num": 6435331870,
+        "radiant_win": true,
+        "start_time": 1710893000,
+        "duration": 2035,
+        "lobby_type": 7,
+        "game_mode": 22,
+        "avg_rank_tier": 81,
+        "num_rank_tier": 4,
+        "cluster": 122,
+        "radiant_team": [
+            44,
+            49,
+            7,
+            5,
+            62
+        ],
+        "dire_team": [
+            46,
+            79,
+            53,
+            97,
+            129
+        ]
+    },
+    {
+        "match_id": 7645671802,
+        "match_seq_num": 6435339578,
+        "radiant_win": false,
+        "start_time": 1710892995,
+        "duration": 3063,
+        "lobby_type": 7,
+        "game_mode": 22,
+        "avg_rank_tier": 81,
+        "num_rank_tier": 6,
+        "cluster": 183,
+        "radiant_team": [
+            35,
+            53,
+            89,
+            68,
+            114
+        ],
+        "dire_team": [
+            109,
+            74,
+            27,
+            67,
+            47
+        ]
+    },
+    {
+        "match_id": 7645671518,
+        "match_seq_num": 6435335926,
+        "radiant_win": true,
+        "start_time": 1710892964,
+        "duration": 2728,
+        "lobby_type": 7,
+        "game_mode": 22,
+        "avg_rank_tier": 81,
+        "num_rank_tier": 7,
+        "cluster": 121,
+        "radiant_team": [
+            123,
+            49,
+            128,
+            76,
+            70
+        ],
+        "dire_team": [
+            54,
+            14,
+            120,
+            26,
+            29
+        ]
+    },
+    {
+        "match_id": 7645671512,
+        "match_seq_num": 6435331557,
+        "radiant_win": true,
+        "start_time": 1710892964,
+        "duration": 2167,
+        "lobby_type": 7,
+        "game_mode": 22,
+        "avg_rank_tier": 81,
+        "num_rank_tier": 3,
+        "cluster": 121,
+        "radiant_team": [
+            106,
+            14,
+            45,
+            20,
+            10
+        ],
+        "dire_team": [
+            19,
+            63,
+            53,
+            59,
+            64
+        ]
+    },
+    {
+        "match_id": 7645671414,
+        "match_seq_num": 6435327447,
+        "radiant_win": false,
+        "start_time": 1710892945,
+        "duration": 1630,
+        "lobby_type": 7,
+        "game_mode": 22,
+        "avg_rank_tier": 81,
+        "num_rank_tier": 6,
+        "cluster": 381,
+        "radiant_team": [
+            72,
+            123,
+            71,
+            40,
+            20
+        ],
+        "dire_team": [
+            5,
+            46,
+            35,
+            7,
+            74
+        ]
+    },
+    {
+        "match_id": 7645670611,
+        "match_seq_num": 6435332468,
+        "radiant_win": true,
+        "start_time": 1710892865,
+        "duration": 2379,
+        "lobby_type": 7,
+        "game_mode": 22,
+        "avg_rank_tier": 81,
+        "num_rank_tier": 4,
+        "cluster": 122,
+        "radiant_team": [
+            123,
+            10,
+            129,
+            23,
+            30
+        ],
+        "dire_team": [
+            36,
+            18,
+            71,
+            88,
+            104
+        ]
+    },
+    {
+        "match_id": 7645670203,
+        "match_seq_num": 6435325269,
+        "radiant_win": true,
+        "start_time": 1710892820,
+        "duration": 1576,
+        "lobby_type": 7,
+        "game_mode": 22,
+        "avg_rank_tier": 81,
+        "num_rank_tier": 7,
+        "cluster": 152,
+        "radiant_team": [
+            64,
+            97,
+            17,
+            40,
+            41
+        ],
+        "dire_team": [
+            109,
+            93,
+            86,
+            7,
+            102
+        ]
+    },
+    {
+        "match_id": 7645668903,
+        "match_seq_num": 6435326866,
+        "radiant_win": true,
+        "start_time": 1710892640,
+        "duration": 1866,
+        "lobby_type": 7,
+        "game_mode": 22,
+        "avg_rank_tier": 81,
+        "num_rank_tier": 4,
+        "cluster": 121,
+        "radiant_team": [
+            25,
+            49,
+            67,
+            86,
+            110
+        ],
+        "dire_team": [
+            54,
+            47,
+            79,
+            107,
+            119
+        ]
+    },
+    {
+        "match_id": 7645667600,
+        "match_seq_num": 6435322014,
+        "radiant_win": true,
+        "start_time": 1710892535,
+        "duration": 1424,
+        "lobby_type": 7,
+        "game_mode": 22,
+        "avg_rank_tier": 81,
+        "num_rank_tier": 3,
+        "cluster": 381,
+        "radiant_team": [
+            87,
+            8,
+            97,
+            123,
+            90
+        ],
+        "dire_team": [
+            114,
+            88,
+            21,
+            136,
+            113
+        ]
+    },
+    {
+        "match_id": 7645667304,
+        "match_seq_num": 6435324979,
+        "radiant_win": true,
+        "start_time": 1710892495,
+        "duration": 1847,
+        "lobby_type": 7,
+        "game_mode": 22,
+        "avg_rank_tier": 81,
+        "num_rank_tier": 5,
+        "cluster": 381,
+        "radiant_team": [
+            90,
+            7,
+            41,
+            20,
+            97
+        ],
+        "dire_team": [
+            110,
+            135,
+            26,
+            28,
+            54
+        ]
+    },
+    {
+        "match_id": 7645667213,
+        "match_seq_num": 6435329666,
+        "radiant_win": true,
+        "start_time": 1710892490,
+        "duration": 2357,
+        "lobby_type": 7,
+        "game_mode": 22,
+        "avg_rank_tier": 81,
+        "num_rank_tier": 4,
+        "cluster": 273,
+        "radiant_team": [
+            98,
+            45,
+            19,
+            41,
+            22
+        ],
+        "dire_team": [
+            128,
+            109,
+            114,
+            23,
+            40
+        ]
+    },
+    {
+        "match_id": 7645666819,
+        "match_seq_num": 6435326518,
+        "radiant_win": false,
+        "start_time": 1710892450,
+        "duration": 2104,
+        "lobby_type": 7,
+        "game_mode": 22,
+        "avg_rank_tier": 81,
+        "num_rank_tier": 7,
+        "cluster": 154,
+        "radiant_team": [
+            123,
+            14,
+            74,
+            1,
+            111
+        ],
+        "dire_team": [
+            8,
+            40,
+            35,
+            2,
+            5
+        ]
+    },
+    {
+        "match_id": 7645666513,
+        "match_seq_num": 6435327805,
+        "radiant_win": false,
+        "start_time": 1710892409,
+        "duration": 2255,
+        "lobby_type": 7,
+        "game_mode": 22,
+        "avg_rank_tier": 81,
+        "num_rank_tier": 5,
+        "cluster": 191,
+        "radiant_team": [
+            93,
+            39,
+            3,
+            14,
+            100
+        ],
+        "dire_team": [
+            82,
+            94,
+            79,
+            19,
+            135
+        ]
+    },
+    {
+        "match_id": 7645666117,
+        "match_seq_num": 6435319538,
+        "radiant_win": true,
+        "start_time": 1710892365,
+        "duration": 1231,
+        "lobby_type": 7,
+        "game_mode": 22,
+        "avg_rank_tier": 81,
+        "num_rank_tier": 6,
+        "cluster": 381,
+        "radiant_team": [
+            85,
+            45,
+            71,
+            49,
+            8
+        ],
+        "dire_team": [
+            21,
+            66,
+            97,
+            1,
+            17
+        ]
+    },
+    {
+        "match_id": 7645666116,
+        "match_seq_num": 6435339245,
+        "radiant_win": false,
+        "start_time": 1710892360,
+        "duration": 3686,
+        "lobby_type": 7,
+        "game_mode": 22,
+        "avg_rank_tier": 81,
+        "num_rank_tier": 6,
+        "cluster": 121,
+        "radiant_team": [
+            13,
+            93,
+            37,
+            22,
+            104
+        ],
+        "dire_team": [
+            83,
+            6,
+            39,
+            112,
+            96
+        ]
+    },
+    {
+        "match_id": 7645665103,
+        "match_seq_num": 6435319673,
+        "radiant_win": true,
+        "start_time": 1710892260,
+        "duration": 1392,
+        "lobby_type": 7,
+        "game_mode": 22,
+        "avg_rank_tier": 81,
+        "num_rank_tier": 6,
+        "cluster": 154,
+        "radiant_team": [
+            48,
+            120,
+            26,
+            109,
+            43
+        ],
+        "dire_team": [
+            9,
+            21,
+            71,
+            67,
+            85
+        ]
+    },
+    {
+        "match_id": 7645664006,
+        "match_seq_num": 6435332746,
+        "radiant_win": true,
+        "start_time": 1710892140,
+        "duration": 3145,
+        "lobby_type": 7,
+        "game_mode": 22,
+        "avg_rank_tier": 81,
+        "num_rank_tier": 7,
+        "cluster": 153,
+        "radiant_team": [
+            30,
+            67,
+            53,
+            112,
+            2
+        ],
+        "dire_team": [
+            88,
+            109,
+            54,
+            114,
+            104
+        ]
+    },
+    {
+        "match_id": 7645663608,
+        "match_seq_num": 6435337180,
+        "radiant_win": false,
+        "start_time": 1710892330,
+        "duration": 2776,
+        "lobby_type": 1,
+        "game_mode": 2,
+        "avg_rank_tier": 81,
+        "num_rank_tier": 10,
+        "cluster": 381,
+        "radiant_team": [
+            135,
+            49,
+            26,
+            5,
+            18
+        ],
+        "dire_team": [
+            44,
+            25,
+            96,
+            86,
+            109
+        ]
+    },
+    {
+        "match_id": 7645663017,
+        "match_seq_num": 6435319549,
+        "radiant_win": false,
+        "start_time": 1710892030,
+        "duration": 1671,
+        "lobby_type": 7,
+        "game_mode": 22,
+        "avg_rank_tier": 81,
+        "num_rank_tier": 7,
+        "cluster": 185,
+        "radiant_team": [
+            95,
+            2,
+            40,
+            17,
+            109
+        ],
+        "dire_team": [
+            25,
+            76,
+            53,
+            114,
+            27
+        ]
+    },
+    {
+        "match_id": 7645662811,
+        "match_seq_num": 6435323620,
+        "radiant_win": true,
+        "start_time": 1710892015,
+        "duration": 2099,
+        "lobby_type": 7,
+        "game_mode": 22,
+        "avg_rank_tier": 81,
+        "num_rank_tier": 5,
+        "cluster": 154,
+        "radiant_team": [
+            57,
+            44,
+            109,
+            106,
+            105
+        ],
+        "dire_team": [
+            49,
+            98,
+            51,
+            72,
+            110
+        ]
+    },
+    {
+        "match_id": 7645661910,
+        "match_seq_num": 6435317071,
+        "radiant_win": true,
+        "start_time": 1710891914,
+        "duration": 1389,
+        "lobby_type": 7,
+        "game_mode": 22,
+        "avg_rank_tier": 81,
+        "num_rank_tier": 5,
+        "cluster": 274,
+        "radiant_team": [
+            29,
+            123,
+            112,
+            104,
+            85
+        ],
+        "dire_team": [
+            14,
+            74,
+            59,
+            18,
+            128
+        ]
+    },
+    {
+        "match_id": 7645661117,
+        "match_seq_num": 6435326521,
+        "radiant_win": true,
+        "start_time": 1710891830,
+        "duration": 2634,
+        "lobby_type": 7,
+        "game_mode": 22,
+        "avg_rank_tier": 81,
+        "num_rank_tier": 5,
+        "cluster": 273,
+        "radiant_team": [
+            100,
+            74,
+            54,
+            7,
+            22
+        ],
+        "dire_team": [
+            106,
+            23,
+            27,
+            123,
+            44
+        ]
+    },
+    {
+        "match_id": 7645661113,
+        "match_seq_num": 6435318458,
+        "radiant_win": false,
+        "start_time": 1710891824,
+        "duration": 1614,
+        "lobby_type": 7,
+        "game_mode": 22,
+        "avg_rank_tier": 81,
+        "num_rank_tier": 5,
+        "cluster": 184,
+        "radiant_team": [
+            61,
+            123,
+            49,
+            88,
+            95
+        ],
+        "dire_team": [
+            56,
+            54,
+            19,
+            137,
+            20
+        ]
+    },
+    {
+        "match_id": 7645660801,
+        "match_seq_num": 6435313510,
+        "radiant_win": true,
+        "start_time": 1710891794,
+        "duration": 1087,
+        "lobby_type": 7,
+        "game_mode": 22,
+        "avg_rank_tier": 81,
+        "num_rank_tier": 5,
+        "cluster": 183,
+        "radiant_team": [
+            61,
+            14,
+            93,
+            114,
+            98
+        ],
+        "dire_team": [
+            19,
+            18,
+            40,
+            52,
+            2
+        ]
+    },
+    {
+        "match_id": 7645660512,
+        "match_seq_num": 6435316108,
+        "radiant_win": true,
+        "start_time": 1710891765,
+        "duration": 1544,
+        "lobby_type": 7,
+        "game_mode": 22,
+        "avg_rank_tier": 81,
+        "num_rank_tier": 3,
+        "cluster": 273,
+        "radiant_team": [
+            9,
+            61,
+            123,
+            88,
+            18
+        ],
+        "dire_team": [
+            62,
+            120,
+            26,
+            48,
+            72
+        ]
+    },
+    {
+        "match_id": 7645660406,
+        "match_seq_num": 6435332629,
+        "radiant_win": true,
+        "start_time": 1710891755,
+        "duration": 3352,
+        "lobby_type": 7,
+        "game_mode": 22,
+        "avg_rank_tier": 81,
+        "num_rank_tier": 8,
+        "cluster": 274,
+        "radiant_team": [
+            29,
+            53,
+            10,
+            40,
+            13
+        ],
+        "dire_team": [
+            123,
+            120,
+            71,
+            21,
+            63
+        ]
+    },
+    {
+        "match_id": 7645659810,
+        "match_seq_num": 6435327042,
+        "radiant_win": true,
+        "start_time": 1710891690,
+        "duration": 2764,
+        "lobby_type": 7,
+        "game_mode": 22,
+        "avg_rank_tier": 81,
+        "num_rank_tier": 6,
+        "cluster": 122,
+        "radiant_team": [
+            138,
+            105,
+            72,
+            114,
+            14
+        ],
+        "dire_team": [
+            137,
+            20,
+            48,
+            65,
+            25
+        ]
+    },
+    {
+        "match_id": 7645659506,
+        "match_seq_num": 6435314386,
+        "radiant_win": true,
+        "start_time": 1710891660,
+        "duration": 1342,
+        "lobby_type": 7,
+        "game_mode": 22,
+        "avg_rank_tier": 81,
+        "num_rank_tier": 6,
+        "cluster": 274,
+        "radiant_team": [
+            41,
+            75,
+            123,
+            22,
+            98
+        ],
+        "dire_team": [
+            84,
+            10,
+            45,
+            13,
+            136
+        ]
+    },
+    {
+        "match_id": 7645658511,
+        "match_seq_num": 6435317691,
+        "radiant_win": false,
+        "start_time": 1710891550,
+        "duration": 1884,
+        "lobby_type": 7,
+        "game_mode": 22,
+        "avg_rank_tier": 81,
+        "num_rank_tier": 6,
+        "cluster": 274,
+        "radiant_team": [
+            26,
+            44,
+            53,
+            15,
+            28
+        ],
+        "dire_team": [
+            19,
+            21,
+            18,
+            7,
+            86
+        ]
+    },
+    {
+        "match_id": 7645658210,
+        "match_seq_num": 6435320035,
+        "radiant_win": true,
+        "start_time": 1710891505,
+        "duration": 2206,
+        "lobby_type": 7,
+        "game_mode": 22,
+        "avg_rank_tier": 81,
+        "num_rank_tier": 4,
+        "cluster": 251,
+        "radiant_team": [
+            30,
+            17,
+            44,
+            123,
+            76
+        ],
+        "dire_team": [
+            129,
+            100,
+            106,
+            136,
+            104
+        ]
+    },
+    {
+        "match_id": 7645657917,
+        "match_seq_num": 6435318538,
+        "radiant_win": true,
+        "start_time": 1710891490,
+        "duration": 2090,
+        "lobby_type": 7,
+        "game_mode": 22,
+        "avg_rank_tier": 81,
+        "num_rank_tier": 7,
+        "cluster": 153,
+        "radiant_team": [
+            101,
+            33,
+            137,
+            70,
+            15
+        ],
+        "dire_team": [
+            19,
+            108,
+            72,
+            22,
+            86
+        ]
+    },
+    {
+        "match_id": 7645657606,
+        "match_seq_num": 6435325891,
+        "radiant_win": true,
+        "start_time": 1710891450,
+        "duration": 2995,
+        "lobby_type": 7,
+        "game_mode": 22,
+        "avg_rank_tier": 81,
+        "num_rank_tier": 4,
+        "cluster": 181,
+        "radiant_team": [
+            129,
+            13,
+            27,
+            87,
+            6
+        ],
+        "dire_team": [
+            10,
+            53,
+            22,
+            85,
+            15
+        ]
+    },
+    {
+        "match_id": 7645657213,
+        "match_seq_num": 6435314758,
+        "radiant_win": true,
+        "start_time": 1710891416,
+        "duration": 1697,
+        "lobby_type": 7,
+        "game_mode": 22,
+        "avg_rank_tier": 81,
+        "num_rank_tier": 3,
+        "cluster": 184,
+        "radiant_team": [
+            54,
+            43,
+            16,
+            9,
+            27
+        ],
+        "dire_team": [
+            113,
+            128,
+            104,
+            93,
+            79
+        ]
+    },
+    {
+        "match_id": 7645657003,
+        "match_seq_num": 6435326852,
+        "radiant_win": false,
+        "start_time": 1710891381,
+        "duration": 3047,
+        "lobby_type": 7,
+        "game_mode": 22,
+        "avg_rank_tier": 81,
+        "num_rank_tier": 4,
+        "cluster": 251,
+        "radiant_team": [
+            19,
+            22,
+            53,
+            70,
+            119
+        ],
+        "dire_team": [
+            82,
+            86,
+            63,
+            128,
+            14
+        ]
+    },
+    {
+        "match_id": 7645656712,
+        "match_seq_num": 6435320627,
+        "radiant_win": true,
+        "start_time": 1710891354,
+        "duration": 2330,
+        "lobby_type": 7,
+        "game_mode": 22,
+        "avg_rank_tier": 81,
+        "num_rank_tier": 7,
+        "cluster": 251,
+        "radiant_team": [
+            63,
+            14,
+            112,
+            5,
+            9
+        ],
+        "dire_team": [
+            114,
+            44,
+            13,
+            36,
+            86
+        ]
+    },
+    {
+        "match_id": 7645656608,
+        "match_seq_num": 6435319115,
+        "radiant_win": true,
+        "start_time": 1710891350,
+        "duration": 2278,
+        "lobby_type": 7,
+        "game_mode": 22,
+        "avg_rank_tier": 81,
+        "num_rank_tier": 5,
+        "cluster": 183,
+        "radiant_team": [
+            2,
+            75,
+            8,
+            74,
+            59
+        ],
+        "dire_team": [
+            86,
+            25,
+            18,
+            101,
+            28
+        ]
+    },
+    {
+        "match_id": 7645655708,
+        "match_seq_num": 6435314018,
+        "radiant_win": false,
+        "start_time": 1710891260,
+        "duration": 1665,
+        "lobby_type": 7,
+        "game_mode": 22,
+        "avg_rank_tier": 81,
+        "num_rank_tier": 7,
+        "cluster": 152,
+        "radiant_team": [
+            28,
+            63,
+            76,
+            123,
+            111
+        ],
+        "dire_team": [
+            95,
+            53,
+            97,
+            137,
+            9
+        ]
+    },
+    {
+        "match_id": 7645655700,
+        "match_seq_num": 6435328692,
+        "radiant_win": true,
+        "start_time": 1710891245,
+        "duration": 3413,
+        "lobby_type": 7,
+        "game_mode": 22,
+        "avg_rank_tier": 81,
+        "num_rank_tier": 7,
+        "cluster": 191,
+        "radiant_team": [
+            49,
+            109,
+            120,
+            45,
+            129
+        ],
+        "dire_team": [
+            21,
+            79,
+            48,
+            19,
+            59
+        ]
+    },
+    {
+        "match_id": 7645655512,
+        "match_seq_num": 6435309730,
+        "radiant_win": false,
+        "start_time": 1710891235,
+        "duration": 1270,
+        "lobby_type": 7,
+        "game_mode": 22,
+        "avg_rank_tier": 81,
+        "num_rank_tier": 5,
+        "cluster": 271,
+        "radiant_team": [
+            23,
+            9,
+            110,
+            18,
+            120
+        ],
+        "dire_team": [
+            105,
+            19,
+            114,
+            15,
+            93
+        ]
+    },
+    {
+        "match_id": 7645655214,
+        "match_seq_num": 6435314577,
+        "radiant_win": true,
+        "start_time": 1710891204,
+        "duration": 1829,
+        "lobby_type": 7,
+        "game_mode": 22,
+        "avg_rank_tier": 81,
+        "num_rank_tier": 5,
+        "cluster": 121,
+        "radiant_team": [
+            28,
+            69,
+            53,
+            17,
+            54
+        ],
+        "dire_team": [
+            35,
+            26,
+            135,
+            99,
+            9
+        ]
+    },
+    {
+        "match_id": 7645655201,
+        "match_seq_num": 6435321525,
+        "radiant_win": false,
+        "start_time": 1710891200,
+        "duration": 2605,
+        "lobby_type": 7,
+        "game_mode": 22,
+        "avg_rank_tier": 81,
+        "num_rank_tier": 3,
+        "cluster": 121,
+        "radiant_team": [
+            37,
+            69,
+            86,
+            72,
+            39
+        ],
+        "dire_team": [
+            112,
+            70,
+            46,
+            64,
+            45
+        ]
+    },
+    {
+        "match_id": 7645654418,
+        "match_seq_num": 6435313317,
+        "radiant_win": true,
+        "start_time": 1710891120,
+        "duration": 1828,
+        "lobby_type": 7,
+        "game_mode": 22,
+        "avg_rank_tier": 81,
+        "num_rank_tier": 4,
+        "cluster": 122,
+        "radiant_team": [
+            30,
+            39,
+            89,
+            123,
+            29
+        ],
+        "dire_team": [
+            97,
+            98,
+            81,
+            70,
+            53
+        ]
+    },
+    {
+        "match_id": 7645654201,
+        "match_seq_num": 6435314874,
+        "radiant_win": false,
+        "start_time": 1710891105,
+        "duration": 1997,
+        "lobby_type": 7,
+        "game_mode": 22,
+        "avg_rank_tier": 81,
+        "num_rank_tier": 2,
+        "cluster": 274,
+        "radiant_team": [
+            29,
+            109,
+            68,
+            76,
+            19
+        ],
+        "dire_team": [
+            56,
+            137,
+            128,
+            11,
+            48
+        ]
+    },
+    {
+        "match_id": 7645653707,
+        "match_seq_num": 6435317518,
+        "radiant_win": false,
+        "start_time": 1710891060,
+        "duration": 2289,
+        "lobby_type": 7,
+        "game_mode": 22,
+        "avg_rank_tier": 81,
+        "num_rank_tier": 6,
+        "cluster": 183,
+        "radiant_team": [
+            61,
+            14,
+            44,
+            28,
+            15
+        ],
+        "dire_team": [
+            54,
+            111,
+            7,
+            88,
+            19
+        ]
+    },
+    {
+        "match_id": 7645653208,
+        "match_seq_num": 6435315992,
+        "radiant_win": false,
+        "start_time": 1710891000,
+        "duration": 2290,
+        "lobby_type": 7,
+        "game_mode": 22,
+        "avg_rank_tier": 81,
+        "num_rank_tier": 6,
+        "cluster": 273,
+        "radiant_team": [
+            22,
+            49,
+            47,
+            138,
+            3
+        ],
+        "dire_team": [
+            98,
+            75,
+            44,
+            20,
+            2
+        ]
+    },
+    {
+        "match_id": 7645652801,
+        "match_seq_num": 6435319794,
+        "radiant_win": true,
+        "start_time": 1710890959,
+        "duration": 2711,
+        "lobby_type": 7,
+        "game_mode": 22,
+        "avg_rank_tier": 81,
+        "num_rank_tier": 7,
+        "cluster": 272,
+        "radiant_team": [
+            113,
+            2,
+            70,
+            26,
+            102
+        ],
+        "dire_team": [
+            89,
+            97,
+            22,
+            86,
+            112
+        ]
+    },
+    {
+        "match_id": 7645651800,
+        "match_seq_num": 6435310581,
+        "radiant_win": true,
+        "start_time": 1710890854,
+        "duration": 1774,
+        "lobby_type": 7,
+        "game_mode": 22,
+        "avg_rank_tier": 81,
+        "num_rank_tier": 4,
+        "cluster": 271,
+        "radiant_team": [
+            128,
+            49,
+            10,
+            92,
+            75
+        ],
+        "dire_team": [
+            62,
+            14,
+            23,
+            20,
+            18
+        ]
+    },
+    {
+        "match_id": 7645651205,
+        "match_seq_num": 6435312570,
+        "radiant_win": true,
+        "start_time": 1710890795,
+        "duration": 2085,
+        "lobby_type": 7,
+        "game_mode": 22,
+        "avg_rank_tier": 81,
+        "num_rank_tier": 5,
+        "cluster": 272,
+        "radiant_team": [
+            113,
+            102,
+            41,
+            104,
+            123
+        ],
+        "dire_team": [
+            78,
+            65,
+            48,
+            14,
+            19
+        ]
+    },
+    {
+        "match_id": 7645649803,
+        "match_seq_num": 6435317044,
+        "radiant_win": true,
+        "start_time": 1710890655,
+        "duration": 2476,
+        "lobby_type": 7,
+        "game_mode": 22,
+        "avg_rank_tier": 81,
+        "num_rank_tier": 7,
+        "cluster": 272,
+        "radiant_team": [
+            91,
+            129,
+            19,
+            3,
+            93
+        ],
+        "dire_team": [
+            65,
+            79,
+            74,
+            48,
+            57
+        ]
+    },
+    {
+        "match_id": 7645649710,
+        "match_seq_num": 6435318341,
+        "radiant_win": false,
+        "start_time": 1710890645,
+        "duration": 2892,
+        "lobby_type": 7,
+        "game_mode": 22,
+        "avg_rank_tier": 81,
+        "num_rank_tier": 6,
+        "cluster": 271,
+        "radiant_team": [
+            70,
+            113,
+            14,
+            51,
+            108
+        ],
+        "dire_team": [
+            72,
+            39,
+            41,
+            2,
+            31
+        ]
+    },
+    {
+        "match_id": 7645648910,
+        "match_seq_num": 6435314400,
+        "radiant_win": false,
+        "start_time": 1710890560,
+        "duration": 2528,
+        "lobby_type": 7,
+        "game_mode": 22,
+        "avg_rank_tier": 81,
+        "num_rank_tier": 7,
+        "cluster": 271,
+        "radiant_team": [
+            86,
+            19,
+            105,
+            2,
+            48
+        ],
+        "dire_team": [
+            14,
+            10,
+            43,
+            123,
+            35
+        ]
+    },
+    {
+        "match_id": 7645647101,
+        "match_seq_num": 6435303772,
+        "radiant_win": false,
+        "start_time": 1710890380,
+        "duration": 1433,
+        "lobby_type": 7,
+        "game_mode": 22,
+        "avg_rank_tier": 81,
+        "num_rank_tier": 5,
+        "cluster": 122,
+        "radiant_team": [
+            10,
+            98,
+            45,
+            74,
+            23
+        ],
+        "dire_team": [
+            72,
+            91,
+            123,
+            137,
+            15
+        ]
+    },
+    {
+        "match_id": 7645647015,
+        "match_seq_num": 6435305602,
+        "radiant_win": true,
+        "start_time": 1710890375,
+        "duration": 1716,
+        "lobby_type": 7,
+        "game_mode": 22,
+        "avg_rank_tier": 81,
+        "num_rank_tier": 5,
+        "cluster": 185,
+        "radiant_team": [
+            37,
+            90,
+            54,
+            25,
+            19
+        ],
+        "dire_team": [
+            82,
+            30,
+            103,
+            43,
+            6
+        ]
+    },
+    {
+        "match_id": 7645647010,
+        "match_seq_num": 6435312344,
+        "radiant_win": false,
+        "start_time": 1710890365,
+        "duration": 2310,
+        "lobby_type": 7,
+        "game_mode": 22,
+        "avg_rank_tier": 81,
+        "num_rank_tier": 4,
+        "cluster": 121,
+        "radiant_team": [
+            105,
+            14,
+            52,
+            35,
+            128
+        ],
+        "dire_team": [
+            2,
+            64,
+            54,
+            123,
+            49
+        ]
+    },
+    {
+        "match_id": 7645646706,
+        "match_seq_num": 6435315132,
+        "radiant_win": true,
+        "start_time": 1710890345,
+        "duration": 2765,
+        "lobby_type": 7,
+        "game_mode": 22,
+        "avg_rank_tier": 81,
+        "num_rank_tier": 2,
+        "cluster": 182,
+        "radiant_team": [
+            21,
+            73,
+            111,
+            59,
+            74
+        ],
+        "dire_team": [
+            54,
+            26,
+            100,
+            19,
+            38
+        ]
+    },
+    {
+        "match_id": 7645646200,
+        "match_seq_num": 6435308214,
+        "radiant_win": false,
+        "start_time": 1710890285,
+        "duration": 2099,
+        "lobby_type": 7,
+        "game_mode": 22,
+        "avg_rank_tier": 81,
+        "num_rank_tier": 3,
+        "cluster": 192,
+        "radiant_team": [
+            31,
+            48,
+            49,
+            29,
+            72
+        ],
+        "dire_team": [
+            121,
+            98,
+            60,
+            123,
+            1
+        ]
+    },
+    {
+        "match_id": 7645646100,
+        "match_seq_num": 6435315592,
+        "radiant_win": false,
+        "start_time": 1710890285,
+        "duration": 2990,
+        "lobby_type": 7,
+        "game_mode": 22,
+        "avg_rank_tier": 81,
+        "num_rank_tier": 8,
+        "cluster": 185,
+        "radiant_team": [
+            68,
+            23,
+            45,
+            95,
+            14
+        ],
+        "dire_team": [
+            138,
+            97,
+            7,
+            51,
+            86
+        ]
+    },
+    {
+        "match_id": 7645644818,
+        "match_seq_num": 6435318232,
+        "radiant_win": true,
+        "start_time": 1710890150,
+        "duration": 3385,
+        "lobby_type": 7,
+        "game_mode": 22,
+        "avg_rank_tier": 81,
+        "num_rank_tier": 4,
+        "cluster": 184,
+        "radiant_team": [
+            97,
+            105,
+            39,
+            12,
+            20
+        ],
+        "dire_team": [
+            36,
+            19,
+            112,
+            123,
+            56
+        ]
+    },
+    {
+        "match_id": 7645644511,
+        "match_seq_num": 6435306911,
+        "radiant_win": false,
+        "start_time": 1710890120,
+        "duration": 2077,
+        "lobby_type": 7,
+        "game_mode": 22,
+        "avg_rank_tier": 81,
+        "num_rank_tier": 5,
+        "cluster": 273,
+        "radiant_team": [
+            110,
+            52,
+            129,
+            10,
+            21
+        ],
+        "dire_team": [
+            19,
+            54,
+            15,
+            31,
+            22
+        ]
+    },
+    {
+        "match_id": 7645644410,
+        "match_seq_num": 6435309570,
+        "radiant_win": false,
+        "start_time": 1710890115,
+        "duration": 2428,
+        "lobby_type": 7,
+        "game_mode": 22,
+        "avg_rank_tier": 81,
+        "num_rank_tier": 6,
+        "cluster": 185,
+        "radiant_team": [
+            56,
+            48,
+            2,
+            36,
+            91
+        ],
+        "dire_team": [
+            77,
+            61,
+            49,
+            64,
+            30
+        ]
+    },
+    {
+        "match_id": 7645644301,
+        "match_seq_num": 6435294363,
+        "radiant_win": false,
+        "start_time": 1710890100,
+        "duration": 640,
+        "lobby_type": 7,
+        "game_mode": 22,
+        "avg_rank_tier": 81,
+        "num_rank_tier": 3,
+        "cluster": 273,
+        "radiant_team": [
+            40,
+            28,
+            25,
+            43,
+            44
+        ],
+        "dire_team": [
+            15,
+            11,
+            19,
+            136,
+            72
+        ]
+    },
+    {
+        "match_id": 7645642910,
+        "match_seq_num": 6435315671,
+        "radiant_win": false,
+        "start_time": 1710889965,
+        "duration": 3280,
+        "lobby_type": 7,
+        "game_mode": 22,
+        "avg_rank_tier": 81,
+        "num_rank_tier": 2,
+        "cluster": 272,
+        "radiant_team": [
+            17,
+            123,
+            30,
+            70,
+            129
+        ],
+        "dire_team": [
+            91,
+            15,
+            98,
+            52,
+            59
+        ]
+    },
+    {
+        "match_id": 7645641308,
+        "match_seq_num": 6435302750,
+        "radiant_win": false,
+        "start_time": 1710889806,
+        "duration": 1952,
+        "lobby_type": 7,
+        "game_mode": 22,
+        "avg_rank_tier": 81,
+        "num_rank_tier": 5,
+        "cluster": 274,
+        "radiant_team": [
+            53,
+            59,
+            100,
+            80,
+            42
+        ],
+        "dire_team": [
+            69,
+            89,
+            65,
+            86,
+            98
+        ]
+    },
+    {
+        "match_id": 7645640717,
+        "match_seq_num": 6435307170,
+        "radiant_win": true,
+        "start_time": 1710889750,
+        "duration": 2507,
+        "lobby_type": 7,
+        "game_mode": 22,
+        "avg_rank_tier": 81,
+        "num_rank_tier": 7,
+        "cluster": 251,
+        "radiant_team": [
+            26,
+            86,
+            90,
+            105,
+            6
+        ],
+        "dire_team": [
+            23,
+            42,
+            28,
+            7,
+            31
+        ]
+    },
+    {
+        "match_id": 7645640602,
+        "match_seq_num": 6435316948,
+        "radiant_win": true,
+        "start_time": 1710889740,
+        "duration": 3642,
+        "lobby_type": 7,
+        "game_mode": 22,
+        "avg_rank_tier": 81,
+        "num_rank_tier": 5,
+        "cluster": 236,
+        "radiant_team": [
+            15,
+            112,
+            13,
+            69,
+            51
+        ],
+        "dire_team": [
+            3,
+            53,
+            113,
+            123,
+            40
+        ]
+    },
+    {
+        "match_id": 7645640207,
+        "match_seq_num": 6435295964,
+        "radiant_win": true,
+        "start_time": 1710889700,
+        "duration": 1292,
+        "lobby_type": 7,
+        "game_mode": 22,
+        "avg_rank_tier": 81,
+        "num_rank_tier": 5,
+        "cluster": 274,
+        "radiant_team": [
+            137,
+            41,
+            13,
+            30,
+            86
+        ],
+        "dire_team": [
+            10,
+            33,
+            109,
+            50,
+            71
+        ]
+    },
+    {
+        "match_id": 7645639704,
+        "match_seq_num": 6435305532,
+        "radiant_win": true,
+        "start_time": 1710889651,
+        "duration": 2423,
+        "lobby_type": 7,
+        "game_mode": 22,
+        "avg_rank_tier": 81,
+        "num_rank_tier": 2,
+        "cluster": 192,
+        "radiant_team": [
+            44,
+            15,
+            128,
+            57,
+            83
+        ],
+        "dire_team": [
+            109,
+            13,
+            41,
+            23,
+            71
+        ]
+    },
+    {
+        "match_id": 7645638916,
+        "match_seq_num": 6435313951,
+        "radiant_win": true,
+        "start_time": 1710889569,
+        "duration": 3400,
+        "lobby_type": 7,
+        "game_mode": 22,
+        "avg_rank_tier": 81,
+        "num_rank_tier": 4,
+        "cluster": 251,
+        "radiant_team": [
+            73,
+            14,
+            20,
+            32,
+            15
+        ],
+        "dire_team": [
+            136,
+            45,
+            34,
+            88,
+            98
+        ]
+    },
+    {
+        "match_id": 7645638715,
+        "match_seq_num": 6435304464,
+        "radiant_win": true,
+        "start_time": 1710889560,
+        "duration": 2319,
+        "lobby_type": 7,
+        "game_mode": 22,
+        "avg_rank_tier": 81,
+        "num_rank_tier": 8,
+        "cluster": 152,
+        "radiant_team": [
+            13,
+            86,
+            102,
+            96,
+            114
+        ],
+        "dire_team": [
+            59,
+            109,
+            54,
+            57,
+            65
+        ]
+    },
+    {
+        "match_id": 7645638216,
+        "match_seq_num": 6435295894,
+        "radiant_win": true,
+        "start_time": 1710889500,
+        "duration": 1523,
+        "lobby_type": 7,
+        "game_mode": 22,
+        "avg_rank_tier": 81,
+        "num_rank_tier": 5,
+        "cluster": 273,
+        "radiant_team": [
+            26,
+            113,
+            72,
+            96,
+            97
+        ],
+        "dire_team": [
+            19,
+            128,
+            52,
+            5,
+            95
+        ]
+    },
+    {
+        "match_id": 7645637906,
+        "match_seq_num": 6435300512,
+        "radiant_win": true,
+        "start_time": 1710889480,
+        "duration": 2000,
+        "lobby_type": 7,
+        "game_mode": 22,
+        "avg_rank_tier": 81,
+        "num_rank_tier": 4,
+        "cluster": 151,
+        "radiant_team": [
+            94,
+            112,
+            57,
+            90,
+            20
+        ],
+        "dire_team": [
+            42,
+            17,
+            5,
+            101,
+            28
+        ]
+    },
+    {
+        "match_id": 7645637516,
+        "match_seq_num": 6435299819,
+        "radiant_win": true,
+        "start_time": 1710889445,
+        "duration": 1957,
+        "lobby_type": 7,
+        "game_mode": 22,
+        "avg_rank_tier": 81,
+        "num_rank_tier": 5,
+        "cluster": 272,
+        "radiant_team": [
+            84,
+            47,
+            120,
+            10,
+            88
+        ],
+        "dire_team": [
+            44,
+            43,
+            105,
+            123,
+            98
+        ]
+    }
+]

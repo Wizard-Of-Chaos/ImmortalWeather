@@ -1,14 +1,6 @@
 import pickle
 import discord as dc
-
-CARDINAL_DIRECTIONS = [75688374, 107944284, 62681700, 173836647]
-CARDINAL_IDS = [125433170047795200, 144608604610232320, 130569142863396865, 252257562710245376]
-CARDINAL_MAP = {
-    125433170047795200 : 75688374,
-    144608604610232320 : 107944284,
-    130569142863396865 : 62681700,
-    252257562710245376 : 173836647
-}
+import gargoyle_consts
 
 class PlayerData(object):
     def __init__(self):
@@ -42,7 +34,7 @@ class SubmanTracker(object):
         self.regfile = regfile
         self.global_subman_ids = [161444478, 106159118]
         self.users = {125433170047795200 : [161444478, 106159118]}
-        self.registered_ids = CARDINAL_MAP
+        self.registered_ids = gargoyle_consts.CARDINAL_MAP
         self.load()
 
     def load(self):
@@ -63,7 +55,7 @@ class SubmanTracker(object):
             with open(self.regfile, 'rb') as config_file:
                 self.registered_ids = pickle.load(config_file)
         except (OSError, EOFError):
-            self.registered_ids = CARDINAL_MAP
+            self.registered_ids = gargoyle_consts.CARDINAL_MAP
             self.save()
     
     def save(self):

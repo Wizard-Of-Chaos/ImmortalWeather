@@ -2,17 +2,18 @@ import discord as dc
 from discord.ext import commands
 from discord.ext.commands import Context
 import requests
-from submantracker import SubmanTracker, CARDINAL_DIRECTIONS, CARDINAL_IDS
+from gargoyle_consts import CARDINAL_DIRECTIONS, CARDINAL_IDS
+from submen.submantracker import SubmanTracker
 import time
 import sys
-from subman_utils import *
+from submen.subman_utils import *
 
 SUBMAN_TRACKER = SubmanTracker('submen.pkl', 'submen_personal.pkl', 'id_reg.pkl')
 
 class SubmanCog(commands.Cog):
     def __init__(self, bot):
         self.bot = bot
-    @commands.group(pass_context=True)
+    @commands.hybrid_group(pass_context=True)
     async def subman(self, ctx):
         if ctx.invoked_subcommand is None:
             await ctx.send('Invalid subcommandman.')
@@ -162,7 +163,7 @@ class SubmanCog(commands.Cog):
 
         await ctx.send(embed=embed)
 
-    @commands.command(name='myweather')
+    @commands.hybrid_command(name='myweather')
     async def myweather(self, ctx: Context):
         if SUBMAN_TRACKER.registered(int(ctx.author.id)) == False:
             ctx.send('You are not registered. Please register first (see `--helpme` for commands).')
@@ -189,7 +190,7 @@ class SubmanCog(commands.Cog):
             embed.set_field_at(1, name='**No Submen Listed**', value='You do not have any tracked submen.', inline=False)
             msg = await msg.edit(embed=embed)
 
-    @commands.command(name='weather')
+    @commands.hybrid_command(name='weather')
     async def weather(self, ctx: Context):
         embed = placeholder_global_embed(ctx.author)
         msg = await ctx.send(embed=embed)
@@ -226,7 +227,7 @@ class SubmanCog(commands.Cog):
 
         msg = await data.msg.edit(embed=embed)
 
-    @commands.command('invalids')
+    @commands.hybrid_command('invalids')
     async def check_validity_global_submen(self, ctx: Context):
         invalids = []
         msg = await ctx.send('Checking validity of global submen...')
@@ -246,7 +247,7 @@ class SubmanCog(commands.Cog):
 
         await msg.edit(content='Done checking validity of global submen.', embed=embed)
 
-    @commands.command('myinvalids')
+    @commands.hybrid_command('myinvalids')
     async def check_validity_personal_submen(self, ctx: Context):
         if SUBMAN_TRACKER.registered(int(ctx.author.id)) == False:
             ctx.send('You are not registered. Please register first (see `--helpme` for commands).')

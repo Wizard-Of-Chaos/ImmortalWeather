@@ -1,16 +1,28 @@
 import discord as dc
 from discord.ext import commands
-from subman_commands import SubmanCog
+from discord.ext.commands import Context as ctx
+from discord import app_commands
+from submen.subman_cog import SubmanCog
+from deadlock.deadlock_cog import DeadlockCog
 import asyncio
+import user_reg as urg
+
+#glgglrrrogglglghglhghlh
+import gargoyle_consts as gargle
 
 intents = dc.Intents.default()
 intents.message_content = True
 
 #change prefix for dev to !-
-bot = commands.Bot(command_prefix='--', intents=intents)
+bot = commands.Bot(command_prefix='!!', intents=intents)
+# tree = app_commands.CommandTree(bot)
+
+#NOTE FOR LATER TODO
+#ADD THIS GUY: 287071378 TO TRACKER
 
 @bot.event
 async def on_ready():
+    # await tree.sync()
     print(f'{bot.user} awaiting orders.')
 
 @bot.event
@@ -21,7 +33,7 @@ async def on_message(message):
         await message.channel.send('It is an ill wind.')
     await bot.process_commands(message)
 
-@bot.command(name='helpme')
+@bot.hybrid_command(name='helpme')
 async def global_help(ctx):
     embed = dc.Embed(
         color=dc.Color.blue(),
@@ -42,12 +54,38 @@ async def global_help(ctx):
     embed.add_field(name='invalids:', value='Checks validity of global submen accounts, listing the invalid ones.', inline=False)
     await ctx.send(embed=embed)
 
+@bot.hybrid_command(name="unregister")
+async def unregister_id(ctx: ctx):
+    if ctx.author.id in gargle.CARDINAL_IDS:
+        await ctx.send("You are one of the four Cardinal Directions and are here forever.")
+        return
+    urg.REGISTRY.unregister(ctx.author.id)
+    await ctx.send("Unregistered your steam ID.")
+ 
+
+@bot.hybrid_command(name="register")
+async def register_id(ctx: ctx, steam_id):
+    if ctx.author.id in gargle.CARDINAL_IDS:
+        await ctx.send("You are one of the four Cardinal Directions and are already registered.")
+        return
+    if steam_id in gargle.CARDINAL_DIRECTIONS:
+        await ctx.send("You are not one of the four Cardinal Directions and cannot use this ID.")
+        return
+    
+    if urg.REGISTRY.registered(ctx.author.id):
+        ctx.send(f"You are already registered as steam ID {urg.REGISTRY.steam_registered_as(ctx.author.id)}. Unregister with `unregister`.")
+        return
+    
+    urg.REGISTRY.register(ctx.author.id, steam_id)
+    await ctx.send(f"User ID {ctx.author.id} registered to steam ID {steam_id}.")
+
 async def main():
     async with bot:
         #change txt for dev to token_alt.txt
-        with open('token.txt', 'r') as tok:
+        with open('token_alt.txt', 'r') as tok:
             token = tok.readline()
             await bot.add_cog(SubmanCog(bot))
+            await bot.add_cog(DeadlockCog(bot))
             await bot.start(token)
 
 if __name__ == '__main__':
