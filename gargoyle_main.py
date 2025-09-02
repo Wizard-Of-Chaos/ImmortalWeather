@@ -53,7 +53,7 @@ async def global_help(ctx):
     embed.add_field(name='invalids:', value='Checks validity of global submen accounts, listing the invalid ones.', inline=False)
     await ctx.send(embed=embed)
 
-@bot.tree.command(name="unregister")
+@bot.command(name="unregister")
 async def unregister_id(ctx: ctx):
     if ctx.author.id in gargle.CARDINAL_IDS:
         await ctx.send("You are one of the four Cardinal Directions and are here forever.")
@@ -62,7 +62,7 @@ async def unregister_id(ctx: ctx):
     await ctx.send("Unregistered your steam ID.")
  
 
-@bot.tree.command(name="register")
+@bot.command(name="register")
 async def register_id(ctx: ctx, steam_id: int):
     if ctx.author.id in gargle.CARDINAL_IDS:
         await ctx.send("You are one of the four Cardinal Directions and are already registered.")
@@ -74,7 +74,6 @@ async def register_id(ctx: ctx, steam_id: int):
     if urg.REGISTRY.registered(ctx.author.id):
         ctx.send(f"You are already registered as steam ID {urg.REGISTRY.steam_registered_as(ctx.author.id)}. Unregister with `unregister`.")
         return
-    
     urg.REGISTRY.register(ctx.author.id, steam_id)
     await ctx.send(f"User ID {ctx.author.id} registered to steam ID {steam_id}.")
 
