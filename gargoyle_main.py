@@ -15,14 +15,13 @@ intents.message_content = True
 
 #change prefix for dev to !-
 bot = commands.Bot(command_prefix='!!', intents=intents)
-# tree = app_commands.CommandTree(bot)
 
 #NOTE FOR LATER TODO
 #ADD THIS GUY: 287071378 TO TRACKER
 
 @bot.event
 async def on_ready():
-    # await tree.sync()
+    await bot.tree.sync(guild=dc.Object(id=132689675981684736))
     print(f'{bot.user} awaiting orders.')
 
 @bot.event
@@ -33,7 +32,7 @@ async def on_message(message):
         await message.channel.send('It is an ill wind.')
     await bot.process_commands(message)
 
-@bot.hybrid_command(name='helpme')
+@bot.tree.command(name='helpme')
 async def global_help(ctx):
     embed = dc.Embed(
         color=dc.Color.blue(),
@@ -54,7 +53,7 @@ async def global_help(ctx):
     embed.add_field(name='invalids:', value='Checks validity of global submen accounts, listing the invalid ones.', inline=False)
     await ctx.send(embed=embed)
 
-@bot.hybrid_command(name="unregister")
+@bot.tree.command(name="unregister")
 async def unregister_id(ctx: ctx):
     if ctx.author.id in gargle.CARDINAL_IDS:
         await ctx.send("You are one of the four Cardinal Directions and are here forever.")
@@ -63,8 +62,8 @@ async def unregister_id(ctx: ctx):
     await ctx.send("Unregistered your steam ID.")
  
 
-@bot.hybrid_command(name="register")
-async def register_id(ctx: ctx, steam_id):
+@bot.tree.command(name="register")
+async def register_id(ctx: ctx, steam_id: int):
     if ctx.author.id in gargle.CARDINAL_IDS:
         await ctx.send("You are one of the four Cardinal Directions and are already registered.")
         return

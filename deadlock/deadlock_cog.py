@@ -6,6 +6,7 @@ from discord import app_commands
 import requests
 import user_reg as urg
 import datetime
+from PIL import Image 
 
 STEAM_API_KEY = ''
 with open('api.txt', 'r') as api:
@@ -53,7 +54,7 @@ class DeadlockCog(commands.Cog):
 
     @deadlock.command(
             name="lm", 
-            description="Gets the last match for Wizard of Chaos"
+            description="Gets the last match of the calling player"
             )
     async def last_match(self, ctx: ctx):
         if not urg.REGISTRY.registered(ctx.author.id):
@@ -66,6 +67,7 @@ class DeadlockCog(commands.Cog):
         print(f"Performing request for {steam_id} ({ctx.author})")
         history_request = requests.get(f"{DEADLOCK_API_URL}/players/{steam_id}/match-history")
         print(f"Got history req back: status code {history_request.status_code}")
+
         if history_request.status_code != 200:
             embed = error_default_embed
             embed.add_field(value=f"Error code {history_request.status_code} on request")
@@ -73,24 +75,39 @@ class DeadlockCog(commands.Cog):
             return
         
         lm = history_request.json()[0]
+        print(lm)
         lm_id = lm["match_id"]
+        print(lm_id)
 
-        lm_detailed = requests.get(f"{DEADLOCK_API_URL}/matches/{lm_id}/metadata").json()
+        lm_meta = requests.get(f"{DEADLOCK_API_URL}/matches/{lm_id}/metadata")
+    
+        if lm_meta.status_code != 200:
+            embed = error_default_embed
+            embed.add_field(value=f"Error code {history_request.status_code} on most recent match request. Has it been parsed?\n-# request string: {DEADLOCK_API_URL}/matches/{lm_id}/metadata")
+            await msg.delete()
+            await ctx.send(embed=error_default_embed)
+            return
+
+        lm_detailed = lm_meta.json()
 
         player_details = lm_detailed["match_info"]["players"]
         stats_end = player_details
         for player in lm_detailed["match_info"]["players"]:
-            if player["account_id"] == steam_id:
-                player_details = player
-                for stat in player_details["stats"]:
-                    if stat["time_stamp_s"] == lm["match_duration_s"]:
-                        stats_end = stat
+            if player["account_id"] != steam_id:
+                continue
+            player_details = player
+            print("Found player in match")
+            for stat in player_details["stats"]:
+                if stat["time_stamp_s"] == lm["match_duration_s"]:
+                    stats_end = stat
+
         items = player_details["items"]
 
         match_embed = dc.Embed(
             color=dc.Color.yellow(),
             description=f'**{ctx.author.nick}** achieved **{"Victory" if lm["match_result"] is lm["player_team"] else "Defeat"}** as **{hero_name(lm["hero_id"])}** - {datetime.timedelta(seconds=lm["match_duration_s"])}'
         )
+        print("Match embed completed")
         match_embed.add_field(name="Damage", value=f'''
             K/D/A: {lm["player_kills"]}/{lm["player_deaths"]}/{lm["player_assists"]}
             Damage: {stats_end["player_damage"]}
@@ -98,12 +115,14 @@ class DeadlockCog(commands.Cog):
             Damage Taken: {stats_end["player_damage_taken"]}
             Accuracy: {round((stats_end["shots_hit"] / (stats_end["shots_missed"] + stats_end["shots_hit"])) * 100, 1)}%
         ''')
+        print("Damage embed completed")
         match_embed.add_field(name="Net Worth", value=f'''
             Net Worth: {lm["net_worth"]}
             Last Hits: {lm["last_hits"]}
             Denies: {lm["denies"]}
             Level: {lm["hero_level"]}
         ''', inline=True)
+        print("Economy embed completed")
         # match_embed.add_field(name="Inventory", value=f"test" inline=True)
         # match_embed.add_field(name="", value=f'-# (View Match)[https://deadlocktracker.gg/matches/{lm_id}], all of these sites suck')
         itemstr: str = ""
@@ -113,6 +132,7 @@ class DeadlockCog(commands.Cog):
             if is_upgrade(item["item_id"]):
                 itemstr = itemstr + f'{get_item(item["item_id"])["name"]}\n'
         match_embed.add_field(name="Inventory", value=itemstr, inline=False)
-
+        match_embed.add_field(name="", value=f"-# match id {lm_id}")
+        print("Inventory embed completed")
         await msg.delete()
         await ctx.send(embed=match_embed)
