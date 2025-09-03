@@ -7,6 +7,7 @@ import requests
 import user_reg as urg
 import datetime
 from PIL import Image 
+import random
 
 STEAM_API_KEY = ''
 with open('api.txt', 'r') as api:
@@ -66,23 +67,27 @@ def get_lane_diff(data, team, lane) -> float:
 
 class DeadlockCog(commands.Cog):
     def __init__(self, bot):
+        print("Initializing Deadlock functionality cog.")
         self.bot = bot
-    @commands.hybrid_group(name="deadlock", pass_context=True)
-    async def deadlock(self, ctx):
-        if ctx.invoked_subcommand is None:
-            await ctx.send('Does not meet all 4 conditions for deadlock.')
+
+    deadlock = app_commands.Group(
+        name="deadlock", 
+        description="Deadlock functionality."
+    )
 
     @deadlock.command(
             name="lm", 
-            description="Gets the last match of the calling player"
+            description="Gets the last match of the calling player. Must be registered."
             )
-    async def last_match(self, ctx: ctx):
-        if not urg.REGISTRY.registered(ctx.author.id):
+    async def last_match(self, interaction: dc.Interaction) -> None:
+        user = interaction.user
+
+        if not urg.REGISTRY.registered(user.id):
             embed = error_default_embed
             embed.set_field_at(0, name="Reason:", value="You are not registered with the bot. Please use `register steam_id` to register.")
-        msg: dc.Message = await ctx.send("Getting match data...")
+        msg: dc.Message = await interaction.channel.send("Thinking..." if random.randint(1, 20) != 20 else 'Midboh?!')
 
-        steam_id: int = urg.REGISTRY.steam_registered_as(ctx.author.id)
+        steam_id: int = urg.REGISTRY.steam_registered_as(user.id)
 
         print(f"Performing request for {steam_id} ({ctx.author})")
         history_request = requests.get(f"{DEADLOCK_API_URL}/players/{steam_id}/match-history")
@@ -90,8 +95,9 @@ class DeadlockCog(commands.Cog):
 
         if history_request.status_code != 200:
             embed = error_default_embed
-            embed.add_field(value=f"Error code {history_request.status_code} on request")
-            await ctx.send(embed=error_default_embed)
+            embed.add_field(value=f"Error code {history_request.status_code} on request.")
+            await msg.delete()
+            await interaction.response.send_message(embed=error_default_embed)
             return
         
         lm = history_request.json()[0]
@@ -103,9 +109,9 @@ class DeadlockCog(commands.Cog):
     
         if lm_meta.status_code != 200:
             embed = error_default_embed
-            embed.add_field(value=f"Error code {history_request.status_code} on most recent match request. Has it been parsed?\n-# request string: {DEADLOCK_API_URL}/matches/{lm_id}/metadata")
+            embed.add_field(value=f"Error code {history_request.status_code} on most recent match request. Has it been parsed?\n -# request string: {DEADLOCK_API_URL}/matches/{lm_id}/metadata")
             await msg.delete()
-            await ctx.send(embed=error_default_embed)
+            await interaction.response.send_message(embed=error_default_embed)
             return
 
         lm_detailed = lm_meta.json()
@@ -123,9 +129,19 @@ class DeadlockCog(commands.Cog):
 
         items = player_details["items"]
 
+        player_victory: bool = lm["match_result"] is lm["player_team"]
+        lanediff: float = get_lane_diff(lm_detailed, player_details["team"], player_details["assigned_lane"])
+        outcome: str = 'You carried this game.'
+        if lanediff <= 0 and player_victory:
+            outcome = 'You were carried this game.'
+        elif lanediff > 0 and not player_victory:
+            outcome = "This wasn't your fault."
+        elif lanediff <= 0 and not player_victory:
+            outcome = 'This was your fault.'
+
         match_embed = dc.Embed(
             color=dc.Color.yellow(),
-            description=f'**{ctx.author.nick}** achieved **{"Victory" if lm["match_result"] is lm["player_team"] else "Defeat"}** as **{hero_name(lm["hero_id"])}** - {datetime.timedelta(seconds=lm["match_duration_s"])}'
+            description=f'**{user.nick if user.nick else user.name}** {"achieved **Victory" if lm["match_result"] is lm["player_team"] else "suffered **Defeat"}** as **{hero_name(lm["hero_id"])}** - {datetime.timedelta(seconds=lm["match_duration_s"])}'
         )
         print("Match embed completed")
         match_embed.add_field(name="Damage", value=f'''
@@ -135,16 +151,16 @@ class DeadlockCog(commands.Cog):
             Damage Taken: {stats_end["player_damage_taken"]}
             Accuracy: {round((stats_end["shots_hit"] / (stats_end["shots_missed"] + stats_end["shots_hit"])) * 100, 1)}%
         ''')
+
         print("Damage embed completed")
-        match_embed.add_field(name="Net Worth", value=f'''
+        match_embed.add_field(name="Economics", value=f'''
             Net Worth: {lm["net_worth"]}
             Last Hits: {lm["last_hits"]}
             Denies: {lm["denies"]}
             Level: {lm["hero_level"]}
         ''', inline=True)
+
         print("Economy embed completed")
-        # match_embed.add_field(name="Inventory", value=f"test" inline=True)
-        # match_embed.add_field(name="", value=f'-# (View Match)[https://deadlocktracker.gg/matches/{lm_id}], all of these sites suck')
         itemstr: str = ""
         for item in items:
             if item["sold_time_s"] != 0:
@@ -153,9 +169,12 @@ class DeadlockCog(commands.Cog):
                 itemstr = itemstr + f'{get_item(item["item_id"])["name"]}\n'
         match_embed.add_field(name="Inventory", value=itemstr, inline=False)
         print("Inventory embed completed")
-        lanediff: float = get_lane_diff(lm_detailed, player_details["team"], player_details["assigned_lane"])
-        match_embed.add_field(name="Laning", value=f"Laning was **{'won - this is not your fault.' if lanediff > 0 else 'lost - this is your fault.'}**\nSoul diff at 8 min: {lanediff}k@", inline=False)
+
+        match_embed.add_field(name="Laning", value=f"""
+                              Laning was **{'won' if lanediff > 0 else 'lost'}** - ** {outcome}**\nLane soul diff at 8 min: {lanediff}k
+                              """, inline=False)
         print("Laning embed completed")
+
         match_embed.add_field(name="", value=f"-# match id {lm_id}")
         await msg.delete()
-        await ctx.send(embed=match_embed)
+        await interaction.response.send_message(embed=match_embed)

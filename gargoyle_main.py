@@ -1,4 +1,5 @@
 import discord as dc
+import discord.interactions as interacts
 from discord.ext import commands
 from discord.ext.commands import Context as ctx
 from discord import app_commands
@@ -6,87 +7,74 @@ from submen.subman_cog import SubmanCog
 from deadlock.deadlock_cog import DeadlockCog
 import asyncio
 import user_reg as urg
-
+from datetime import datetime, timezone
 #glgglrrrogglglghglhghlh
 import gargoyle_consts as gargle
 
+class Bot(commands.Bot):
+    uptime: datetime = datetime.now(timezone.utc)
+    user: dc.ClientUser
+
+    def __init__(self, *, intents: dc.Intents):
+        super().__init__(command_prefix="!!", intents=intents)
+        # self.tree = app_commands.CommandTree(self)
+
+    async def setup_hook(self):
+        self.tree.copy_global_to(guild=dc.Object(id=132689675981684736))
+        await self.tree.sync(guild=dc.Object(id=132689675981684736))
+
 intents = dc.Intents.default()
 intents.message_content = True
-
-#change prefix for dev to !-
-bot = commands.Bot(command_prefix='!!', intents=intents)
-
-#NOTE FOR LATER TODO
-#ADD THIS GUY: 287071378 TO TRACKER
+bot = Bot(intents=intents)
 
 @bot.event
 async def on_ready():
-    await bot.tree.sync(guild=dc.Object(id=132689675981684736))
-    print(f'{bot.user} awaiting orders.')
+    await bot.add_cog(DeadlockCog(bot))
+    await bot.setup_hook()
+    print(f'{bot.user} ready.')
 
-@bot.event
-async def on_message(message):
-    if message.author == bot.user:
-        return
-    if message.content.startswith('Do the winds blow?'):
-        await message.channel.send('It is an ill wind.')
-    if message.content.startswith('i like rubbing my belly'):
-        await message.channel.send('https://cdn.discordapp.com/attachments/196338144201801728/1403414422835167292/goo_tumby.gif')
-    await bot.process_commands(message)
+@bot.command(name="sync")
+async def sync(ctx: ctx):
+    print("Synchronizing commands")
+    bot.tree.copy_global_to(guild=ctx.guild)
+    cmd_list = await bot.tree.sync(guild=ctx.guild)
+    print(len(cmd_list))
 
-@bot.tree.command(name='helpme')
-async def global_help(ctx):
-    embed = dc.Embed(
-        color=dc.Color.blue(),
-        description='**Gargoyle Help**'
-    )
-    embed.add_field(name='weather:', value='Determines the general weather system of Dota 2 pubs. Includes personal submen where possible.', inline=False)
+@bot.tree.command()
+async def slahser(interaction: dc.Interaction):
+    """Slahser's way."""
+    await interaction.response.send_message("BUY A BUNCH OF FUCKING SALVES AND USE THEM IN CHRONO")
 
-    embed.add_field(name='subman register [dota_id]:', value='Registers your Discord ID to your Dota 2 ID.', inline=False)
-    embed.add_field(name='subman add [dota_id]:', value='Adds a subman to your personal list of submen. Must be registered.', inline=False)
-    embed.add_field(name='subman remove [dota_id]:', value='Removes a subman from your personal list of submen. Must be registered.', inline=False)
-    embed.add_field(name='subman tracked:', value='Lists all of your tracked submen IDs. Must be registered.', inline=False)
-    embed.add_field(name='myweather:', value='Generates your individualized weather report. Must be registered.', inline=False)
-    embed.add_field(name='myinvalids:', value='Checks validity of your submen accounts, listing the invalid ones.', inline=False)
-
-    embed.add_field(name='subman global_add [dota_id]:', value='Adds subman globally. Only available to cardinal winds.', inline=False)
-    embed.add_field(name='subman global_remove [dota_id]:', value='Removes subman globally. Only available to cardinal winds.', inline=False)
-    embed.add_field(name='subman global_tracked [dota_id]:', value='Lists all global submen.', inline=False)
-    embed.add_field(name='invalids:', value='Checks validity of global submen accounts, listing the invalid ones.', inline=False)
-    await ctx.send(embed=embed)
-
-@bot.command(name="unregister")
-async def unregister_id(ctx: ctx):
-    if ctx.author.id in gargle.CARDINAL_IDS:
-        await ctx.send("You are one of the four Cardinal Directions and are here forever.")
-        return
-    urg.REGISTRY.unregister(ctx.author.id)
-    await ctx.send("Unregistered your steam ID.")
- 
-
-@bot.command(name="register")
-async def register_id(ctx: ctx, steam_id: int):
-    if ctx.author.id in gargle.CARDINAL_IDS:
-        await ctx.send("You are one of the four Cardinal Directions and are already registered.")
+@bot.tree.command(name="register", description="Register your Steam ID to your Discord ID for use with the bot.")
+@app_commands.describe(steam_id="Your steam ID (ID3).")
+async def register(interaction: dc.Interaction, steam_id: int):
+    if interaction.user.id in gargle.CARDINAL_IDS:
+        await interaction.response.send_message("You are one of the four Cardinal Directions and are already registered.")
         return
     if steam_id in gargle.CARDINAL_DIRECTIONS:
-        await ctx.send("You are not one of the four Cardinal Directions and cannot use this ID.")
+        await interaction.response.send_message("You are not one of the four Cardinal Directions and cannot use this ID.")
         return
     
-    if urg.REGISTRY.registered(ctx.author.id):
-        ctx.send(f"You are already registered as steam ID {urg.REGISTRY.steam_registered_as(ctx.author.id)}. Unregister with `unregister`.")
+    if urg.REGISTRY.registered(interaction.user.id):
+        interaction.response.send_message(f"You are already registered as steam ID {urg.REGISTRY.steam_registered_as(interaction.user.id)}. Unregister with `unregister`.")
         return
-    urg.REGISTRY.register(ctx.author.id, steam_id)
-    await ctx.send(f"User ID {ctx.author.id} registered to steam ID {steam_id}.")
+    urg.REGISTRY.register(interaction.user.id, steam_id)
+    await interaction.response.send_message(f"User ID {ctx.author.id} registered to steam ID {steam_id}.")
 
-async def main():
-    async with bot:
-        #change txt for dev to token_alt.txt
-        with open('token_alt.txt', 'r') as tok:
-            token = tok.readline()
-            await bot.add_cog(SubmanCog(bot))
-            await bot.add_cog(DeadlockCog(bot))
-            await bot.start(token)
+@bot.tree.command(name="unregister", description="Unregister your Steam ID from your Discord ID.")
+async def unregister(interaction: dc.Interaction):
+    if interaction.user.id in gargle.CARDINAL_IDS:
+        await interaction.response.send_message("You are one of the four Cardinal Directions and are here forever.")
+        return
+    urg.REGISTRY.unregister(ctx.author.id)
+    await interaction.response.send_message("Unregistered your steam ID.")
 
-if __name__ == '__main__':
-    asyncio.run(main())
+#######################################################################################################
+
+def get_token() -> str:
+    with open('token_alt.txt', 'r') as tok:
+        token = tok.readline()
+        return token
+
+if __name__ == "__main__":
+    bot.run(get_token())
