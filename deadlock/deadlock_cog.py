@@ -65,10 +65,15 @@ class DeadlockCog(commands.Cog):
             )
     async def last_match(self, interaction: dc.Interaction) -> None:
         user = interaction.user
+        cb: dc.InteractionCallbackResponse = await interaction.response.defer(ephemeral=False, thinking=True)
+        int_msg: dc.InteractionMessage = cb.resource
 
         if not urg.REGISTRY.registered(user.id):
             embed = error_default_embed
             embed.set_field_at(0, name="Reason:", value="You are not registered with the bot. Please use `register steam_id` to register.")
+            int_msg.delete()
+            await interaction.channel.send(embed=embed)
+            return
 
         steam_id: int = urg.REGISTRY.steam_registered_as(user.id)
 
@@ -79,7 +84,8 @@ class DeadlockCog(commands.Cog):
         if history_request.status_code != 200:
             embed = error_default_embed
             embed.add_field(value=f"Error code {history_request.status_code} on request.")
-            await interaction.response.send_message(embed=error_default_embed)
+            await int_msg.delete()
+            await interaction.channel.send(embed=embed)
             return
         
         lm = history_request.json()[0]
@@ -92,7 +98,8 @@ class DeadlockCog(commands.Cog):
         if lm_meta.status_code != 200:
             embed = error_default_embed
             embed.add_field(value=f"Error code {history_request.status_code} on most recent match request. Has it been parsed?\n -# request string: {DEADLOCK_API_URL}/matches/{lm_id}/metadata")
-            await interaction.response.send_message(embed=error_default_embed)
+            await int_msg.delete()
+            await interaction.channel.send(embed=embed)
             return
 
         lm_detailed = lm_meta.json()
@@ -154,4 +161,5 @@ class DeadlockCog(commands.Cog):
         with io.BytesIO() as image_binary:
             dc_image_file(items).save(image_binary, 'PNG')
             image_binary.seek(0)
-            await interaction.response.send_message(embed=match_embed, file=dc.File(fp=image_binary, filename=fname))
+            await int_msg.edit(embed=match_embed, content=None, attachments=[dc.File(fp=image_binary, filename=fname)])
+            # await interaction.channel.send(embed=match_embed, file=dc.File(fp=image_binary, filename=fname))
