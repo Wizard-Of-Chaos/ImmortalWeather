@@ -1,13 +1,11 @@
 import discord as dc
 from discord.ext import commands
-from discord.ext.commands import Context as ctx
-import asyncio
 from discord import app_commands
 import requests
 import user_reg as urg
 import datetime
-from PIL import Image 
 import random
+from deadlock.deadlock_item_utils import *
 
 STEAM_API_KEY = ''
 with open('api.txt', 'r') as api:
@@ -16,26 +14,12 @@ STEAM_API_URL = 'http://api.steampowered.com'
 
 DEADLOCK_API_URL = "https://api.deadlock-api.com/v1"
 
-print("Loading up default Deadlock requests...")
 HEROES = requests.get("https://assets.deadlock-api.com/v2/heroes?language=english&only_active=true").json()
-ITEMS = requests.get("https://assets.deadlock-api.com/v2/items/by-type/upgrade").json()
-print("Loaded.")
 
 def hero_name(id: int) -> str:
     for hero in HEROES:
         if hero["id"] == id:
             return hero["name"]
-
-def get_item(id: int):
-    for item in ITEMS:
-        if item["id"] == id:
-            return item
-
-def is_upgrade(id: int) -> bool:
-    for item in ITEMS:
-        if item["id"] == id:
-            return True
-    return False
 
 error_default_embed = dc.Embed(
     color=dc.Color.red(),
@@ -52,7 +36,7 @@ def get_player_networth_9min(data, playerdata) -> int:
             return stat["net_worth"]
 
 
-def get_lane_diff(data, team, lane) -> float:
+def get_player_lane_diff(data, team, lane) -> float:
     soulcount_0 = 0
     soulcount_1 = 0
     print("getting lane diff")
@@ -85,18 +69,16 @@ class DeadlockCog(commands.Cog):
         if not urg.REGISTRY.registered(user.id):
             embed = error_default_embed
             embed.set_field_at(0, name="Reason:", value="You are not registered with the bot. Please use `register steam_id` to register.")
-        msg: dc.Message = await interaction.channel.send("Thinking..." if random.randint(1, 20) != 20 else 'Midboh?!')
 
         steam_id: int = urg.REGISTRY.steam_registered_as(user.id)
 
-        print(f"Performing request for {steam_id} ({ctx.author})")
+        print(f"Performing request for {steam_id} ({user.name})")
         history_request = requests.get(f"{DEADLOCK_API_URL}/players/{steam_id}/match-history")
         print(f"Got history req back: status code {history_request.status_code}")
 
         if history_request.status_code != 200:
             embed = error_default_embed
             embed.add_field(value=f"Error code {history_request.status_code} on request.")
-            await msg.delete()
             await interaction.response.send_message(embed=error_default_embed)
             return
         
@@ -110,7 +92,6 @@ class DeadlockCog(commands.Cog):
         if lm_meta.status_code != 200:
             embed = error_default_embed
             embed.add_field(value=f"Error code {history_request.status_code} on most recent match request. Has it been parsed?\n -# request string: {DEADLOCK_API_URL}/matches/{lm_id}/metadata")
-            await msg.delete()
             await interaction.response.send_message(embed=error_default_embed)
             return
 
@@ -130,7 +111,7 @@ class DeadlockCog(commands.Cog):
         items = player_details["items"]
 
         player_victory: bool = lm["match_result"] is lm["player_team"]
-        lanediff: float = get_lane_diff(lm_detailed, player_details["team"], player_details["assigned_lane"])
+        lanediff: float = get_player_lane_diff(lm_detailed, player_details["team"], player_details["assigned_lane"])
         outcome: str = 'You carried this game.'
         if lanediff <= 0 and player_victory:
             outcome = 'You were carried this game.'
@@ -141,7 +122,7 @@ class DeadlockCog(commands.Cog):
 
         match_embed = dc.Embed(
             color=dc.Color.yellow(),
-            description=f'**{user.nick if user.nick else user.name}** {"achieved **Victory" if lm["match_result"] is lm["player_team"] else "suffered **Defeat"}** as **{hero_name(lm["hero_id"])}** - {datetime.timedelta(seconds=lm["match_duration_s"])}'
+            description=f'**{user.nick if user.nick else user.name}** {"achieved **Victory" if lm["match_result"] is lm["player_team"] else "suffered **Defeat"}** as **{hero_name(lm["hero_id"])}** - {datetime.timedelta(seconds=lm["match_duration_s"])}\n-# match id {lm_id}'
         )
         print("Match embed completed")
         match_embed.add_field(name="Damage", value=f'''
@@ -161,20 +142,16 @@ class DeadlockCog(commands.Cog):
         ''', inline=True)
 
         print("Economy embed completed")
-        itemstr: str = ""
-        for item in items:
-            if item["sold_time_s"] != 0:
-                continue
-            if is_upgrade(item["item_id"]):
-                itemstr = itemstr + f'{get_item(item["item_id"])["name"]}\n'
-        match_embed.add_field(name="Inventory", value=itemstr, inline=False)
-        print("Inventory embed completed")
 
         match_embed.add_field(name="Laning", value=f"""
-                              Laning was **{'won' if lanediff > 0 else 'lost'}** - ** {outcome}**\nLane soul diff at 8 min: {lanediff}k
+                              Your lane was **{'won' if lanediff > 0 else 'lost'}** - ** {outcome}**\nLane soul diff at 8 min: {lanediff}k
                               """, inline=False)
         print("Laning embed completed")
+        fname = f"inventory-{steam_id}-{lm_id}.png"
+        match_embed.set_image(url=f"attachment://{fname}")
+        print("Inventory embed completed")
 
-        match_embed.add_field(name="", value=f"-# match id {lm_id}")
-        await msg.delete()
-        await interaction.response.send_message(embed=match_embed)
+        with io.BytesIO() as image_binary:
+            dc_image_file(items).save(image_binary, 'PNG')
+            image_binary.seek(0)
+            await interaction.response.send_message(embed=match_embed, file=dc.File(fp=image_binary, filename=fname))
