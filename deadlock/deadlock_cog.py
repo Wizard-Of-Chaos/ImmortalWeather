@@ -15,6 +15,7 @@ STEAM_API_URL = 'http://api.steampowered.com'
 DEADLOCK_API_URL = "https://api.deadlock-api.com/v1"
 
 HEROES = requests.get("https://assets.deadlock-api.com/v2/heroes?language=english&only_active=true").json()
+RANKS = requests.get("https://assets.deadlock-api.com/v2/ranks").json()
 
 def hero_name(id: int) -> str:
     for hero in HEROES:
@@ -48,6 +49,11 @@ def get_player_lane_diff(data, team, lane) -> float:
                 soulcount_1 += get_player_networth_9min(data, player)
     
     return round(float(soulcount_0 - soulcount_1) / 1000.0, 1)
+
+def get_rank_str(num: int) -> str:
+    tier: int = num // 10
+    div: int = num % 10
+    return f"{RANKS[tier]['name']} {div}"
 
 class DeadlockCog(commands.Cog):
     def __init__(self, bot):
@@ -105,6 +111,7 @@ class DeadlockCog(commands.Cog):
         lm_detailed = lm_meta.json()
 
         player_details = lm_detailed["match_info"]["players"]
+        
         stats_end = player_details
         for player in lm_detailed["match_info"]["players"]:
             if player["account_id"] != steam_id:
@@ -119,6 +126,7 @@ class DeadlockCog(commands.Cog):
 
         player_victory: bool = lm["match_result"] is lm["player_team"]
         lanediff: float = get_player_lane_diff(lm_detailed, player_details["team"], player_details["assigned_lane"])
+
         outcome: str = 'You carried this game.'
         if lanediff <= 0 and player_victory:
             outcome = 'You were carried this game.'
@@ -126,6 +134,28 @@ class DeadlockCog(commands.Cog):
             outcome = "This wasn't your fault."
         elif lanediff <= 0 and not player_victory:
             outcome = 'This was your fault.'
+
+        player_team_badge = lm_detailed["match_info"]["average_badge_team0"] if lm["player_team"] == 0 else lm_detailed["match_info"]["average_badge_team1"]
+        enemy_team_badge = lm_detailed["match_info"]["average_badge_team0"] if lm["player_team"] == 1 else lm_detailed["match_info"]["average_badge_team1"]
+
+        rank_flavor: str = f"Your **{get_rank_str(player_team_badge)}** team "
+
+        if player_victory:
+            if player_team_badge == enemy_team_badge:
+                rank_flavor += "outplayed and outwitted "
+            elif player_team_badge > enemy_team_badge:
+                rank_flavor += "brutally crushed "
+            elif player_team_badge < enemy_team_badge:
+                rank_flavor += "skillfully defeated "
+        else:
+            if player_team_badge == enemy_team_badge:
+                rank_flavor += "was barely defeated by "
+            elif player_team_badge > enemy_team_badge:
+                rank_flavor += "hilariously lost to "
+            elif player_team_badge < enemy_team_badge:
+                rank_flavor += "expectedly lost to "
+
+        rank_flavor += f"the **{get_rank_str(enemy_team_badge)}** enemy team."
 
         match_embed = dc.Embed(
             color=dc.Color.yellow(),
@@ -150,9 +180,12 @@ class DeadlockCog(commands.Cog):
 
         print("Economy embed completed")
 
-        match_embed.add_field(name="Laning", value=f"""
-                              Your lane was **{'won' if lanediff > 0 else 'lost'}** - ** {outcome}**\nLane soul diff at 8 min: {lanediff}k
+        match_embed.add_field(name="Match Details", value=f"""
+                              Your lane was **{'won' if lanediff > 0 else 'lost'}** - ** {outcome}**
+                              Lane soul diff at **8** min: **{lanediff}k**
+                              {rank_flavor}
                               """, inline=False)
+        
         print("Laning embed completed")
         fname = f"inventory-{steam_id}-{lm_id}.png"
         match_embed.set_image(url=f"attachment://{fname}")
@@ -162,4 +195,3 @@ class DeadlockCog(commands.Cog):
             dc_image_file(items).save(image_binary, 'PNG')
             image_binary.seek(0)
             await int_msg.edit(embed=match_embed, content=None, attachments=[dc.File(fp=image_binary, filename=fname)])
-            # await interaction.channel.send(embed=match_embed, file=dc.File(fp=image_binary, filename=fname))
