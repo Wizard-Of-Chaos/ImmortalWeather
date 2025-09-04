@@ -35,18 +35,6 @@ class DeadlockCog(commands.Cog):
         description="Deadlock functionality."
     )
 
-    #Default response for you failed to register yourself
-    async def not_registered_response(self, int_msg: dc.InteractionMessage):
-        embed = error_default_embed
-        embed.set_field_at(0, name="Reason:", value="You are not registered with the bot. Please use `/register steam_id` to register.")
-        await int_msg.edit(embed=embed, content=None)
-    
-    #Default response for the request erroring out in some capacity
-    async def not_found_response(self, code: int, int_msg: dc.InteractionMessage):
-        embed = error_default_embed
-        embed.set_field_at(0, name="Reason:", value=f"The request errored out with a {code}. Try again later.")
-        await int_msg.edit(embed=embed, content=None)
-
     #Spits out a digest from the most recent game attached to the steam ID
     #TODO - make it agnostic and capable of just grabbing a random match ID
     async def get_digest(self, steam_id: int, user: str, int_msg: dc.InteractionMessage) -> Digest_lm | None:
@@ -54,14 +42,14 @@ class DeadlockCog(commands.Cog):
         history_request = requests.get(f"{DEADLOCK_API_URL}/players/{steam_id}/match-history")
 
         if history_request.status_code != 200:
-            await self.not_found_response(history_request.status_code, int_msg)
+            await int_msg.edit(content=f"Request failed. Status code: {history_request.status_code}")
             return None
         
         lm = history_request.json()[0]
         lm_meta = requests.get(f"{DEADLOCK_API_URL}/matches/{lm["match_id"]}/metadata")
     
         if lm_meta.status_code != 200:
-            await self.not_found_response(history_request.status_code, int_msg)
+            await int_msg.edit(content=f"Request failed. Status code: {history_request.status_code}")
             return None
         
         digest: Digest_lm = Digest_lm(steam_id, lm_meta.json())
@@ -87,7 +75,7 @@ class DeadlockCog(commands.Cog):
         int_msg: dc.InteractionMessage = cb.resource
 
         if not urg.REGISTRY.registered(user.id):
-            await self.not_registered_response(int_msg)
+            await int_msg.edit(content="You're not registered. Register with `/register")
             return
         steam_id: int = urg.REGISTRY.steam_registered_as(user.id)
 
@@ -160,7 +148,7 @@ class DeadlockCog(commands.Cog):
         int_msg: dc.InteractionMessage = cb.resource
 
         if not urg.REGISTRY.registered(user.id):
-            await self.not_registered_response(int_msg)
+            await int_msg.edit(content="You're not registered. Register with `/register")
             return
         steam_id: int = urg.REGISTRY.steam_registered_as(user.id)
 
@@ -224,7 +212,7 @@ class DeadlockCog(commands.Cog):
         int_msg: dc.InteractionMessage = cb.resource
 
         if not urg.REGISTRY.registered(user.id):
-            await self.not_registered_response(int_msg)
+            await int_msg.edit(content="You're not registered. Register with `/register")
             return
         steam_id: int = urg.REGISTRY.steam_registered_as(user.id)
 
@@ -235,7 +223,7 @@ class DeadlockCog(commands.Cog):
 
         hero_req = requests.get(f"{DEADLOCK_API_URL}/players/hero-stats?account_ids={steam_id}")
         if hero_req.status_code != 200:
-            await self.not_found_response(hero_req.status_code, int_msg)
+            await int_msg.edit(content=f"Request failed. Status code: {hero_req.status_code}")
             return None
         
         data = hero_req.json()
