@@ -5,18 +5,23 @@ from discord.ext.commands import Context as ctx
 from discord import app_commands
 from submen.subman_cog import SubmanCog
 from deadlock.deadlock_cog import DeadlockCog
-import asyncio
-import user_reg as urg
 from datetime import datetime, timezone
+
+import asyncio
+#urrrrrrrgg... my user...
+import user_reg as urg
 #glgglrrrogglglghglhghlh
 import gargoyle_consts as gargle
+
+prefix: str = "!!"
+token_str: str = "token_alt.txt"
 
 class Bot(commands.Bot):
     uptime: datetime = datetime.now(timezone.utc)
     user: dc.ClientUser
 
     def __init__(self, *, intents: dc.Intents):
-        super().__init__(command_prefix="!!", intents=intents)
+        super().__init__(command_prefix=prefix, intents=intents)
         # self.tree = app_commands.CommandTree(self)
 
     async def setup_hook(self):
@@ -72,7 +77,7 @@ async def unregister(interaction: dc.Interaction):
 #######################################################################################################
 
 def get_token() -> str:
-    with open('token_alt.txt', 'r') as tok:
+    with open(token_str, 'r') as tok:
         token = tok.readline()
         return token
 

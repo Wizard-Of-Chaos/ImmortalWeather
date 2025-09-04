@@ -6,6 +6,8 @@ import user_reg as urg
 import datetime
 import random
 from deadlock.deadlock_item_utils import *
+#I consider it an act of restraint on my part to not name the digestion func "Colon"
+from deadlock.match_digestion import *
 
 STEAM_API_KEY = ''
 with open('api.txt', 'r') as api:
@@ -13,14 +15,6 @@ with open('api.txt', 'r') as api:
 STEAM_API_URL = 'http://api.steampowered.com'
 
 DEADLOCK_API_URL = "https://api.deadlock-api.com/v1"
-
-HEROES = requests.get("https://assets.deadlock-api.com/v2/heroes?language=english&only_active=true").json()
-RANKS = requests.get("https://assets.deadlock-api.com/v2/ranks").json()
-
-def hero_name(id: int) -> str:
-    for hero in HEROES:
-        if hero["id"] == id:
-            return hero["name"]
 
 error_default_embed = dc.Embed(
     color=dc.Color.red(),
@@ -31,39 +25,57 @@ match_default_embed = dc.Embed(
     description='**Last Match**'
 )
 
-def get_player_networth_9min(data, playerdata) -> int:
-    for stat in playerdata["stats"]:
-        if stat["time_stamp_s"] == 900:
-            return stat["net_worth"]
-
-
-def get_player_lane_diff(data, team, lane) -> float:
-    soulcount_0 = 0
-    soulcount_1 = 0
-    print("getting lane diff")
-    for player in data["match_info"]["players"]:
-        if player["assigned_lane"] == lane:
-            if player["team"] == team:
-                soulcount_0 += get_player_networth_9min(data, player)
-            else:
-                soulcount_1 += get_player_networth_9min(data, player)
-    
-    return round(float(soulcount_0 - soulcount_1) / 1000.0, 1)
-
-def get_rank_str(num: int) -> str:
-    tier: int = num // 10
-    div: int = num % 10
-    return f"{RANKS[tier]['name']} {div}"
-
 class DeadlockCog(commands.Cog):
     def __init__(self, bot):
-        print("Initializing Deadlock functionality cog.")
+        print("Initializing Deadlock functionality cog...")
         self.bot = bot
 
     deadlock = app_commands.Group(
         name="deadlock", 
         description="Deadlock functionality."
     )
+
+    #Default response for you failed to register yourself
+    async def not_registered_response(self, int_msg: dc.InteractionMessage):
+        embed = error_default_embed
+        embed.set_field_at(0, name="Reason:", value="You are not registered with the bot. Please use `/register steam_id` to register.")
+        await int_msg.edit(embed=embed, content=None)
+    
+    #Default response for the request erroring out in some capacity
+    async def not_found_response(self, code: int, int_msg: dc.InteractionMessage):
+        embed = error_default_embed
+        embed.set_field_at(0, name="Reason:", value=f"The request errored out with a {code}. Try again later.")
+        await int_msg.edit(embed=embed, content=None)
+
+    #Spits out a digest from the most recent game attached to the steam ID
+    #TODO - make it agnostic and capable of just grabbing a random match ID
+    async def get_digest(self, steam_id: int, user: str, int_msg: dc.InteractionMessage) -> Digest_lm | None:
+        print(f"Performing request for {steam_id} ({user})")
+        history_request = requests.get(f"{DEADLOCK_API_URL}/players/{steam_id}/match-history")
+
+        if history_request.status_code != 200:
+            await self.not_found_response(history_request.status_code, int_msg)
+            return None
+        
+        lm = history_request.json()[0]
+        lm_meta = requests.get(f"{DEADLOCK_API_URL}/matches/{lm["match_id"]}/metadata")
+    
+        if lm_meta.status_code != 200:
+            await self.not_found_response(history_request.status_code, int_msg)
+            return None
+        
+        digest: Digest_lm = Digest_lm(steam_id, lm_meta.json())
+        return digest
+    
+    def lane_outcome_str(self, digest: Digest_lm) -> str:
+        outcome: str = 'You carried this game.'
+        if digest.lane_diff <= 0 and digest.victory:
+            outcome = 'You were carried this game.'
+        elif digest.lane_diff > 0 and not digest.victory:
+            outcome = "This wasn't your fault."
+        elif digest.lane_diff <= 0 and not digest.victory:
+            outcome = 'This was your fault.'
+        return outcome
 
     @deadlock.command(
             name="lm", 
@@ -75,123 +87,106 @@ class DeadlockCog(commands.Cog):
         int_msg: dc.InteractionMessage = cb.resource
 
         if not urg.REGISTRY.registered(user.id):
-            embed = error_default_embed
-            embed.set_field_at(0, name="Reason:", value="You are not registered with the bot. Please use `register steam_id` to register.")
-            int_msg.delete()
-            await interaction.channel.send(embed=embed)
+            await self.not_registered_response(int_msg)
             return
-
         steam_id: int = urg.REGISTRY.steam_registered_as(user.id)
 
-        print(f"Performing request for {steam_id} ({user.name})")
-        history_request = requests.get(f"{DEADLOCK_API_URL}/players/{steam_id}/match-history")
-        print(f"Got history req back: status code {history_request.status_code}")
+        digest = await self.get_digest(steam_id, user.name, int_msg)
+        if digest == None:
+            print("Digest failure")
+            return None
 
-        if history_request.status_code != 200:
-            embed = error_default_embed
-            embed.add_field(value=f"Error code {history_request.status_code} on request.")
-            await int_msg.delete()
-            await interaction.channel.send(embed=embed)
-            return
+        outcome: str = self.lane_outcome_str(digest)
         
-        lm = history_request.json()[0]
-        print(lm)
-        lm_id = lm["match_id"]
-        print(lm_id)
+        rank_flavor: str = f"Your **{get_rank_str(digest.player_team_badge)}** team "
 
-        lm_meta = requests.get(f"{DEADLOCK_API_URL}/matches/{lm_id}/metadata")
-    
-        if lm_meta.status_code != 200:
-            embed = error_default_embed
-            embed.add_field(value=f"Error code {history_request.status_code} on most recent match request. Has it been parsed?\n -# request string: {DEADLOCK_API_URL}/matches/{lm_id}/metadata")
-            await int_msg.delete()
-            await interaction.channel.send(embed=embed)
-            return
-
-        lm_detailed = lm_meta.json()
-
-        player_details = lm_detailed["match_info"]["players"]
-        
-        stats_end = player_details
-        for player in lm_detailed["match_info"]["players"]:
-            if player["account_id"] != steam_id:
-                continue
-            player_details = player
-            print("Found player in match")
-            for stat in player_details["stats"]:
-                if stat["time_stamp_s"] == lm["match_duration_s"]:
-                    stats_end = stat
-
-        items = player_details["items"]
-
-        player_victory: bool = lm["match_result"] is lm["player_team"]
-        lanediff: float = get_player_lane_diff(lm_detailed, player_details["team"], player_details["assigned_lane"])
-
-        outcome: str = 'You carried this game.'
-        if lanediff <= 0 and player_victory:
-            outcome = 'You were carried this game.'
-        elif lanediff > 0 and not player_victory:
-            outcome = "This wasn't your fault."
-        elif lanediff <= 0 and not player_victory:
-            outcome = 'This was your fault.'
-
-        player_team_badge = lm_detailed["match_info"]["average_badge_team0"] if lm["player_team"] == 0 else lm_detailed["match_info"]["average_badge_team1"]
-        enemy_team_badge = lm_detailed["match_info"]["average_badge_team0"] if lm["player_team"] == 1 else lm_detailed["match_info"]["average_badge_team1"]
-
-        rank_flavor: str = f"Your **{get_rank_str(player_team_badge)}** team "
-
-        if player_victory:
-            if player_team_badge == enemy_team_badge:
+        if digest.victory:
+            if digest.player_team_badge == digest.enemy_team_badge:
                 rank_flavor += "outplayed and outwitted "
-            elif player_team_badge > enemy_team_badge:
+            elif digest.player_team_badge > digest.enemy_team_badge:
                 rank_flavor += "brutally crushed "
-            elif player_team_badge < enemy_team_badge:
+            elif digest.player_team_badge < digest.enemy_team_badge:
                 rank_flavor += "skillfully defeated "
         else:
-            if player_team_badge == enemy_team_badge:
+            if digest.player_team_badge == digest.enemy_team_badge:
                 rank_flavor += "was barely defeated by "
-            elif player_team_badge > enemy_team_badge:
+            elif digest.player_team_badge > digest.enemy_team_badge:
                 rank_flavor += "hilariously lost to "
-            elif player_team_badge < enemy_team_badge:
+            elif digest.player_team_badge < digest.enemy_team_badge:
                 rank_flavor += "expectedly lost to "
 
-        rank_flavor += f"the **{get_rank_str(enemy_team_badge)}** enemy team."
+        rank_flavor += f"the **{get_rank_str(digest.enemy_team_badge)}** enemy team."
 
         match_embed = dc.Embed(
             color=dc.Color.yellow(),
-            description=f'**{user.nick if user.nick else user.name}** {"achieved **Victory" if lm["match_result"] is lm["player_team"] else "suffered **Defeat"}** as **{hero_name(lm["hero_id"])}** - {datetime.timedelta(seconds=lm["match_duration_s"])}\n-# match id {lm_id}'
+            description=f'**{user.nick if user.nick else user.name}** {"achieved **Victory" if digest.victory else "suffered **Defeat"}** as **{hero_name(digest.player_hero)}** - {datetime.timedelta(seconds=digest.duration)}\n-# match id {digest.lm_id}'
         )
-        print("Match embed completed")
         match_embed.add_field(name="Damage", value=f'''
-            K/D/A: {lm["player_kills"]}/{lm["player_deaths"]}/{lm["player_assists"]}
-            Damage: {stats_end["player_damage"]}
-            Healing: {stats_end["player_healing"]}
-            Damage Taken: {stats_end["player_damage_taken"]}
-            Accuracy: {round((stats_end["shots_hit"] / (stats_end["shots_missed"] + stats_end["shots_hit"])) * 100, 1)}%
+            K/D/A: {digest.kills}/{digest.deaths}/{digest.assists}
+            Damage: {digest.player_end_stats["player_damage"]}
+            Healing: {digest.player_end_stats["player_healing"]}
+            Damage Taken: {digest.player_end_stats["player_damage_taken"]}
+            Accuracy: {round((digest.player_end_stats["shots_hit"] / (digest.player_end_stats["shots_missed"] + digest.player_end_stats["shots_hit"])) * 100, 1)}%
         ''')
 
-        print("Damage embed completed")
         match_embed.add_field(name="Economics", value=f'''
-            Net Worth: {lm["net_worth"]}
-            Last Hits: {lm["last_hits"]}
-            Denies: {lm["denies"]}
-            Level: {lm["hero_level"]}
+            Net Worth: {digest.player_nw}
+            Last Hits: {digest.player_lh}
+            Denies: {digest.player_denies}
+            Level: {digest.player_lvl}
         ''', inline=True)
-
-        print("Economy embed completed")
-
         match_embed.add_field(name="Match Details", value=f"""
-                              Your lane was **{'won' if lanediff > 0 else 'lost'}** - ** {outcome}**
-                              Lane soul diff at **8** min: **{lanediff}k**
-                              {rank_flavor}
-                              """, inline=False)
+            Your lane was **{'won' if digest.lane_diff > 0 else 'lost'}** - ** {outcome}**
+            Lane soul diff at **8** min: **{digest.lane_diff}k**
+            {rank_flavor}
+        """, inline=False)
         
-        print("Laning embed completed")
-        fname = f"inventory-{steam_id}-{lm_id}.png"
+        fname = f"inventory-{steam_id}-{digest.lm_id}.png"
         match_embed.set_image(url=f"attachment://{fname}")
-        print("Inventory embed completed")
 
         with io.BytesIO() as image_binary:
-            dc_image_file(items).save(image_binary, 'PNG')
+            dc_image_file(digest.player_items).save(image_binary, 'PNG')
             image_binary.seek(0)
             await int_msg.edit(embed=match_embed, content=None, attachments=[dc.File(fp=image_binary, filename=fname)])
+
+    @deadlock.command(
+        name="blame",
+        description="Find out EXACTLY who screwed up your last match."
+    )
+    async def copium(self, interaction: dc.Interaction):
+        user = interaction.user
+        cb: dc.InteractionCallbackResponse = await interaction.response.defer(ephemeral=False, thinking=True)
+        int_msg: dc.InteractionMessage = cb.resource
+
+        if not urg.REGISTRY.registered(user.id):
+            await self.not_registered_response(int_msg)
+            return
+        steam_id: int = urg.REGISTRY.steam_registered_as(user.id)
+
+        digest: Digest_lm = await self.get_digest(steam_id, user.name, int_msg)
+        if digest == None:
+            print("Digest failure")
+            return
+        
+        embed = match_default_embed
+        embed.add_field(name="Player Hero", value=f"{hero_name(digest.player_hero)}")
+        embed.add_field(name="Match Details", value=f"""
+            Your lane was **{'won' if digest.lane_diff > 0 else 'lost'}** - ** {self.lane_outcome_str(digest)}**
+            Lane soul diff at **8** min: **{digest.lane_diff}k**
+        """)
+        embed.add_field(name="Setup", value=f"""
+            At 8 minutes, you had **{round(float(digest.player_nw_8)/1000, 1)}k** and your allied **{hero_name(digest.lane_partner_hero)}** had **{round(float(digest.lane_partner_nw_8)/1000, 1)}k.**
+            The enemy **{hero_name(digest.lane_opp_0_hero)}** had **{round(float(digest.lane_opp_0_nw_8)/1000, 1)}k** and the enemy **{hero_name(digest.lane_opp_1_hero)}** had **{round(float(digest.lane_opp_1_nw_8)/1000, 1)}k.**
+            """,
+        inline=False)
+
+        nws = [(digest.player_hero, digest.player_nw_8), 
+               (digest.lane_partner_hero, digest.lane_partner_nw_8),
+               (digest.lane_opp_0_hero, digest.lane_opp_0_nw_8),
+               (digest.lane_opp_1_hero, digest.lane_opp_1_nw_8),
+            ]
+        loser = min(nws, key= lambda t: t[1])
+
+        embed.add_field(name="Deadweight", value=f"In this lane, the **{hero_name(loser[0])}** was complete deadweight.", inline=False)
+
+        await int_msg.edit(embed=embed, content=None)
