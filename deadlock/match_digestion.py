@@ -3,6 +3,13 @@ import requests
 HEROES = requests.get("https://assets.deadlock-api.com/v2/heroes?language=english&only_active=true").json()
 RANKS = requests.get("https://assets.deadlock-api.com/v2/ranks").json()
 
+def get_hero_id(name: str) -> int | None:
+    for hero in HEROES:
+        hero_name: str = hero["name"]
+        if hero_name.lower() == name.lower():
+            return hero["id"]
+    return None
+
 def hero_name(id: int) -> str:
     for hero in HEROES:
         if hero["id"] == id:
@@ -82,6 +89,7 @@ class Digest_lm():
         self.player_denies: int = self.player_end_stats["denies"]
         self.player_lh: int = self.player_end_stats["creep_kills"] + self.player_end_stats["neutral_kills"]
         self.player_lvl: int = self.player_end_stats["level"]
+        self.player_obj_damage = self.player_end_stats["boss_damage"]
 
         self.player_hero: int = self.player_data["hero_id"]
         self.kills: int = self.player_data["kills"]

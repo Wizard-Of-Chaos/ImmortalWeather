@@ -121,9 +121,10 @@ class DeadlockCog(commands.Cog):
             color=dc.Color.yellow(),
             description=f'**{user.nick if user.nick else user.name}** {"achieved **Victory" if digest.victory else "suffered **Defeat"}** as **{hero_name(digest.player_hero)}** - {datetime.timedelta(seconds=digest.duration)}\n-# match id {digest.lm_id}'
         )
-        match_embed.add_field(name="Damage", value=f'''
+        match_embed.add_field(name="Combat", value=f'''
             K/D/A: {digest.kills}/{digest.deaths}/{digest.assists}
             Damage: {digest.player_end_stats["player_damage"]}
+            Objective Damage: {digest.player_end_stats["boss_damage"]}
             Healing: {digest.player_end_stats["player_healing"]}
             Damage Taken: {digest.player_end_stats["player_damage_taken"]}
             Accuracy: {round((digest.player_end_stats["shots_hit"] / (digest.player_end_stats["shots_missed"] + digest.player_end_stats["shots_hit"])) * 100, 1)}%
@@ -201,7 +202,7 @@ class DeadlockCog(commands.Cog):
         int_msg: dc.InteractionMessage = cb.resource
 
         embed = dc.Embed(
-            color=dc.Color.yellow(),
+            color=dc.Color.blue(),
             description=f'**{hero_name(random.choice(HEROES)["id"])}**'
         )
         fname = f"bot-author-not-liable.png"
@@ -211,3 +212,66 @@ class DeadlockCog(commands.Cog):
             randomized_inv_image().save(image_binary, 'PNG')
             image_binary.seek(0)
             await int_msg.edit(embed=embed, content=None, attachments=[dc.File(fp=image_binary, filename=fname)])
+
+    @deadlock.command(
+        name="herostats",
+        description="Get your personal stats on a given hero."
+    )
+    @app_commands.describe(hero="Hero in question to pull up stats on.")
+    async def hero_stats(self, interaction: dc.Interaction, hero: str) -> None:
+        user = interaction.user
+        cb: dc.InteractionCallbackResponse = await interaction.response.defer(ephemeral=False, thinking=True)
+        int_msg: dc.InteractionMessage = cb.resource
+
+        if not urg.REGISTRY.registered(user.id):
+            await self.not_registered_response(int_msg)
+            return
+        steam_id: int = urg.REGISTRY.steam_registered_as(user.id)
+
+        hero_id = get_hero_id(hero)
+        if hero_id == None:
+            await int_msg.edit(content="That's not a real hero.")
+            return
+
+        hero_req = requests.get(f"{DEADLOCK_API_URL}/players/hero-stats?account_ids={steam_id}")
+        if hero_req.status_code != 200:
+            await self.not_found_response(hero_req.status_code, int_msg)
+            return None
+        
+        data = hero_req.json()
+
+        hero_stat = None
+        for hero in data:
+            if hero["hero_id"] == hero_id:
+                hero_stat = hero
+        
+        matches = hero_stat["matches_played"]
+
+        embed = dc.Embed(
+            color=dc.Color.gold(),
+            description=f'**{user.nick if user.nick else user.name}** as **{hero_name(hero_id)}**'
+        )
+        embed.add_field(name="Overall", value=f"""
+            {hero_stat["wins"]} in {matches} matches (**{round((float(hero_stat["wins"]) / float(matches)) * 100, 2) }% winrate**)
+        """, inline=False)
+        
+        embed.add_field(name="Combat", value=f"""
+            Average kills: **{round(float(hero_stat["kills"]) / float(matches), 1)}**
+            Average deaths: **{round(float(hero_stat["deaths"]) / float(matches), 1)}**
+            Average assists: **{round(float(hero_stat["assists"]) / float(matches), 1)}**
+            Damage per minute: **{round(hero_stat["damage_per_min"], 1)}**
+            Objective damage per minute: **{round(hero_stat["obj_damage_per_min"], 1)}**
+            Last hits per minute: **{round(hero_stat["creeps_per_min"], 1)}**
+            Accuracy: **{round(float(hero_stat["accuracy"]) * 100, 1)}%**
+            Headshot rate: **{round(float(hero_stat["crit_shot_rate"]) * 100, 1)}**
+        """)
+
+        embed.add_field(name="Economics", value=f"""
+            Average level: **{round(float(hero_stat["ending_level"]), 1)}**
+            Net worth per minute: **{round(hero_stat["networth_per_min"], 1)}**
+            Creeps per minute: **{round(hero_stat["creeps_per_min"], 1)}**
+            Damage per soul: **{round(hero_stat["damage_per_soul"], 3)}**
+            Objective damage per soul: **{round(hero_stat["obj_damage_per_soul"], 3)}**
+        """)
+
+        await int_msg.edit(embed=embed)

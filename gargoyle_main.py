@@ -71,7 +71,7 @@ async def unregister(interaction: dc.Interaction):
     if interaction.user.id in gargle.CARDINAL_IDS:
         await interaction.response.send_message("You are one of the four Cardinal Directions and are here forever.")
         return
-    urg.REGISTRY.unregister(ctx.author.id)
+    urg.REGISTRY.unregister(interaction.user.id)
     await interaction.response.send_message("Unregistered your steam ID.")
 
 #######################################################################################################
