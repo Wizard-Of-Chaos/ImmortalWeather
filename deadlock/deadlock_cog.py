@@ -254,16 +254,15 @@ class DeadlockCog(commands.Cog):
         embed.add_field(name="Overall", value=f"""
             {hero_stat["wins"]} in {matches} matches (**{round((float(hero_stat["wins"]) / float(matches)) * 100, 2) }% winrate**)
         """, inline=False)
-        
+
         embed.add_field(name="Combat", value=f"""
             Average kills: **{round(float(hero_stat["kills"]) / float(matches), 1)}**
             Average deaths: **{round(float(hero_stat["deaths"]) / float(matches), 1)}**
             Average assists: **{round(float(hero_stat["assists"]) / float(matches), 1)}**
             Damage per minute: **{round(hero_stat["damage_per_min"], 1)}**
             Objective damage per minute: **{round(hero_stat["obj_damage_per_min"], 1)}**
-            Last hits per minute: **{round(hero_stat["creeps_per_min"], 1)}**
             Accuracy: **{round(float(hero_stat["accuracy"]) * 100, 1)}%**
-            Headshot rate: **{round(float(hero_stat["crit_shot_rate"]) * 100, 1)}**
+            Headshot rate: **{round(float(hero_stat["crit_shot_rate"]) * 100, 1)}%**
         """)
 
         embed.add_field(name="Economics", value=f"""
