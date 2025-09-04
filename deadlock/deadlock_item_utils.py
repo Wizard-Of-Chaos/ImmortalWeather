@@ -2,6 +2,8 @@ import requests
 from PIL import Image, PngImagePlugin
 import os
 import io
+import json
+import random
 
 ITEM_IMG_PATH = "deadlock/item_img_buffer/"
 DEADLOCK_API_URL = "https://api.deadlock-api.com/v1"
@@ -25,6 +27,29 @@ def is_upgrade(id: int) -> bool:
         return True
     return False
 
+def valid_random_item(id: int) -> bool:
+    item = __ITEMS__[id]
+    # print(item["name"])
+    if 'disabled' in item:
+        if item['disabled'] == True:
+            return False
+    if not item["shopable"]:
+        return False
+    if item["cost"] < 3200:
+        return False
+    return True
+
+def randomized_inventory() -> list[int]:
+    inventory = []
+    while len(inventory) < 12:
+        item = random.choice(list(__ITEMS__.keys()))
+        #needs to be purchaseable, 3200+ souls, not disabled and not already in inventory
+        while item in inventory or valid_random_item(item) == False:
+            item = random.choice(list(__ITEMS__.keys()))
+        inventory.append(item)
+        # print(__ITEMS__[item]["name"])
+    return inventory
+
 def get_item_img(id: int) -> PngImagePlugin.PngImageFile:
     item = get_item(id)
     if item == None:
@@ -41,6 +66,12 @@ def get_inventory_images(data) -> list[PngImagePlugin.PngImageFile]:
         id = item["item_id"]
         if is_upgrade(id):
             ret.append(get_item_img(id))
+    return ret
+
+def get_inventory_images_from_ids(data: list[int]) -> list[PngImagePlugin.PngImageFile]:
+    ret = []
+    for x in data:
+        ret.append(get_item_img(x))
     return ret
 
 def build_inventory_img(item_images: list[PngImagePlugin.PngImageFile]) -> PngImagePlugin.PngImageFile:    
@@ -63,4 +94,7 @@ def dc_image_file(data) -> PngImagePlugin.PngImageFile:
     file = build_inventory_img(get_inventory_images(data))
     return file
 
+def randomized_inv_image() -> PngImagePlugin.PngImageFile:
+    file = build_inventory_img(get_inventory_images_from_ids(randomized_inventory()))
+    return file
     # ret_image.save(f"{ITEM_IMG_PATH}inventory.png", "PNG")

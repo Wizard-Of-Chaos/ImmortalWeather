@@ -190,3 +190,24 @@ class DeadlockCog(commands.Cog):
         embed.add_field(name="Deadweight", value=f"In this lane, the **{hero_name(loser[0])}** was complete deadweight.", inline=False)
 
         await int_msg.edit(embed=embed, content=None)
+
+    @deadlock.command(
+        name="courage",
+        description="Are you fearless enough to take this build suggestion?"
+    )
+    async def courage(self, interaction: dc.Interaction) -> None:
+        user = interaction.user
+        cb: dc.InteractionCallbackResponse = await interaction.response.defer(ephemeral=False, thinking=True)
+        int_msg: dc.InteractionMessage = cb.resource
+
+        embed = dc.Embed(
+            color=dc.Color.yellow(),
+            description=f'**{hero_name(random.choice(HEROES)["id"])}**'
+        )
+        fname = f"bot-author-not-liable.png"
+        embed.set_image(url=f"attachment://{fname}")
+
+        with io.BytesIO() as image_binary:
+            randomized_inv_image().save(image_binary, 'PNG')
+            image_binary.seek(0)
+            await int_msg.edit(embed=embed, content=None, attachments=[dc.File(fp=image_binary, filename=fname)])
