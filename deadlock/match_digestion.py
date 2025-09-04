@@ -74,7 +74,7 @@ class Digest_lm():
         self.lm_id: int = lm_detailed["match_info"]["match_id"]
         self.duration: int = lm_detailed["match_info"]["duration_s"]
         self.player_team: int = self.player_data["team"]
-        self.victory: bool = lm_detailed["match_info"]["match_outcome"] == self.player_team
+        self.victory: bool = lm_detailed["match_info"]["winning_team"] == self.player_team
         self.player_lane: int = self.player_data["assigned_lane"]
 
         self.player_end_stats = get_player_end_stats(self.duration, self.player_data)
