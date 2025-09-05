@@ -16,15 +16,6 @@ STEAM_API_URL = 'http://api.steampowered.com'
 
 DEADLOCK_API_URL = "https://api.deadlock-api.com/v1"
 
-error_default_embed = dc.Embed(
-    color=dc.Color.red(),
-    description='**Error**'
-)
-match_default_embed = dc.Embed(
-    color=dc.Color.yellow(),
-    description='**Last Match**'
-)
-
 class DeadlockCog(commands.Cog):
     def __init__(self, bot):
         print("Initializing Deadlock functionality cog...")
@@ -157,7 +148,10 @@ class DeadlockCog(commands.Cog):
             print("Digest failure")
             return
         
-        embed = match_default_embed
+        embed =  dc.Embed(
+            color=dc.Color.red(),
+            description='**Last Match**'
+        )
         embed.add_field(name="Player Hero", value=f"{hero_name(digest.player_hero)}")
         embed.add_field(name="Match Details", value=f"""
             Your lane was **{'won' if digest.lane_diff > 0 else 'lost'}** - ** {self.lane_outcome_str(digest)}**
