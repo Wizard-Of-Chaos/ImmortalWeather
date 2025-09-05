@@ -243,6 +243,7 @@ class DeadlockCog(commands.Cog):
             Average assists: **{round(float(hero_stat["assists"]) / float(matches), 1)}**
             Damage per minute: **{round(hero_stat["damage_per_min"], 1)}**
             Objective damage per minute: **{round(hero_stat["obj_damage_per_min"], 1)}**
+            Damage taken per minute: **{round(hero_stat["damage_taken_per_min"], 1)}**
             Accuracy: **{round(float(hero_stat["accuracy"]) * 100, 1)}%**
             Headshot rate: **{round(float(hero_stat["crit_shot_rate"]) * 100, 1)}%**
         """)
