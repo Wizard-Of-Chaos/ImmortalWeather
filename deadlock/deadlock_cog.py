@@ -257,3 +257,89 @@ class DeadlockCog(commands.Cog):
         """)
 
         await int_msg.edit(embed=embed)
+    @deadlock.command(
+        name="meta-roulette",
+        description="Gets a build for the given hero in an Eternus game."
+    )
+    @app_commands.describe(hero="Hero in question to pull up stats on.")
+    async def hero_stats(self, interaction: dc.Interaction, hero: str) -> None:
+        user = interaction.user
+        cb: dc.InteractionCallbackResponse = await interaction.response.defer(ephemeral=False, thinking=True)
+        int_msg: dc.InteractionMessage = cb.resource
+
+        if not urg.REGISTRY.registered(user.id):
+            await int_msg.edit(content="You're not registered. Register with `/register")
+            return
+        steam_id: int = urg.REGISTRY.steam_registered_as(user.id)
+
+        hero_id = get_hero_id(hero)
+        if hero_id == None:
+            await int_msg.edit(content="That's not a real hero.")
+            return
+
+        eternus_req = requests.get(f"{DEADLOCK_API_URL}/matches/metadata?include_objectives=true&include_mid_boss=true&include_player_info=true&include_player_items=true&include_player_stats=true&include_player_death_details=true&min_average_badge=110&order_by=match_id&order_direction=desc&limit=200")
+        if eternus_req.status_code != 200:
+            await int_msg.edit(content=f"Request failed. Status code: {eternus_req.status_code}")
+            return None
+
+        #player_id: int = None
+        #match_data = None
+        matches = []
+
+        # print(match_data)
+        for match in eternus_req.json():
+            for player in match["players"]:
+                if player["hero_id"] == hero_id:
+                    #print("found a match!")
+                    json_dat = json.loads("{}")
+                    json_dat["match_info"] = match
+                    matches.append((player["account_id"], json_dat))
+
+                    #match_data["match_info"] = match
+                    #player_id = player["account_id"]
+                    #match_id = match["match_id"]
+                    #break
+            #if player_id != None:
+                #break
+
+        if len(matches) == 0:
+            await int_msg.edit(content=f"Unable to find an appropriate Eternus game for {hero_name(hero_id)}.")
+            return None
+        # print(match_data)
+
+        which = random.choice(matches)
+
+        digest = Digest_lm(which[0], which[1])
+
+        match_embed = dc.Embed(
+            color=dc.Color.green(),
+            description=f'Some random Eternus freak just pulled this shit as **{hero_name(hero_id)}** (they **{'won' if digest.victory else 'lost'}** in {datetime.timedelta(seconds=digest.duration)})\n-# match id {digest.lm_id}'
+        )
+
+        match_embed.add_field(name="Combat", value=f'''
+            K/D/A: {digest.kills}/{digest.deaths}/{digest.assists}
+            Damage: {digest.player_end_stats["player_damage"]}
+            Objective Damage: {digest.player_end_stats["boss_damage"]}
+            Healing: {digest.player_end_stats["player_healing"]}
+            Damage Taken: {digest.player_end_stats["player_damage_taken"]}
+            Accuracy: {round((digest.player_end_stats["shots_hit"] / (digest.player_end_stats["shots_missed"] + digest.player_end_stats["shots_hit"])) * 100, 1)}%
+        ''')
+
+        match_embed.add_field(name="Economics", value=f'''
+            Net Worth: {digest.player_nw}
+            Last Hits: {digest.player_lh}
+            Denies: {digest.player_denies}
+            Level: {digest.player_lvl}
+        ''', inline=True)
+        match_embed.add_field(name="Match Details", value=f"""
+            Their lane was **{'won' if digest.lane_diff > 0 else 'lost'}**.
+            Lane soul diff at **8** min: **{digest.lane_diff}k**
+        """, inline=False)
+
+        fname = f"inventory-{steam_id}-{digest.lm_id}.png"
+        match_embed.set_image(url=f"attachment://{fname}")
+
+        with io.BytesIO() as image_binary:
+            dc_image_file(digest.player_items).save(image_binary, 'PNG')
+            image_binary.seek(0)
+            await int_msg.edit(embed=match_embed, content=None, attachments=[dc.File(fp=image_binary, filename=fname)])
