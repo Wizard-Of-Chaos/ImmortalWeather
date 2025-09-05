@@ -267,11 +267,6 @@ class DeadlockCog(commands.Cog):
         cb: dc.InteractionCallbackResponse = await interaction.response.defer(ephemeral=False, thinking=True)
         int_msg: dc.InteractionMessage = cb.resource
 
-        if not urg.REGISTRY.registered(user.id):
-            await int_msg.edit(content="You're not registered. Register with `/register")
-            return
-        steam_id: int = urg.REGISTRY.steam_registered_as(user.id)
-
         hero_id = get_hero_id(hero)
         if hero_id == None:
             await int_msg.edit(content="That's not a real hero.")
@@ -336,7 +331,7 @@ class DeadlockCog(commands.Cog):
             Lane soul diff at **8** min: **{digest.lane_diff}k**
         """, inline=False)
 
-        fname = f"inventory-{steam_id}-{digest.lm_id}.png"
+        fname = f"inventory-{which[0]}-{digest.lm_id}.png"
         match_embed.set_image(url=f"attachment://{fname}")
 
         with io.BytesIO() as image_binary:

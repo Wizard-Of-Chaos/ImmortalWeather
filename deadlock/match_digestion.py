@@ -3,10 +3,33 @@ import requests
 HEROES = requests.get("https://assets.deadlock-api.com/v2/heroes?language=english&only_active=true").json()
 RANKS = requests.get("https://assets.deadlock-api.com/v2/ranks").json()
 
+__ALIASES__: dict[str, list[str]] = {
+    'lash': ['asshole'],
+    'lady geist': ['geist'],
+    'mo & krill': ['mo', 'krill', 'mo and krill', 'kriller'],
+    'the doorman': ['doorman'],
+    'victor': ['frank'],
+    'dynamo': ['prof', 'professor'],
+    'vyper': ['snake'],
+    'billy': ['punk', 'goat', 'punkgoat'],
+    'paige': ['bookworm'],
+    'mina': ['vampirebat'],
+    'viscous': ['goo'],
+    'grey talon': ['grey', 'talon', 'bird'],
+    'paradox': ['pdox']
+}
+
 def get_hero_id(name: str) -> int | None:
+    alias = name
+    for key, val in __ALIASES__.items():
+        # print(val)
+        if name in val:
+            alias = key
+            break
+
     for hero in HEROES:
         hero_name: str = hero["name"]
-        if hero_name.lower() == name.lower():
+        if hero_name.lower() == alias.lower():
             return hero["id"]
     return None
 
