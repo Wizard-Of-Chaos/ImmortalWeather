@@ -6,7 +6,8 @@ from discord import app_commands
 from submen.subman_cog import SubmanCog
 from deadlock.deadlock_cog import DeadlockCog
 from datetime import datetime, timezone
-
+from misc.dinnertime import DinnerStorage as din
+import random
 import asyncio
 #urrrrrrrgg... my user...
 import user_reg as urg
@@ -15,6 +16,8 @@ import gargoyle_consts as gargle
 
 prefix: str = "!!"
 token_str: str = "token_alt.txt"
+
+_DINNERS = din('misc/storage/dinners.pkl')
 
 class Bot(commands.Bot):
     uptime: datetime = datetime.now(timezone.utc)
@@ -73,6 +76,24 @@ async def unregister(interaction: dc.Interaction):
         return
     urg.REGISTRY.unregister(interaction.user.id)
     await interaction.response.send_message("Unregistered your steam ID.")
+
+@bot.tree.command(name="universal_spice", description="In case you forgot.")
+async def universal_spice(interaction: dc.Interaction):
+    await interaction.response.send_message("The 'Universal Spice' refers to either [Montreal Steak Seasoning](<https://www.mccormick.com/products/mccormick-grill-mates-montreal-steak-seasoning-3-4-oz>!!) OR\n3 tbsp the aforementioned seasoning\n1 tsp garlic powder\n1/2 tsp chili powder\n1/2 tsp oregano\n1/2 tsp thyme")
+
+@bot.tree.command(name="dinner", description="What the hell should I make for dinner?")
+async def dinnertime(interaction: dc.Interaction):
+    await interaction.response.send_message(random.choice(_DINNERS.dinners))
+
+@bot.command(name="add_dinner")
+async def add_dinner(ctx: ctx, *, dinner):
+    if ctx.author.id != 125433170047795200:
+        await ctx.send("Recipes must be vetted by bot author")
+        return
+    # print(dinner)
+    _DINNERS.dinners.append(dinner)
+    _DINNERS.save()
+    await ctx.send("Added the recipe to possible dinner suggestions.")
 
 #######################################################################################################
 
