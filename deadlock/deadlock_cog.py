@@ -117,7 +117,7 @@ class DeadlockCog(commands.Cog):
         ''', inline=True)
         match_embed.add_field(name="Match Details", value=f"""
             Your lane was **{'won' if digest.lane_diff > 0 else 'lost'}** - ** {outcome}**
-            Lane soul diff at **8** min: **{digest.lane_diff}k**
+            Lane soul diff at **9** min: **{digest.lane_diff}k**
             {rank_flavor}
         """, inline=False)
         
@@ -155,18 +155,18 @@ class DeadlockCog(commands.Cog):
         embed.add_field(name="Player Hero", value=f"{hero_name(digest.player_hero)}")
         embed.add_field(name="Match Details", value=f"""
             Your lane was **{'won' if digest.lane_diff > 0 else 'lost'}** - ** {self.lane_outcome_str(digest)}**
-            Lane soul diff at **8** min: **{digest.lane_diff}k**
+            Lane soul diff at **9** min: **{digest.lane_diff}k**
         """)
         embed.add_field(name="Setup", value=f"""
-            At 8 minutes, you had **{round(float(digest.player_nw_8)/1000, 1)}k** and your allied **{hero_name(digest.lane_partner_hero)}** had **{round(float(digest.lane_partner_nw_8)/1000, 1)}k.**
-            The enemy **{hero_name(digest.lane_opp_0_hero)}** had **{round(float(digest.lane_opp_0_nw_8)/1000, 1)}k** and the enemy **{hero_name(digest.lane_opp_1_hero)}** had **{round(float(digest.lane_opp_1_nw_8)/1000, 1)}k.**
+            At 9 minutes, you had **{round(float(digest.player_nw_9)/1000, 1)}k** and your allied **{hero_name(digest.lane_partner_hero)}** had **{round(float(digest.lane_partner_nw_9)/1000, 1)}k.**
+            The enemy **{hero_name(digest.lane_opp_0_hero)}** had **{round(float(digest.lane_opp_0_nw_9)/1000, 1)}k** and the enemy **{hero_name(digest.lane_opp_1_hero)}** had **{round(float(digest.lane_opp_1_nw_9)/1000, 1)}k.**
             """,
         inline=False)
 
-        nws = [(digest.player_hero, digest.player_nw_8), 
-               (digest.lane_partner_hero, digest.lane_partner_nw_8),
-               (digest.lane_opp_0_hero, digest.lane_opp_0_nw_8),
-               (digest.lane_opp_1_hero, digest.lane_opp_1_nw_8),
+        nws = [(digest.player_hero, digest.player_nw_9), 
+               (digest.lane_partner_hero, digest.lane_partner_nw_9),
+               (digest.lane_opp_0_hero, digest.lane_opp_0_nw_9),
+               (digest.lane_opp_1_hero, digest.lane_opp_1_nw_9),
             ]
         loser = min(nws, key= lambda t: t[1])
 
@@ -328,7 +328,7 @@ class DeadlockCog(commands.Cog):
         ''', inline=True)
         match_embed.add_field(name="Match Details", value=f"""
             Their lane was **{'won' if digest.lane_diff > 0 else 'lost'}**.
-            Lane soul diff at **8** min: **{digest.lane_diff}k**
+            Lane soul diff at **9** min: **{digest.lane_diff}k**
         """, inline=False)
 
         fname = f"inventory-{which[0]}-{digest.lm_id}.png"

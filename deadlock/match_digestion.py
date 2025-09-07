@@ -38,7 +38,7 @@ def hero_name(id: int) -> str:
         if hero["id"] == id:
             return hero["name"]
 
-def get_player_networth_8min(playerdata) -> int:
+def get_player_networth_9min(playerdata) -> int:
     for stat in playerdata["stats"]:
         if stat["time_stamp_s"] == 540:
             return stat["net_worth"]
@@ -63,9 +63,9 @@ def get_player_lane_diff(data, team, lane) -> float:
     for player in data["match_info"]["players"]:
         if player["assigned_lane"] == lane:
             if player["team"] == team:
-                soulcount_0 += get_player_networth_8min(player)
+                soulcount_0 += get_player_networth_9min(player)
             else:
-                soulcount_1 += get_player_networth_8min(player)
+                soulcount_1 += get_player_networth_9min(player)
     
     return round(float(soulcount_0 - soulcount_1) / 1000.0, 1)
 
@@ -119,12 +119,12 @@ class Digest_lm():
         self.deaths: int = self.player_data["deaths"]
         self.assists: int = self.player_data["assists"]
 
-        self.player_nw_8 = get_player_networth_8min(self.player_data)
+        self.player_nw_9 = get_player_networth_9min(self.player_data)
         self.laners = get_lane_players(lm_detailed, self.player_team, steam_id, self.player_lane)
-        self.lane_partner_nw_8 = get_player_networth_8min(self.laners[0])
+        self.lane_partner_nw_9 = get_player_networth_9min(self.laners[0])
         self.lane_partner_hero = self.laners[0]["hero_id"]
         
-        self.lane_opp_0_nw_8 = get_player_networth_8min(self.laners[1])
-        self.lane_opp_1_nw_8 = get_player_networth_8min(self.laners[2])
+        self.lane_opp_0_nw_9 = get_player_networth_9min(self.laners[1])
+        self.lane_opp_1_nw_9 = get_player_networth_9min(self.laners[2])
         self.lane_opp_0_hero = self.laners[1]["hero_id"]
         self.lane_opp_1_hero = self.laners[2]["hero_id"]
