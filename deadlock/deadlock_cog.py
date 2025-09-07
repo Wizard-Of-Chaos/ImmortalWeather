@@ -31,16 +31,15 @@ class DeadlockCog(commands.Cog):
     async def get_digest(self, steam_id: int, user: str, int_msg: dc.InteractionMessage) -> Digest_lm | None:
         print(f"Performing request for {steam_id} ({user})")
         history_request = requests.get(f"{DEADLOCK_API_URL}/players/{steam_id}/match-history")
-
         if history_request.status_code != 200:
-            await int_msg.edit(content=f"Request failed. Status code: {history_request.status_code}")
+            await int_msg.edit(content=f"Request for match history on id {steam_id} failed. Status code: {history_request.status_code}")
             return None
         
         lm = history_request.json()[0]
         lm_meta = requests.get(f"{DEADLOCK_API_URL}/matches/{lm["match_id"]}/metadata")
-    
+
         if lm_meta.status_code != 200:
-            await int_msg.edit(content=f"Request failed. Status code: {history_request.status_code}")
+            await int_msg.edit(content=f"Request for most-recent match (id {lm["match_id"]}) failed. Status code: {lm_meta.status_code}")
             return None
         
         digest: Digest_lm = Digest_lm(steam_id, lm_meta.json())
@@ -72,7 +71,7 @@ class DeadlockCog(commands.Cog):
 
         digest = await self.get_digest(steam_id, user.name, int_msg)
         if digest == None:
-            print("Digest failure")
+            print("Digest failure for request.")
             return None
 
         outcome: str = self.lane_outcome_str(digest)

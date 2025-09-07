@@ -47,12 +47,7 @@ async def sync(ctx: ctx):
     bot.tree.copy_global_to(guild=ctx.guild)
     cmd_list = await bot.tree.sync(guild=ctx.guild)
     print(len(cmd_list))
-
-@bot.tree.command()
-async def slahser(interaction: dc.Interaction):
-    """Slahser's way."""
-    await interaction.response.send_message("BUY A BUNCH OF FUCKING SALVES AND USE THEM IN CHRONO")
-
+    
 @bot.tree.command(name="register", description="Register your Steam ID to your Discord ID for use with the bot.")
 @app_commands.describe(steam_id="Your steam ID (ID3).")
 async def register(interaction: dc.Interaction, steam_id: int):
