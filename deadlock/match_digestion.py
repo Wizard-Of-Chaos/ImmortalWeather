@@ -40,7 +40,7 @@ def hero_name(id: int) -> str:
 
 def get_player_networth_8min(playerdata) -> int:
     for stat in playerdata["stats"]:
-        if stat["time_stamp_s"] == 900:
+        if stat["time_stamp_s"] == 540:
             return stat["net_worth"]
 
 #returns lane partner, then opps 1 and 2
