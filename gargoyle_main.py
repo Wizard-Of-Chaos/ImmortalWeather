@@ -73,26 +73,6 @@ async def unregister(interaction: dc.Interaction):
     urg.REGISTRY.unregister(interaction.user.id)
     await interaction.response.send_message("Unregistered your steam ID.")
 
-@bot.command(name="moron_reg", description="Manually register a moron")
-async def moron_reg(ctx: ctx, steam_id: int, disc_id:str):
-    if ctx.author.id not in gargle.CARDINAL_IDS:
-        await ctx.send("not for you fat boy")
-        return
-    if urg.REGISTRY.registered(disc_id):
-        await ctx.send("already registered")
-        return
-    print(f"registering {int(disc_id)}, {steam_id}")
-    urg.REGISTRY.register(int(disc_id), steam_id)
-    await ctx.send(f"Moron {disc_id} registered to steam ID {steam_id}.")
-
-@bot.command(name="moron_unreg", description="Manuallyy unregister a moron")
-async def moron_unreg(ctx: ctx, disc_id:str):
-    if ctx.author.id not in gargle.CARDINAL_IDS:
-        await ctx.send("not for you fat boy")
-        return
-    urg.REGISTRY.unregister(disc_id)
-    await ctx.send(f"Moron {disc_id} unregistered.")
-
 @bot.tree.command(name="steam_id3", description="Get your steam ID for use with `/register`.")
 @app_commands.describe(profile_link="Your steam profile link.")
 async def steam_id3(interaction: dc.Interaction, profile_link:str):
@@ -113,6 +93,22 @@ async def universal_spice(interaction: dc.Interaction):
 async def dinnertime(interaction: dc.Interaction):
     await interaction.response.send_message(random.choice(_DINNERS.dinners))
 
+@bot.tree.command(name="contribute", description="How does one contribute to Gargoyle?!")
+async def contribute(interaction: dc.Interaction):
+    embed = dc.Embed(
+        color=dc.Color.dark_blue(),
+    )
+    embed.add_field(
+        name="", value=f"""
+        Do you have a friend or a relative who would make a valuable contribution to **Gargoyle**?
+        Then encourage them to [submit a pull request](<https://github.com/Wizard-Of-Chaos/ImmortalWeather>) here.
+        We are **always** looking for new PRs to completely ignore!
+        """
+    )
+    await interaction.response.send_message(embed=embed)
+
+#######################################################################################################
+
 @bot.command(name="add_dinner")
 async def add_dinner(ctx: ctx, *, dinner):
     if ctx.author.id != 125433170047795200:
@@ -122,6 +118,26 @@ async def add_dinner(ctx: ctx, *, dinner):
     _DINNERS.dinners.append(dinner)
     _DINNERS.save()
     await ctx.send("Added the recipe to possible dinner suggestions.")
+
+@bot.command(name="moron_reg", description="Manually register a moron")
+async def moron_reg(ctx: ctx, steam_id: int, disc_id:str):
+    if ctx.author.id not in gargle.CARDINAL_IDS:
+        await ctx.send("not for you fat boy")
+        return
+    if urg.REGISTRY.registered(disc_id):
+        await ctx.send("already registered")
+        return
+    print(f"registering {int(disc_id)}, {steam_id}")
+    urg.REGISTRY.register(int(disc_id), steam_id)
+    await ctx.send(f"Moron {disc_id} registered to steam ID {steam_id}.")
+
+@bot.command(name="moron_unreg", description="Manuallyy unregister a moron")
+async def moron_unreg(ctx: ctx, disc_id:str):
+    if ctx.author.id not in gargle.CARDINAL_IDS:
+        await ctx.send("not for you fat boy")
+        return
+    urg.REGISTRY.unregister(disc_id)
+    await ctx.send(f"Moron {disc_id} unregistered.")
 
 #######################################################################################################
 
