@@ -72,6 +72,26 @@ async def unregister(interaction: dc.Interaction):
     urg.REGISTRY.unregister(interaction.user.id)
     await interaction.response.send_message("Unregistered your steam ID.")
 
+@bot.tree.command(name="moron_reg", description="Manually register a moron")
+async def moron(interaction: dc.Interaction, steam_id: int, disc_id:str):
+    if interaction.user.id not in gargle.CARDINAL_IDS:
+        await interaction.response.send_message("not for you fat boy")
+        return
+    if urg.REGISTRY.registered(disc_id):
+        await interaction.response.send_message("already registered")
+        return
+    print(f"registering {int(disc_id)}, {steam_id}")
+    urg.REGISTRY.register(int(disc_id), steam_id)
+    await interaction.response.send_message(f"Moron {disc_id} registered to steam ID {steam_id}.")
+
+@bot.tree.command(name="moron_unreg", description="Manuallyy unregister a moron")
+async def moron(interaction: dc.Interaction, disc_id: int):
+    if interaction.user.id not in gargle.CARDINAL_IDS:
+        await interaction.response.send_message("not for you fat boy")
+        return
+    urg.REGISTRY.unregister(disc_id)
+    await interaction.response.send_message(f"Moron {disc_id} unregistered.")
+
 @bot.tree.command(name="universal_spice", description="In case you forgot.")
 async def universal_spice(interaction: dc.Interaction):
     await interaction.response.send_message("The 'Universal Spice' refers to either [Montreal Steak Seasoning](<https://www.mccormick.com/products/mccormick-grill-mates-montreal-steak-seasoning-3-4-oz>!!) OR\n3 tbsp the aforementioned seasoning\n1 tsp garlic powder\n1/2 tsp chili powder\n1/2 tsp oregano\n1/2 tsp thyme")
