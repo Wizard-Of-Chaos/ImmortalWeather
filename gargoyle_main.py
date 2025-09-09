@@ -62,7 +62,7 @@ async def register(interaction: dc.Interaction, steam_id: int):
         interaction.response.send_message(f"You are already registered as steam ID {urg.REGISTRY.steam_registered_as(interaction.user.id)}. Unregister with `unregister`.")
         return
     urg.REGISTRY.register(interaction.user.id, steam_id)
-    await interaction.response.send_message(f"User ID {ctx.author.id} registered to steam ID {steam_id}.")
+    await interaction.response.send_message(f"User ID {interaction.user.id} registered to steam ID {steam_id}.")
 
 @bot.tree.command(name="unregister", description="Unregister your Steam ID from your Discord ID.")
 async def unregister(interaction: dc.Interaction):

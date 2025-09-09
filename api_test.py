@@ -34,8 +34,14 @@ def request():
     print(enemy_team_badge)
     print(player_team_badge)
 
-
+def scrape():
+    req = requests.get(f"https://steamcommunity.com/id/sandosius/")
+    steam_id = int(req.text.split("\"steamid\":\"")[1].split("\"")[0])
+    print(steam_id)
+    mask = (1 << 32) - 1
+    print(steam_id & mask)
 
 if __name__ == '__main__':
     print("Requesting")
-    request()
+    scrape()
+    #request()
