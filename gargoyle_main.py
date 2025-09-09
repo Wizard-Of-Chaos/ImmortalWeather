@@ -9,6 +9,7 @@ from datetime import datetime, timezone
 from misc.dinnertime import DinnerStorage as din
 import random
 import asyncio
+import requests
 #urrrrrrrgg... my user...
 import user_reg as urg
 #glgglrrrogglglghglhghlh
@@ -48,7 +49,7 @@ async def sync(ctx: ctx):
     cmd_list = await bot.tree.sync(guild=ctx.guild)
     print(len(cmd_list))
     
-@bot.tree.command(name="register", description="Register your Steam ID to your Discord ID for use with the bot.")
+@bot.tree.command(name="register", description="Register your Steam ID to your Discord ID for use with the bot. Use `/steam_id3` to get yours.")
 @app_commands.describe(steam_id="Your steam ID (ID3).")
 async def register(interaction: dc.Interaction, steam_id: int):
     if interaction.user.id in gargle.CARDINAL_IDS:
@@ -73,7 +74,7 @@ async def unregister(interaction: dc.Interaction):
     await interaction.response.send_message("Unregistered your steam ID.")
 
 @bot.tree.command(name="moron_reg", description="Manually register a moron")
-async def moron(interaction: dc.Interaction, steam_id: int, disc_id:str):
+async def moron_reg(interaction: dc.Interaction, steam_id: int, disc_id:str):
     if interaction.user.id not in gargle.CARDINAL_IDS:
         await interaction.response.send_message("not for you fat boy")
         return
@@ -85,12 +86,24 @@ async def moron(interaction: dc.Interaction, steam_id: int, disc_id:str):
     await interaction.response.send_message(f"Moron {disc_id} registered to steam ID {steam_id}.")
 
 @bot.tree.command(name="moron_unreg", description="Manuallyy unregister a moron")
-async def moron(interaction: dc.Interaction, disc_id: int):
+async def moron_unreg(interaction: dc.Interaction, disc_id:str):
     if interaction.user.id not in gargle.CARDINAL_IDS:
         await interaction.response.send_message("not for you fat boy")
         return
     urg.REGISTRY.unregister(disc_id)
     await interaction.response.send_message(f"Moron {disc_id} unregistered.")
+
+@bot.tree.command(name="steam_id3", description="Get your steam ID for use with `/register`.")
+@app_commands.describe(profile_link="Your steam profile link.")
+async def steam_id3(interaction: dc.Interaction, profile_link:str):
+    req = requests.get(profile_link)
+    if req.status_code != 200:
+        await interaction.response.send_message(f"Your link returned {req.status_code}. Try again with a real link.")
+        return
+    steam_id = int(req.text.split("\"steamid\":\"")[1].split("\"")[0])
+    mask = (1 << 32) - 1
+    print(f"steam ID3 for account link {profile_link}: {steam_id & mask}")
+    await interaction.response.send_message(f"Your steam ID3 is `{steam_id & mask}`.")
 
 @bot.tree.command(name="universal_spice", description="In case you forgot.")
 async def universal_spice(interaction: dc.Interaction):
