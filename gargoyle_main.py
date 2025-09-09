@@ -44,10 +44,10 @@ async def on_ready():
 
 @bot.command(name="sync")
 async def sync(ctx: ctx):
-    print("Synchronizing commands")
+    print(f"Synchronizing commands for guild id {ctx.guild.id}.")
     bot.tree.copy_global_to(guild=ctx.guild)
     cmd_list = await bot.tree.sync(guild=ctx.guild)
-    print(len(cmd_list))
+    print(f'{len(cmd_list)} commands were synchronized to guild {ctx.guild.id}.')
     
 @bot.tree.command(name="register", description="Register your Steam ID to your Discord ID for use with the bot. Use `/steam_id3` to get yours.")
 @app_commands.describe(steam_id="Your steam ID (ID3).")
@@ -73,25 +73,25 @@ async def unregister(interaction: dc.Interaction):
     urg.REGISTRY.unregister(interaction.user.id)
     await interaction.response.send_message("Unregistered your steam ID.")
 
-@bot.tree.command(name="moron_reg", description="Manually register a moron")
-async def moron_reg(interaction: dc.Interaction, steam_id: int, disc_id:str):
-    if interaction.user.id not in gargle.CARDINAL_IDS:
-        await interaction.response.send_message("not for you fat boy")
+@bot.command(name="moron_reg", description="Manually register a moron")
+async def moron_reg(ctx: ctx, steam_id: int, disc_id:str):
+    if ctx.author.id not in gargle.CARDINAL_IDS:
+        await ctx.send("not for you fat boy")
         return
     if urg.REGISTRY.registered(disc_id):
-        await interaction.response.send_message("already registered")
+        await ctx.send("already registered")
         return
     print(f"registering {int(disc_id)}, {steam_id}")
     urg.REGISTRY.register(int(disc_id), steam_id)
-    await interaction.response.send_message(f"Moron {disc_id} registered to steam ID {steam_id}.")
+    await ctx.send(f"Moron {disc_id} registered to steam ID {steam_id}.")
 
-@bot.tree.command(name="moron_unreg", description="Manuallyy unregister a moron")
-async def moron_unreg(interaction: dc.Interaction, disc_id:str):
-    if interaction.user.id not in gargle.CARDINAL_IDS:
-        await interaction.response.send_message("not for you fat boy")
+@bot.command(name="moron_unreg", description="Manuallyy unregister a moron")
+async def moron_unreg(ctx: ctx, disc_id:str):
+    if ctx.author.id not in gargle.CARDINAL_IDS:
+        await ctx.send("not for you fat boy")
         return
     urg.REGISTRY.unregister(disc_id)
-    await interaction.response.send_message(f"Moron {disc_id} unregistered.")
+    await ctx.send(f"Moron {disc_id} unregistered.")
 
 @bot.tree.command(name="steam_id3", description="Get your steam ID for use with `/register`.")
 @app_commands.describe(profile_link="Your steam profile link.")
