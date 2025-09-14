@@ -14,6 +14,7 @@ class UserReg(object):
         except (OSError, EOFError):
             self.registered_ids = gargoyle_consts.CARDINAL_MAP
             self.save()
+
     def save(self):
         with open(self.regfile, 'wb') as config_file:
             pickle.dump(self.registered_ids, config_file)
@@ -43,5 +44,5 @@ class UserReg(object):
             if key == discordid:
                 return val
         return None
-
+    
 REGISTRY = UserReg("id_reg.pkl")

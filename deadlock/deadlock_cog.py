@@ -20,6 +20,10 @@ class DeadlockCog(commands.Cog):
     def __init__(self, bot):
         print("Initializing Deadlock functionality cog...")
         self.bot = bot
+        self.lms: dict[int, int] = {}
+        for id in urg.REGISTRY.registered_ids.values():
+            self.lms[id] = 0
+        
 
     deadlock = app_commands.Group(
         name="deadlock", 
@@ -54,7 +58,32 @@ class DeadlockCog(commands.Cog):
         elif digest.lane_diff <= 0 and not digest.victory:
             outcome = 'This was your fault.'
         return outcome
+    
+    @deadlock.command(
+        name="arewethereyet",
+        description="Checks to see if the API updated since your last game."
+    )
+    async def fucking_whiners(self, interaction: dc.Interaction) -> None:
+        user = interaction.user
+        cb: dc.InteractionCallbackResponse = await interaction.response.defer(ephemeral=False, thinking=True)
+        int_msg: dc.InteractionMessage = cb.resource
 
+        if not urg.REGISTRY.registered(user.id):
+            await int_msg.edit(content="You're not registered. Register with `/register")
+            return
+        steam_id: int = urg.REGISTRY.steam_registered_as(user.id)
+
+        digest = await self.get_digest(steam_id, user.name, int_msg)
+        if digest == None:
+            print("Digest failure for request.")
+            return None
+        
+        if self.lms[steam_id] == digest.lm_id:
+            await int_msg.edit(content="No.")
+            return
+        self.lms[steam_id] = digest.lm_id
+        await int_msg.edit(content="Yes!")
+        
     @deadlock.command(
             name="lm", 
             description="Gets the last match of the calling player. Must be registered."
@@ -73,7 +102,8 @@ class DeadlockCog(commands.Cog):
         if digest == None:
             print("Digest failure for request.")
             return None
-
+        self.lms[steam_id] = digest.lm_id
+        
         outcome: str = self.lane_outcome_str(digest)
         
         rank_flavor: str = f"Your **{get_rank_str(digest.player_team_badge)}** team "
