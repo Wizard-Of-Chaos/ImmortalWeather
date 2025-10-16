@@ -69,7 +69,7 @@ class DeadlockCog(commands.Cog):
         int_msg: dc.InteractionMessage = cb.resource
 
         if not urg.REGISTRY.registered(user.id):
-            await int_msg.edit(content="You're not registered. Register with `/register")
+            await int_msg.edit(content="You're not registered. Register with `/register`")
             return
         steam_id: int = urg.REGISTRY.steam_registered_as(user.id)
 
@@ -94,7 +94,7 @@ class DeadlockCog(commands.Cog):
         int_msg: dc.InteractionMessage = cb.resource
 
         if not urg.REGISTRY.registered(user.id):
-            await int_msg.edit(content="You're not registered. Register with `/register")
+            await int_msg.edit(content="You're not registered. Register with `/register`")
             return
         steam_id: int = urg.REGISTRY.steam_registered_as(user.id)
 
@@ -168,7 +168,7 @@ class DeadlockCog(commands.Cog):
         int_msg: dc.InteractionMessage = cb.resource
 
         if not urg.REGISTRY.registered(user.id):
-            await int_msg.edit(content="You're not registered. Register with `/register")
+            await int_msg.edit(content="You're not registered. Register with `/register`")
             return
         steam_id: int = urg.REGISTRY.steam_registered_as(user.id)
 
@@ -235,7 +235,7 @@ class DeadlockCog(commands.Cog):
         int_msg: dc.InteractionMessage = cb.resource
 
         if not urg.REGISTRY.registered(user.id):
-            await int_msg.edit(content="You're not registered. Register with `/register")
+            await int_msg.edit(content="You're not registered. Register with `/register`")
             return
         steam_id: int = urg.REGISTRY.steam_registered_as(user.id)
 

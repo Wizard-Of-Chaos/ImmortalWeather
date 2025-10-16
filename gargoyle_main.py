@@ -93,6 +93,22 @@ async def universal_spice(interaction: dc.Interaction):
 async def dinnertime(interaction: dc.Interaction):
     await interaction.response.send_message(random.choice(_DINNERS.dinners))
 
+@bot.tree.command(name="confess", description="Confess your sins to the gargoyle.")
+@app_commands.describe(confession="What do you have to say for yourself?")
+async def confessional(interaction: dc.Interaction, confession:str):
+    salvation_options: list[str] = [
+        "You are **forgiven**.",
+        "There is no hope. You are **damned**.",
+        "You are **forgiven if you apologize**.",
+        "I don't **care**. No ruling.",
+        "You are **forgiven** if you describe your purpose in sinning.",
+        "You are **forgiven** if you ping whoever you wronged with a cat video.",
+        "You are **damned** unless you can get Dave to say otherwise.",
+        "If you have **dirty dishes** in your room, you are **damned**, otherwise you are **forgiven**.",
+        "Huh?"
+    ]    
+    await interaction.response.send_message(f'For your confession of "{confession}":\n\n{random.choice(salvation_options)}')
+
 @bot.tree.command(name="contribute", description="How does one contribute to Gargoyle?!")
 async def contribute(interaction: dc.Interaction):
     embed = dc.Embed(
