@@ -105,7 +105,17 @@ async def confessional(interaction: dc.Interaction, confession:str):
         "You are **forgiven** if you ping whoever you wronged with a cat video.",
         "You are **damned** unless you can get Dave to say otherwise.",
         "If you have **dirty dishes** in your room, you are **damned**, otherwise you are **forgiven**.",
-        "Huh?"
+        "Huh?",
+        "You are **damned** if you have not **eaten a vegetable** today, otherwise you are **forgiven**.",
+        "Your salvation would be inconvenient - **purgatory** for this sin.",
+        "You are **forgiven** for this and your **next sin.**",
+        "You are **damned** for this and your **next sin.**",
+        "Morality is subjective. No ruling.",
+        "You are **damned** unless your name is Ryan or Will.",
+        "You are **forgiven** for three hours, at which point you will be **damned** if you have not completed an MSPaint drawing of your sin.",
+        "You are **forgiven** if you make up a guy and submit your guy for judgment by the council.",
+        "You **lack the divine spark** and therefore are not capable of damnation or salvation.",
+        "You are **forgiven** if you can get ChatGPT to say that you are **damned**."
     ]    
     await interaction.response.send_message(f'For your confession of "{confession}":\n\n{random.choice(salvation_options)}')
 
