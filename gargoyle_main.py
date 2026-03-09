@@ -16,9 +16,35 @@ import user_reg as urg
 import gargoyle_consts as gargle
 
 prefix: str = "!!"
-token_str: str = "token_alt.txt"
+token_str: str = "token.txt"
 
 _DINNERS = din('misc/storage/dinners.pkl')
+
+_GOOD_OPTIONS:list[str] = [
+    "Yes.",
+    "No.",
+    "AAAAAAAUGH!",
+    "Hell no!",
+    "Absolutely.",
+    "W",
+    "L",
+    "I dunno.",
+    "Could be.",
+    "Fuck!",
+    "It's slop.",
+    "We're so back.",
+    "It's so over.",
+    "I don't read shit messages.",
+    "Huh?",
+    "Excellent news.",
+    "Guh?",
+    "It will be in the future."
+    "It was then, but not now."
+    "Song has fled the Mountain."
+    "Finally!"
+    "Oh, thank God."
+    "Hey what's up bruh, I just want you to know, I'm also drinking a Wizardbrau right now, and I just want to let you know man you can just drink that shit and smoke a Black and Mild and just chill the fuck out dude. because I'm gonna tell you right now, me and my friends are gonna rip all your fuckin' limbs off your body, and we're gonna fuckin' shove dead animals down your throat until your fuckin' stomach explodes and then we're all gonna piss on you and light you on fire. Alright, so thanks for making that post, but we're basically gonna torture and kill you now."
+] 
 
 class Bot(commands.Bot):
     uptime: datetime = datetime.now(timezone.utc)
@@ -31,6 +57,12 @@ class Bot(commands.Bot):
     async def setup_hook(self):
         self.tree.copy_global_to(guild=dc.Object(id=132689675981684736))
         await self.tree.sync(guild=dc.Object(id=132689675981684736))
+    
+    async def on_message(self, message:dc.Message):
+        if message.author == self.user:
+            return
+        if "is this good" in message.content.lower() or "is this true" in message.content.lower():
+            await message.channel.send(random.choice(_GOOD_OPTIONS), mention_author=True)
 
 intents = dc.Intents.default()
 intents.message_content = True
