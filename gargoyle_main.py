@@ -38,11 +38,11 @@ _GOOD_OPTIONS:list[str] = [
     "Huh?",
     "Excellent news.",
     "Guh?",
-    "It will be in the future."
-    "It was then, but not now."
-    "Song has fled the Mountain."
-    "Finally!"
-    "Oh, thank God."
+    "It will be in the future.",
+    "It was then, but not now.",
+    "Song has fled the Mountain.",
+    "Finally!",
+    "Oh, thank God.",
     "Hey what's up bruh, I just want you to know, I'm also drinking a Wizardbrau right now, and I just want to let you know man you can just drink that shit and smoke a Black and Mild and just chill the fuck out dude. because I'm gonna tell you right now, me and my friends are gonna rip all your fuckin' limbs off your body, and we're gonna fuckin' shove dead animals down your throat until your fuckin' stomach explodes and then we're all gonna piss on you and light you on fire. Alright, so thanks for making that post, but we're basically gonna torture and kill you now."
 ] 
 
