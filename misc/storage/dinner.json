@@ -1,0 +1,317 @@
+{
+    "entrees": [
+        {
+            "name": "Pork Tenderloin",
+            "cook_time": "25-30 min",
+            "ingredients": [
+                "1 or 2 pork tenderloins (about 1 lb each)",
+                "~3 tbsp `/universal_spice` (we're going to be smearing around a lot of this)",
+                "~1-2 tbsp olive oil",
+                "1/2 cup white wine or stock (any kind works, pick your favorite)"
+            ],
+            "equipment": [
+                "Cast-iron skillet (alternately, any kind of oven-safe skillet or a skillet + a baking pan)"
+            ],
+            "method": [
+                "Preheat the oven to 400 F.",
+                "Smear the bejesus out of both tenderloins with the spice mix. Be thorough.",
+                "Heat the oil in your skillet to searing temperature. It is ready when you spit in it and it sizzles. (Flick a drop of water into it if someone's watching.)",
+                "Throw the tenderloins in the pan and cook until browned -- usually about 4-5 minutes.",
+                "Flip tenderloins and cook for another 4-5 minutes on the other side.",
+                "Add in the wine or stock and let boil for about a minute.",
+                "Take the skillet off the heat and put it in the oven (if your pan is not oven safe, transfer the tenderloins to something that is first).",
+                "Bake for about twenty minutes.\\* *See note regarding cook times.*",
+                "Let rest for 5-10 minutes before serving. Juices are good."
+            ],
+            "notes": [
+                "The cook time is going to vary a LOT based on the size of your tenderloins; anywhere from 15 to 30 minutes. The easiest way to check is to simply stab the pork and check the juices (clear is good, bloody is bad). Alternatively slice it about halfway in and check to see if it's still uncooked. Light pink is okay; if it's uncooked it'll be quite obvious."
+            ]
+        },
+        {
+            "name": "Mac and Cheese",
+            "cook_time": "30 min",
+            "ingredients": [
+                "1 8 oz stick of sharp white cheddar, shredded (Cabot's Seriously Sharp works well)",
+                "1 8 oz stick of sharp yellow cheddar, shredded (Cabot's, you can use pre-shredded here but its not as good)",
+                "1 box of large macaroni noodles",
+                "3 eggs",
+                "1 cup half and half OR cream",
+                "Package of country ham",
+                "Bread crumbs",
+                "Onion powder, red pepper flakes, paprika, and chili powder in your preferred ratios (I genuinely just eyeball this every time)",
+                "Stick of butter / cooking spray"
+            ],
+            "equipment": [
+                "8 by 11 by 2½ inch deep baking dish (can be sized to whatever, this just fits the ingredients)",
+                "A food processor is really handy to shred the cheese here. Less work."
+            ],
+            "method": [
+                "Preheat the oven to 350 F.",
+                "Chop up your ham, coarsely. Optionally fry it in a skillet, then set aside.",
+                "Spray the bejesus out of the inside of the baking dish, OR apply a cold stick of butter to all sides.",
+                "Boil the macaroni according to the box directions.",
+                "While the macaroni is boiling, combine the eggs and cream in a bowl and whisk until blended. Add some onion, chili, and pepper flakes (last time I did this it was ~½ tsp each) to the mix. Hot sauce also welcome.",
+                "Put a 1 noodle high layer in the baking dish. Sprinkle on enough cheese to cover the noodles, then add about a third of the country ham.",
+                "Repeat the above step until you run out of noodles (typically like 3 layers of noodle).",
+                "Whisk the cream + egg mixture together and pour it evenly over the surface.",
+                "Cover entire surface in a layer of bread crumbs, but don't overdo. Optionally cut some butter into chunks and evenly dot the top. Sprinkle paprika over the whole thing.",
+                "Put in the oven for 30-35 minutes. Allow to sit for at least 5 minutes before cutting into it."
+            ],
+            "notes": [
+            ]
+        },
+        {
+            "name": "Burgers",
+            "cook_time": "About 10 to 15 minutes",
+            "ingredients": [
+                "1 lb ground beef (the crappiest 85/15 you can find, the fat makes it taste better)",
+                "1 tbsp mustard (acid)",
+                "1 tsp Worcestershire sauce",
+                "1 1/2 tbsp `/universal_spice` (salt)",
+                "Some grated cheddar cheese (helps it hold together, but not necessary)"
+            ],
+            "equipment": [
+                "Grill or cast-iron pan"
+            ],
+            "method": [
+                "Heat up your grill or the skillet.",
+                "Mix up the beef with all the other shit.",
+                "Separate into 3-6 oz patties.",
+                "Cook (timing trial and error and size dependent, just stare at it). Eat."
+            ],
+            "notes": [
+                "The key to making ANY meat taste good is *acid* and *salt*."
+            ]
+        },
+        {
+            "name": "Sirloin with Pomegranate Glaze",
+            "cook_time": "~30-40 minutes",
+            "ingredients": [
+                "Large sirloin steak",
+                "2 teaspoons rosemary (preferably chopped and fresh, not a big deal if not)",
+                "Salt and pepper (no `/universal_spice`; we have other plans)",
+                "1 cup pomegranate juice",
+                "4 teaspoons brown sugar",
+                "2 1/2 teaspoons balsamic vinegar"
+            ],
+            "equipment": [
+                "1 saucepan",
+                "Some way of cooking a steak (grill, broil, sear, whatever)"
+            ],
+            "method": [
+                "Season the steak with the salt, pepper, and rosemary. Let it rest for awhile and allow the salt to sink into the meat.",
+                "While it's resting, add the pomegranate juice, vinegar, and brown sugar to the saucepan. Mix well.",
+                "Boil the mix, then allow to simmer on about half heat until it's reduced to a syrup. Reducing to a syrup is kind of tricky and takes some patience. Put a spoon into it and watch how it flows when you pour it back into the pan. When it's visibly thicker, it's ready.",
+                "Cook the steak. I don't care how you do this. 4 minutes a side is usually good for medium rare.",
+                "Apply the syrup to the steak, serve with some crunchy vegetables on the side."
+            ],
+            "notes": [
+                "Reductions are a bitch. Patience is key for this one."
+            ]
+        },
+        {
+            "name": "Shrimp and Grits",
+            "cook_time": "20 minutes (less if you're cracked)",
+            "ingredients": [
+                "3 cups milk",
+                "2 cloves garlic (2 tsp of pre-chopped garlic or powder if you have that)",
+                "3/4 cup grits",
+                "6 slices of bacon",
+                "1 1/2 pounds shrimp",
+                "2 tablespoons olive oil",
+                "Salt and pepper (`/universal_spice` not really recommended but maybe if you're stupid)",
+                "Spritz of lemon"
+            ],
+            "equipment": [
+                "1 saucepan",
+                "1 skillet"
+            ],
+            "method": [
+                "Boil the milk in the saucepan with half the garlic and some salt and pepper to taste.",
+                "Whisk in the grits, then reduce the heat to about half or medium low and simmer until the grits are creamy. Stir constantly as this will be kind of finicky.",
+                "Add additional seasoning if it's bland.",
+                "Cook up the bacon in the skillet and set it aside for now.",
+                "Saute the (salted and peppered) shrimps in the bacon fat until they're pink. This takes absolutely zero time, so watch it closely.",
+                "Add the other half of the garlic and cook it for about a minute.",
+                "Apply grits to plate, throw chopped bacon on top, throw shrimp on top of that, apply lemon to the whole mess and serve."
+            ],
+            "notes": [
+                "If you're dead certain of your timing, you can cook the grits at the same time as the shrimp. However, this is easy to screw up, so maybe don't."
+            ]
+        },
+        {
+            "name": "Pork Chops",
+            "cook_time": "12-15 minutes (plus an hour of brining)",
+            "ingredients": [
+                "Pork chops (2-4)",
+                "6 tbsp salt or however the fuck much you want",
+                "2-3 cups water",
+                "`/universal_spice` to taste"
+            ],
+            "equipment": [
+                "Plastic bag",
+                "Grill or other method of cooking meat cuts"
+            ],
+            "method": [
+                "Create saltwater from the salt and water and then put the pork chops in it. Forget about it for minimum 1 hour.",
+                "Dry out pork chops and heat up the grill.",
+                "Spice the pork chops and cook to taste (usually 5 minutes a side, longer for thicker chops). Serve with some easy to steam veggie like broccoli."
+            ],
+            "notes": [
+                "I'm sick of people fucking up pork. Literally just brine it and it'll taste incredible."
+            ]
+        },
+        {
+            "name": "Jambalaya",
+            "cook_time": "50-60 minutes",
+            "ingredients": [
+                "1 lb MEAT (I prefer andouille sausage or shrimps)",
+                "2 green bell peppers, chopped",
+                "2 ribs celery, chopped",
+                "1 white onion, chopped",
+                "3 scallions, chopped",
+                "2 cloves garlic, chopped",
+                "1 pound white rice",
+                "4 large tomatoes, chopped",
+                "3 1/2 cups water",
+                "1-2 tablespoons olive oil"
+            ],
+            "equipment": [
+                "1 big-ass pot"
+            ],
+            "method": [
+                "Cook your meat in the pot with some oil over high heat - seared with sausage, until pink with shrimps.",
+                "Pull out the meat from the pot and set it aside.",
+                "Toss in the peppers, celery, onion, scallions, and garlic and cook until caramelized (roughly 10 minutes). Add some salt and pepper as well.",
+                "Stir in the rice, meat, tomatoes, and the water, as well as plenty of salt and pepper. You can check this mix afterward; it should taste pretty solid already.",
+                "Boil the whole thing, then simmer until the rice is nice and tender - about 25-30 minutes.",
+                "Let sit for about 10 minutes before serving."
+            ],
+            "notes": [
+                "You can add basically any kind of seasoning you want, optionally - the food tends to speak for itself. Chili peppers can go far, as an example."
+            ]
+        },
+        {
+            "name": "Kielbasa and Potatoes",
+            "cook_time": "30-40 minutes",
+            "ingredients": [
+                "2 packs of kielbasa",
+                "3 potatoes",
+                "2-3 bell peppers or your vegetable of choice (broccoli or others can also work)",
+                "1 Red onion",
+                "Olive oil",
+                "Your favorite spice mix (`/universal_spice` recommended)"
+            ],
+            "equipment": [
+                "Large sheet pan + cooking spray"
+            ],
+            "method": [
+                "Preheat oven to 400 F.",
+                "Slice up the kielbasa into thin chunks. Sear it if you want.",
+                "Chop the vegetables and onions to be roughly the same size.",
+                "Chop potatoes into a size smaller than the vegetables.",
+                "Mix up the potatoes and vegetables into a bowl or something and toss them with the olive oil and spices.",
+                "Spray the bejesus out of the pan with the cooking spray, then pour the potatoes and veggies in. Top with the kielbasa.",
+                "Cook for about 30 minutes in the oven, more if necessary.",
+                "I like to top it with a tiny amount of gochujang or other spicy seasoning, but it's not required."
+            ],
+            "notes": [
+                "Fun fact: this kind of fuck-it cooking works with a large variety of ingredients. Turns out if you bake a bunch of meat and veggies together, it usually tastes okay."
+            ]
+        },
+        {
+            "name": "Pulled Pork",
+            "cook_time": "5 hours",
+            "ingredients": [
+                "3-4 lbs pork butt/shoulder",
+                "2 tbsp oil",
+                "8oz broth (can be beef, chicken, or whatever you want really)",
+                "8oz sweet liquid (I've used Sprite, Coca-Cola, regular-ass syrup and various types of juice. Best results with Sprite)",
+                "[Optional] 1 bottle dark beer",
+                "Your favorite spice mix (I like salt, chili, onion, and garlic powder with some cumin, sometimes gochujang as well)",
+                "Your favorite barbecue sauce (get something savory)"
+            ],
+            "equipment": [
+                "Dutch oven or large oven-safe pot"
+            ],
+            "method": [
+                "Preheat oven to 300 F.",
+                "Trim excess fat from pork (trust me, it gets disgusting otherwise) and chop into several large pieces for ease of searing.",
+                "Get your spice mix together and slather the pork in it. Do not apply the barbecue sauce yet.",
+                "Heat up the oil and sear the pork on all sides.",
+                "Pour all your liquids into the pot and slap it into the oven with the lid on. Cook for 3 hours.",
+                "Remove lid, cook for another 1-2 hours or until it pulls apart super easily.",
+                "Shred the meat with a couple of forks and slather it in barbecue sauce."
+            ],
+            "notes": [
+                "This is a great example of acid being a key for meat dishes. Soda is acidic, so it works a treat here. Maybe don't try it with pure orange juice, though."
+            ]
+        },
+        {
+            "name": "Chili",
+            "cook_time": "",
+            "ingredients": [
+                "1 lb beef stew meat (the type you can get like five pounds of for a quarter)",
+                "14 oz beef broth (roughly the size of a beef broth container)",
+                "1 can dark red kidney beans (you can cook these yourself but I never bother)",
+                "3 tbsp olive oil",
+                "Flour",
+                "**Spice mix:**",
+                "2 tsp oregano",
+                "1 tsp salt",
+                "3 tbsp chili powder",
+                "1 tbsp cumin",
+                "2 cloves garlic, chopped (or the equivalent in powder)"
+            ],
+            "equipment": [
+                "Large pot"
+            ],
+            "method": [
+                "Mince up the garlic and mix all your spices together.",
+                "In a plastic bag, cover the beef chunks in flour.",
+                "Heat up the oil in the pot. It is safe to cook with when you spit in it and it sizzles properly.",
+                "Shake off the excess flour from the beef chunks and dump them in the pot. Sear until they're browned. You don't need to be too thorough.",
+                "Throw in the beef stock and spice mixes, mix all of it up, then set it to simmer for 2 hours. If you were drinking a dark beer while cooking, pour that in now too.",
+                "Add the kidney beans, then let cook for another two hours."
+            ],
+            "notes": [
+                "This chili is edible at all times of day, and is in fact intended to be."
+            ]
+        }
+    ],
+    "sides": [
+        {
+            "name": "Steamed Veggies",
+            "cook_time": "Less than 10 minutes",
+            "ingredients": [
+                "Your favorite steamable vegetable (broccoli, green beans, asparagus, whatever)"
+            ],
+            "equipment": [
+                "Steam basket",
+                "Pot to put steam basket in"
+            ],
+            "method": [
+                "Put some water in the pot, then put the steam basket into it.",
+                "Put veggies in the steamer. Blast that shit on high until you're satisfied."
+            ],
+            "notes": [
+                "Easiest possible side."
+            ]
+        }
+    ],
+    "drinks": [
+        {
+            "name": "Kamikaze",
+            "ingredients": [
+                "1 part triple sec",
+                "1 part vodka",
+                "1 part lime juice"
+            ],
+            "method": [
+                "Mix all parts in a cocktail shaker and serve over ice."
+            ],
+            "notes": [
+            ]
+        }
+    ]
+}

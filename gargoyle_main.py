@@ -3,10 +3,12 @@ import discord.interactions as interacts
 from discord.ext import commands
 from discord.ext.commands import Context as ctx
 from discord import app_commands
+
 from submen.subman_cog import SubmanCog
 from deadlock.deadlock_cog import DeadlockCog
+from misc.dinner.dinner_cog import DinnerCog
+
 from datetime import datetime, timezone
-from misc.dinnertime import DinnerStorage as din
 import random
 import asyncio
 import requests
@@ -17,8 +19,6 @@ import gargoyle_consts as gargle
 
 prefix: str = "!!"
 token_str: str = "token.txt"
-
-_DINNERS = din('misc/storage/dinners.pkl')
 
 _GOOD_OPTIONS:list[str] = [
     "Yes.",
@@ -71,6 +71,7 @@ bot = Bot(intents=intents)
 @bot.event
 async def on_ready():
     await bot.add_cog(DeadlockCog(bot))
+    await bot.add_cog(DinnerCog(bot, 'misc/storage/dinner.json'))
     await bot.setup_hook()
     print(f'{bot.user} ready.')
 
@@ -116,14 +117,6 @@ async def steam_id3(interaction: dc.Interaction, profile_link:str):
     mask = (1 << 32) - 1
     print(f"steam ID3 for account link {profile_link}: {steam_id & mask}")
     await interaction.response.send_message(f"Your steam ID3 is `{steam_id & mask}`.")
-
-@bot.tree.command(name="universal_spice", description="In case you forgot.")
-async def universal_spice(interaction: dc.Interaction):
-    await interaction.response.send_message("The 'Universal Spice' refers to either [Montreal Steak Seasoning](<https://www.mccormick.com/products/mccormick-grill-mates-montreal-steak-seasoning-3-4-oz>!!) OR\n3 tbsp the aforementioned seasoning\n1 tsp garlic powder\n1/2 tsp chili powder\n1/2 tsp oregano\n1/2 tsp thyme")
-
-@bot.tree.command(name="dinner", description="What the hell should I make for dinner?")
-async def dinnertime(interaction: dc.Interaction):
-    await interaction.response.send_message(random.choice(_DINNERS.dinners))
 
 @bot.tree.command(name="confess", description="Confess your sins to the gargoyle.")
 @app_commands.describe(confession="What do you have to say for yourself?")
