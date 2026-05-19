@@ -160,16 +160,6 @@ async def contribute(interaction: dc.Interaction):
 
 #######################################################################################################
 
-@bot.command(name="add_dinner")
-async def add_dinner(ctx: ctx, *, dinner):
-    if ctx.author.id != 125433170047795200:
-        await ctx.send("Recipes must be vetted by bot author")
-        return
-    # print(dinner)
-    _DINNERS.dinners.append(dinner)
-    _DINNERS.save()
-    await ctx.send("Added the recipe to possible dinner suggestions.")
-
 @bot.command(name="moron_reg", description="Manually register a moron")
 async def moron_reg(ctx: ctx, steam_id: int, disc_id:str):
     if ctx.author.id not in gargle.CARDINAL_IDS:
