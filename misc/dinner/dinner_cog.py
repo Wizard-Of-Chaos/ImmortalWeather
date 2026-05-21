@@ -121,7 +121,7 @@ class DinnerCog(commands.Cog):
 
     @app_commands.command(name="side", description="Get a random side dish!")
     async def side(self, interaction: dc.Interaction, searchparams:str = None):
-        choice = self.get_choice_from_list(self.entrees, searchparams)
+        choice = self.get_choice_from_list(self.sides, searchparams)
         if choice == None:
             await interaction.response.send_message("Nothing matched your search parameters, you *picky eating* motherfucker. Just eat a goddamn vegetable!")
             return
@@ -129,7 +129,7 @@ class DinnerCog(commands.Cog):
 
     @app_commands.command(name="drink", description="Get a random drink!")
     async def drink(self, interaction: dc.Interaction, searchparams:str = None):
-        choice = self.get_choice_from_list(self.entrees, searchparams)
+        choice = self.get_choice_from_list(self.drinks, searchparams)
         if choice == None:
             await interaction.response.send_message("Nothing matched your search parameters, you *picky drinking* motherfucker.")
             return
