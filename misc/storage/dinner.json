@@ -42,7 +42,7 @@
                 "Stick of butter / cooking spray"
             ],
             "equipment": [
-                "8 by 11 by 2½ inch deep baking dish (can be sized to whatever, this just fits the ingredients)",
+                "8 by 11 by 2 1/2 inch deep baking dish (can be sized to whatever, this just fits the ingredients)",
                 "A food processor is really handy to shred the cheese here. Less work."
             ],
             "method": [
@@ -50,15 +50,14 @@
                 "Chop up your ham, coarsely. Optionally fry it in a skillet, then set aside.",
                 "Spray the bejesus out of the inside of the baking dish, OR apply a cold stick of butter to all sides.",
                 "Boil the macaroni according to the box directions.",
-                "While the macaroni is boiling, combine the eggs and cream in a bowl and whisk until blended. Add some onion, chili, and pepper flakes (last time I did this it was ~½ tsp each) to the mix. Hot sauce also welcome.",
+                "While the macaroni is boiling, combine the eggs and cream in a bowl and whisk until blended. Add some onion, chili, and pepper flakes (last time I did this it was ~1/2 tsp each) to the mix. Hot sauce also welcome.",
                 "Put a 1 noodle high layer in the baking dish. Sprinkle on enough cheese to cover the noodles, then add about a third of the country ham.",
                 "Repeat the above step until you run out of noodles (typically like 3 layers of noodle).",
                 "Whisk the cream + egg mixture together and pour it evenly over the surface.",
                 "Cover entire surface in a layer of bread crumbs, but don't overdo. Optionally cut some butter into chunks and evenly dot the top. Sprinkle paprika over the whole thing.",
                 "Put in the oven for 30-35 minutes. Allow to sit for at least 5 minutes before cutting into it."
             ],
-            "notes": [
-            ]
+            "notes": []
         },
         {
             "name": "Burgers",
@@ -249,7 +248,7 @@
         },
         {
             "name": "Chili",
-            "cook_time": "",
+            "cook_time": "4 hours",
             "ingredients": [
                 "1 lb beef stew meat (the type you can get like five pounds of for a quarter)",
                 "14 oz beef broth (roughly the size of a beef broth container)",
@@ -276,6 +275,35 @@
             ],
             "notes": [
                 "This chili is edible at all times of day, and is in fact intended to be."
+            ]
+        },
+        {
+            "name": "Peach and Pork Skewers",
+            "cook_time": "~20 minutes",
+            "ingredients": [
+                "1+ peach (more depending on how much you like peach)",
+                "1 pork tenderloin + brining equipment (salt, water, bag)",
+                "1 bell pepper",
+                "1 red onion",
+                "[Optional] 1 pack bacon",
+                "5-6 tablespoons `/universal_spice`"
+            ],
+            "equipment": [
+                "Many bamboo skewers",
+                "Grill (alternately, a pan + wire rack with the oven if you're trying to broil these)"
+            ],
+            "method": [
+                "Brine the tenderloin for at least an hour.",
+                "About half an hour before you're ready to cook, soak the bamboo skewers in a bowl of water. This makes sure they don't light on fire later during cooking.",
+                "Chop the tenderloin into long strips. Chop the peach into thick slices.",
+                "Coat the pork strips in your spice of choice and then thread each strip around a slice of peach. Apply to skewer.",
+                "Add red onion and pepper to skewer alternately. Repeat step 3 until you have 2-3 chunks of pork on each skewer. If you have bacon, thread that in the same way but on the opposite side.",
+                "Continue making as many skewers as you feel like you can eat / have ingredients for.",
+                "Fire up the grill to half-heat, or broil on medium or low.",
+                "Cook skewers for roughly 8-10 minutes a side, depending on grill or oven power. Serve immediately."
+            ],
+            "notes": [
+                "This is a time consuming process to set up the damn skewers, but the result is worth it."
             ]
         }
     ],
@@ -310,8 +338,7 @@
             "method": [
                 "Mix all parts in a cocktail shaker and serve over ice."
             ],
-            "notes": [
-            ]
+            "notes": []
         }
     ]
 }

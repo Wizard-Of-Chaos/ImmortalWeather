@@ -1,0 +1,29 @@
+{
+    "name": "Peach and Pork Skewers",
+    "cook_time": "~20 minutes",
+    "ingredients": [
+        "1+ peach (more depending on how much you like peach)",
+        "1 pork tenderloin + brining equipment (salt, water, bag)",
+        "1 bell pepper",
+        "1 red onion",
+        "[Optional] 1 pack bacon",
+        "5-6 tablespoons `/universal_spice`"
+    ],
+    "equipment": [
+        "Many bamboo skewers",
+        "Grill (alternately, a pan + wire rack with the oven if you're trying to broil these)"
+    ],
+    "method": [
+        "Brine the tenderloin for at least an hour.",
+        "About half an hour before you're ready to cook, soak the bamboo skewers in a bowl of water. This makes sure they don't light on fire later during cooking.",
+        "Chop the tenderloin into long strips. Chop the peach into thick slices.",
+        "Coat the pork strips in your spice of choice and then thread each strip around a slice of peach. Apply to skewer.",
+        "Add red onion and pepper to skewer alternately. Repeat step 3 until you have 2-3 chunks of pork on each skewer. If you have bacon, thread that in the same way but on the opposite side.",
+        "Continue making as many skewers as you feel like you can eat / have ingredients for.",
+        "Fire up the grill to half-heat, or broil on medium or low.",
+        "Cook skewers for roughly 8-10 minutes a side, depending on grill or oven power. Serve immediately."
+    ],
+    "notes": [
+        "This is a time consuming process to set up the damn skewers, but the result is worth it."
+    ]
+}
