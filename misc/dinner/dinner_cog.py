@@ -139,7 +139,7 @@ class DinnerCog(commands.Cog):
     async def universal_spice(self, interaction: dc.Interaction):
         await interaction.response.send_message("The 'Universal Spice' refers to either [Montreal Steak Seasoning](<https://www.mccormick.com/products/mccormick-grill-mates-montreal-steak-seasoning-3-4-oz>) OR\n3 tbsp the aforementioned seasoning\n1 tsp garlic powder\n1/2 tsp chili powder\n1/2 tsp oregano\n1/2 tsp thyme")
 
-    @app_commands.command(name="submission_template", description="Gets the JSON template for submitting a recipe.")
+    @app_commands.command(name="template_submission", description="Gets the JSON template for submitting a recipe.")
     async def templatesub(self, interaction: dc.Interaction):
         await interaction.response.send_message(
             """
