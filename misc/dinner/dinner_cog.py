@@ -228,11 +228,11 @@ Drink template:
         await self.add_recipe(interaction, 'entree', file)
 
     @app_commands.command(name="submit_side", description="Submit a JSON file for a side dish.")
-    async def submit_entree(self, interaction: dc.Interaction, file: dc.Attachment):
+    async def submit_side(self, interaction: dc.Interaction, file: dc.Attachment):
         await self.add_recipe(interaction, 'side', file)
 
     @app_commands.command(name="submit_drink", description="Submit a JSON file for a mixed drink.")
-    async def submit_entree(self, interaction: dc.Interaction, file: dc.Attachment):
+    async def submit_drink(self, interaction: dc.Interaction, file: dc.Attachment):
         await self.add_recipe(interaction, 'drink', file)
 
     # turns a discord message into the accepted format for the json dinner setup. unused atm
