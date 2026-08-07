@@ -58,6 +58,8 @@ class Bot(commands.Bot):
     async def setup_hook(self):
         self.tree.copy_global_to(guild=dc.Object(id=132689675981684736))
         await self.tree.sync(guild=dc.Object(id=132689675981684736))
+        self.tree.copy_global_to(guild=dc.Object(id=488537187374333962))
+        await self.tree.sync(guild=dc.Object(id=488537187374333962))
     
     async def on_message(self, message:dc.Message):
         if message.author == self.user:
