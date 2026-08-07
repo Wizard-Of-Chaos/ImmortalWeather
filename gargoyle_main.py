@@ -7,6 +7,7 @@ from discord import app_commands
 from submen.subman_cog import SubmanCog
 from deadlock.deadlock_cog import DeadlockCog
 from misc.dinner.dinner_cog import DinnerCog
+from misc.kevin.kevin_cog import KevinCog
 
 from datetime import datetime, timezone
 import random
@@ -72,6 +73,7 @@ bot = Bot(intents=intents)
 async def on_ready():
     await bot.add_cog(DeadlockCog(bot))
     await bot.add_cog(DinnerCog(bot, 'misc/storage/dinner.json'))
+    await bot.add_cog(KevinCog(bot))
     await bot.setup_hook()
     print(f'{bot.user} ready.')
 
