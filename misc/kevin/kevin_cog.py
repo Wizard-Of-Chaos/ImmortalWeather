@@ -4,7 +4,7 @@ from discord import app_commands
 import subprocess
 
 KEVIN_LOCATION = "misc/kevin/kevin.jpg"
-CURL_CMD = ["curl", "--http0.9", "http://192.168.1.161/kevin", "--output", KEVIN_LOCATION ]
+CURL_CMD = ["curl", "--http0.9", "http://192.168.1.163/kevin", "--output", KEVIN_LOCATION ]
 
 class KevinCog(commands.Cog):
     def __init__(self, bot):
