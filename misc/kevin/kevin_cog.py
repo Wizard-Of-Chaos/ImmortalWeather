@@ -20,8 +20,12 @@ class KevinCog(commands.Cog):
         # await interaction.response.send_message("Kevin is under maintenance! Here's the last Kevin pic for now: ", file=dc.File(KEVIN_LOCATION))
 
         cb: dc.InteractionCallbackResponse = await interaction.response.defer(ephemeral=False, thinking=True)
-        result = requests.get("http://192.168.1.163/kevin")
-        with open(KEVIN_LOCATION, mode='wb') as kevin:
-            kevin.write(result.content)
-            kevin.close()
-        await interaction.followup.send(file=dc.File(KEVIN_LOCATION))
+        try:
+            result = requests.get("http://192.168.1.163/kevin", timeout=60)
+            with open(KEVIN_LOCATION, mode='wb') as kevin:
+                kevin.write(result.content)
+                kevin.close()
+                await interaction.followup.send(file=dc.File(KEVIN_LOCATION))
+
+        except requests.Timeout:
+            await interaction.followup.send("Request timed out after 1 minute. Here's the previous Kevin photo.", file=dc.File(KEVIN_LOCATION))
