@@ -26,6 +26,8 @@ class KevinCog(commands.Cog):
                 kevin.write(result.content)
                 kevin.close()
                 await interaction.followup.send(file=dc.File(KEVIN_LOCATION))
-
+        except requests.ConnectionError:
+            await interaction.followup.send("Connection aborted -- the WiFi probably disconnected again. Here's the previous Kevin photo.", file=dc.File(KEVIN_LOCATION))
         except requests.Timeout:
             await interaction.followup.send("Request timed out after 1 minute. Here's the previous Kevin photo.", file=dc.File(KEVIN_LOCATION))
+        
