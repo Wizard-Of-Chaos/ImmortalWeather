@@ -35,6 +35,7 @@ class DinnerCog(commands.Cog):
         self.bot = bot
         self.fname = dinner_filename
         self.load(dinner_filename)
+        print("Recipes loaded!")
 
     def load(self, loadfile):
         with open(loadfile, 'r') as file:

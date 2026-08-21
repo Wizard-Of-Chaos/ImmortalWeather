@@ -23,6 +23,7 @@ class DeadlockCog(commands.Cog):
         self.lms: dict[int, int] = {}
         for id in urg.REGISTRY.registered_ids.values():
             self.lms[id] = 0
+        print("Deadlock cog initialized - when it decides to WORK.")
         
 
     deadlock = app_commands.Group(

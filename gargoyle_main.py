@@ -77,6 +77,7 @@ async def on_ready():
     await bot.add_cog(DeadlockCog(bot))
     await bot.add_cog(DinnerCog(bot, 'misc/storage/dinner.json'))
     await bot.add_cog(KevinCog(bot))
+    print("Cogs initialized. Engaging setup hook...")
     await bot.setup_hook()
     print(f'{bot.user} ready.')
 
